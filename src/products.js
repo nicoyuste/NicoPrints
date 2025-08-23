@@ -49,6 +49,11 @@ const PRODUCTS = [
       price: 0.5,
       currency: 'EUR',
       img: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1200&auto=format&fit=crop',
+      images: [
+        'https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1200&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1527430253228-e93688616381?q=80&w=1200&auto=format&fit=crop',
+        'https://images.unsplash.com/photo-1581091014525-9a506b3c4d20?q=80&w=1200&auto=format&fit=crop'
+      ],
       category: 'Test',
       color: '—',
       material: 'PLA',
