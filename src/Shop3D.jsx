@@ -6,132 +6,16 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import { Badge } from '@/components/ui/badge'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import PRODUCTS from '@/products'
+import ProductCard from '@/components/ProductCard'
+import PayPalIcon from '@/components/icons/PayPalIcon'
+import CustomOrderForm from '@/components/CustomOrderForm'
+import { CONTACT_EMAIL, PAYPAL_BUSINESS_EMAIL } from '@/config'
+import useLocalStorage from '@/lib/useLocalStorage'
+import { formatPrice } from '@/lib/format'
+import { Badge } from '@/components/ui/badge'
 
-const CONTACT_EMAIL = 'info@nicoyuste.es'
-// Email de cuenta PayPal receptor de pagos
-const PAYPAL_BUSINESS_EMAIL = 'nicoyuste@gmail.com'
-
-function PayPalIcon(props) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
-      <path d="M7 3h7a5 5 0 0 1 0 10h-4l-1.2 8H5L7 3Z" />
-      <path d="M12 7h2a2 2 0 1 1 0 4h-3l1-4Z" opacity=".7" />
-    </svg>
-  )
-}
-
-
-function formatPrice(num, currency = 'EUR') {
-  return new Intl.NumberFormat('es-ES', { style: 'currency', currency }).format(num)
-}
-function ProductCard({ product, onAdd, contactEmail }) {
-  const [selectedIndex, setSelectedIndex] = useState(0)
-  const [isOpen, setIsOpen] = useState(false)
-  const images = product.images && product.images.length > 0 ? product.images : [product.img]
-  const mainImage = images[Math.min(selectedIndex, images.length - 1)]
-
-  return (
-    <Card className="rounded-2xl overflow-hidden">
-      <CardContent className="p-0">
-        <div className="aspect-video overflow-hidden bg-gray-100 rounded-2xl">
-          <button type="button" className="w-full h-full focus:outline-none focus-visible:outline-none cursor-zoom-in" onClick={() => setIsOpen(true)} aria-label="Abrir galería">
-            <img src={mainImage} alt={product.name} className="w-full h-full object-cover" />
-          </button>
-        </div>
-        {images.length > 1 && (
-          <div className="px-4 pt-3 flex gap-2 overflow-x-auto">
-            {images.map((src, idx) => (
-              <button
-                key={src + idx}
-                type="button"
-                onClick={() => setSelectedIndex(idx)}
-                className={`h-12 w-16 rounded-md overflow-hidden border ${idx === selectedIndex ? 'ring-2 ring-gray-900 border-gray-900' : 'border-gray-200'}`}
-                aria-label={`Vista ${idx + 1}`}
-              >
-                <img src={src} alt="" className="h-full w-full object-cover" />
-              </button>
-            ))}
-          </div>
-        )}
-        <div className="p-4">
-          <div className="flex items-start justify-between gap-2">
-            <div>
-              <h4 className="font-medium leading-tight">{product.name}</h4>
-              <p className="text-sm text-gray-500">{product.material} · {product.color} · {product.category}</p>
-            </div>
-            <Badge>{formatPrice(product.price, product.currency)}</Badge>
-          </div>
-          <p className="text-sm text-gray-600 mt-2 line-clamp-2">{product.description}</p>
-          <div className="mt-4 flex gap-2">
-            <Button className="flex-1" onClick={() => onAdd(product)}>Añadir al carrito</Button>
-            <a className="flex-1" href={`mailto:${contactEmail}?subject=${encodeURIComponent('Consulta: ' + product.name)}`}>
-              <Button variant="outline" className="w-full">Consulta</Button>
-            </a>
-          </div>
-        </div>
-      </CardContent>
-      {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70" onClick={() => setIsOpen(false)}>
-          <div className="relative max-w-4xl w-full px-4" onClick={(e) => e.stopPropagation()}>
-            <div className="relative aspect-video bg-black rounded-xl overflow-hidden">
-              <img src={mainImage} alt={product.name} className="w-full h-full object-contain" />
-              <button
-                type="button"
-                className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full px-3 py-2 text-sm"
-                onClick={() => setSelectedIndex((selectedIndex - 1 + images.length) % images.length)}
-                aria-label="Anterior"
-              >
-                ‹
-              </button>
-              <button
-                type="button"
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full px-3 py-2 text-sm"
-                onClick={() => setSelectedIndex((selectedIndex + 1) % images.length)}
-                aria-label="Siguiente"
-              >
-                ›
-              </button>
-              <button
-                type="button"
-                className="absolute top-2 right-2 bg-white/80 hover:bg-white rounded-full px-3 py-1 text-sm"
-                onClick={() => setIsOpen(false)}
-                aria-label="Cerrar"
-              >
-                ✕
-              </button>
-            </div>
-            {images.length > 1 && (
-              <div className="mt-3 flex gap-2 overflow-x-auto">
-                {images.map((src, idx) => (
-                  <button
-                    key={'modal-' + src + idx}
-                    type="button"
-                    onClick={() => setSelectedIndex(idx)}
-                    className={`h-14 w-20 rounded-md overflow-hidden border ${idx === selectedIndex ? 'ring-2 ring-white border-white' : 'border-white/40'}`}
-                    aria-label={`Vista ${idx + 1}`}
-                  >
-                    <img src={src} alt="" className="h-full w-full object-cover" />
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-    </Card>
-  )
-}
-
-function useLocalStorage(key, initialValue) {
-  const [value, setValue] = useState(() => {
-    try { const item = localStorage.getItem(key); return item ? JSON.parse(item) : initialValue } catch { return initialValue }
-  })
-  useEffect(() => { try { localStorage.setItem(key, JSON.stringify(value)) } catch {} }, [key, value])
-  return [value, setValue]
-}
 
 export default function Shop3D() {
   const [cart, setCart] = useLocalStorage('cart3d', [])
@@ -290,31 +174,7 @@ export default function Shop3D() {
       <section id="encargos" className="max-w-4xl mx-auto px-4 pb-12">
         <h3 className="text-2xl font-semibold mb-4">Encargos a medida</h3>
         <p className="text-gray-600 mb-4">Cuéntame qué necesitas y te responderé con un presupuesto. Puedes indicar medidas, material (PLA/PETG) y color preferido.</p>
-        <form className="grid gap-3" onSubmit={(e) => { e.preventDefault();
-          const form = e.currentTarget;
-          const name = form.elements.namedItem('name').value.trim();
-          const email = form.elements.namedItem('email').value.trim();
-          const link = form.elements.namedItem('link').value.trim();
-          const details = form.elements.namedItem('details').value.trim();
-          if (name.length < 2) { alert('Por favor, indica un nombre válido.'); return }
-          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Introduce un email válido.'); return }
-          if (details.length < 20) { alert('Cuéntame un poco más de detalles (mínimo 20 caracteres).'); return }
-          const subject = encodeURIComponent('Encargo a medida - NicoPrints');
-          const linkLine = link ? `\nEnlace de referencia: ${link}` : '';
-          const body = encodeURIComponent(`Nombre: ${name}\nEmail: ${email}${linkLine}\n\nDetalles del encargo:\n${details}`);
-          window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
-        }}>
-          <div className="grid sm:grid-cols-2 gap-3">
-            <Input required name="name" placeholder="Tu nombre" />
-            <Input required type="email" name="email" placeholder="Tu email" />
-          </div>
-          <Input type="url" name="link" placeholder="Enlace de referencia (Printables, Thingiverse, etc.)" />
-          <textarea required name="details" rows="5" placeholder="Describe tu pieza: medidas, material (PLA/PETG), color, referencias..." className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-900"></textarea>
-          <div className="flex gap-2">
-            <Button type="submit">Enviar solicitud</Button>
-            <a href={`mailto:${CONTACT_EMAIL}`}><Button variant="outline">Escribir email</Button></a>
-          </div>
-        </form>
+        <CustomOrderForm />
       </section>
 
       <footer className="border-t bg-white/60">
