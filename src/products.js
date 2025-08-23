@@ -1,0 +1,48 @@
+const PRODUCTS = [
+    {
+      id: '1',
+      name: 'Soporte de auriculares',
+      price: 14.9,
+      currency: 'EUR',
+      img: 'https://images.unsplash.com/photo-1581276879432-15e50529f34b?q=80&w=1200&auto=format&fit=crop',
+      category: 'Escritorio',
+      color: 'Negro',
+      material: 'PLA',
+      description: 'Soporte estable para auriculares. Altura 25cm. Impreso en PLA de alta calidad.',
+    },
+    {
+      id: '2',
+      name: 'Organizador de cables',
+      price: 6.5,
+      currency: 'EUR',
+      img: 'https://images.unsplash.com/photo-1585386959984-a41552231653?q=80&w=1200&auto=format&fit=crop',
+      category: 'Escritorio',
+      color: 'Blanco',
+      material: 'PLA',
+      description: 'Clip para cables (pack de 6). Adhesivo 3M incluido.',
+    },
+    {
+      id: '3',
+      name: 'Gancho multiuso',
+      price: 4.0,
+      currency: 'EUR',
+      img: 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?q=80&w=1200&auto=format&fit=crop',
+      category: 'Hogar',
+      color: 'Gris',
+      material: 'PETG',
+      description: 'Gancho resistente (hasta 3kg). Ideal para llaves y bolsas.',
+    },
+    {
+      id: '4',
+      name: 'Soporte de pared para Switches',
+      price: 9.9,
+      currency: 'EUR',
+      img: 'https://images.unsplash.com/photo-1585079542156-2755d9d9c0f4?q=80&w=1200&auto=format&fit=crop',
+      category: 'Hogar',
+      color: 'Negro',
+      material: 'PETG',
+      description: 'Base de pared para interruptores o hubs pequeños. Tacos y tornillos incluidos.',
+    },
+  ]
+  
+  export default PRODUCTS
