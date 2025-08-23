@@ -105,7 +105,7 @@ export default function Shop3D() {
                       <span>Subtotal</span>
                       <span className="font-medium">{formatPrice(total)}</span>
                     </div>
-                    <p className="text-xs text-gray-500 mt-2">* Envío calculado manualmente tras el pedido (correo electrónico). PLA/PETG impresos bajo pedido.</p>
+                    <p className="text-xs text-gray-500 mt-2">* Envíos gratuitos. PLA/PETG impresos bajo pedido. Para piezas a medida, contáctame y te paso presupuesto.</p>
                     <div className="grid grid-cols-1 gap-2 mt-4">
                       <Button className="gap-2" onClick={checkoutPayPal}>
                         <PayPalIcon className="w-4 h-4" /> Pagar con PayPal
@@ -126,15 +126,22 @@ export default function Shop3D() {
       <section className="max-w-6xl mx-auto px-4 pt-8">
         <div className="grid md:grid-cols-2 gap-6 items-center">
           <div>
-            <h2 className="text-3xl md:text-4xl font-bold">Piezas impresas en 3D que uso a diario</h2>
-            <p className="mt-3 text-gray-600">Modelos probados en casa, impresos en PLA y PETG (Bambu Lab A1 Mini). Bajo pedido, personalizables en color y tamaño.</p>
-            <div className="mt-4 flex gap-2">
+            <h2 className="text-3xl md:text-4xl font-bold">Tus ideas, y más cosas, impresas en 3D</h2>
+            <p className="mt-3 text-gray-600 md:text-lg leading-relaxed">Aficionado a la impresión 3D. Aquí encontrarás piezas prácticas que nacen del día a día: organizadores, soportes y pequeños accesorios pensados para durar y mejorar tus espacios.</p>
+            <p className="mt-2 text-gray-600">Trabajo bajo pedido en PLA y PETG, con distintos colores y acabados. Si no ves lo que buscas, <a href="#encargos" className="underline">pide un encargo a medida</a> y lo diseñamos para que encaje justo donde lo necesitas.</p>
+            <ul className="mt-4 grid gap-2 text-sm text-gray-700 sm:grid-cols-2">
+              <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> PLA y PETG en varios colores</li>
+              <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> Tamaño máximo 18×18×18 cm</li>
+              <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> Envíos gratuitos</li>
+              <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> Encargos a medida: pide presupuesto</li>
+            </ul>
+            <div className="mt-5 flex gap-2">
               <a href="#catalogo"><Button>Ver catálogo</Button></a>
-              <a href={`mailto:${CONTACT_EMAIL}`}><Button variant="outline">Contacto</Button></a>
+              <a href="#encargos"><Button variant="outline">Contacto</Button></a>
             </div>
           </div>
-          <div className="rounded-3xl overflow-hidden shadow">
-            <img src="https://images.unsplash.com/photo-1608566042977-8eb7f1b1b0d8?q=80&w=1600&auto=format&fit=crop" alt="3D printing" className="w-full h-full object-cover" />
+          <div className="rounded-3xl overflow-hidden shadow bg-white">
+            <img src="/hero-print.svg" alt="Ilustración de impresión 3D" className="w-full h-full object-cover" />
           </div>
         </div>
       </section>
@@ -142,6 +149,25 @@ export default function Shop3D() {
       <section id="catalogo" className="max-w-6xl mx-auto px-4 py-10">
         <h3 className="text-2xl font-semibold mb-4">Catálogo</h3>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <Card key="custom-order" className="rounded-2xl overflow-hidden border-dashed">
+            <CardContent className="p-0">
+              <div className="aspect-video flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
+                <div className="text-center p-6">
+                  <Package className="w-10 h-10 mx-auto text-gray-600" />
+                  <div className="mt-2 font-medium">Encargos a medida</div>
+                  <div className="text-sm text-gray-600">Diseña tu propia pieza y pide presupuesto</div>
+                </div>
+              </div>
+              <div className="p-4">
+                <p className="text-sm text-gray-600">Indica medidas, material (PLA/PETG) y color. Te responderé con un presupuesto rápido.</p>
+                <div className="mt-4">
+                  <a href="#encargos">
+                    <Button className="w-full">Solicitar presupuesto</Button>
+                  </a>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
           {PRODUCTS.map((p) => (
             <Card key={p.id} className="rounded-2xl overflow-hidden">
               <CardContent className="p-0">
@@ -170,22 +196,38 @@ export default function Shop3D() {
         </div>
       </section>
 
+      <section id="encargos" className="max-w-4xl mx-auto px-4 pb-12">
+        <h3 className="text-2xl font-semibold mb-4">Encargos a medida</h3>
+        <p className="text-gray-600 mb-4">Cuéntame qué necesitas y te responderé con un presupuesto. Puedes indicar medidas, material (PLA/PETG) y color preferido.</p>
+        <form className="grid gap-3" onSubmit={(e) => { e.preventDefault();
+          const form = e.currentTarget;
+          const name = form.elements.namedItem('name').value.trim();
+          const email = form.elements.namedItem('email').value.trim();
+          const link = form.elements.namedItem('link').value.trim();
+          const details = form.elements.namedItem('details').value.trim();
+          if (name.length < 2) { alert('Por favor, indica un nombre válido.'); return }
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Introduce un email válido.'); return }
+          if (details.length < 20) { alert('Cuéntame un poco más de detalles (mínimo 20 caracteres).'); return }
+          const subject = encodeURIComponent('Encargo a medida - NicoPrints');
+          const linkLine = link ? `\nEnlace de referencia: ${link}` : '';
+          const body = encodeURIComponent(`Nombre: ${name}\nEmail: ${email}${linkLine}\n\nDetalles del encargo:\n${details}`);
+          window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+        }}>
+          <div className="grid sm:grid-cols-2 gap-3">
+            <Input required name="name" placeholder="Tu nombre" />
+            <Input required type="email" name="email" placeholder="Tu email" />
+          </div>
+          <Input type="url" name="link" placeholder="Enlace de referencia (Printables, Thingiverse, etc.)" />
+          <textarea required name="details" rows="5" placeholder="Describe tu pieza: medidas, material (PLA/PETG), color, referencias..." className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-900"></textarea>
+          <div className="flex gap-2">
+            <Button type="submit">Enviar solicitud</Button>
+            <a href={`mailto:${CONTACT_EMAIL}`}><Button variant="outline">Escribir email</Button></a>
+          </div>
+        </form>
+      </section>
+
       <footer className="border-t bg-white/60">
-        <div className="max-w-6xl mx-auto px-4 py-8 text-sm text-gray-600 grid md:grid-cols-3 gap-4">
-          <div>
-            <div className="font-semibold">Información</div>
-            <p>Producción bajo pedido. Tiempo típico 1–3 días. PLA y PETG (Bambu Lab A1 Mini).</p>
-          </div>
-          <div>
-            <div className="font-semibold">Envíos</div>
-            <p>Entrega local o envío nacional. Coste según peso y destino.</p>
-          </div>
-          <div>
-            <div className="font-semibold">Contacto</div>
-            <a className="underline" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
-          </div>
-        </div>
-        <div className="text-center text-xs text-gray-600 pb-2">
+        <div className="text-center text-xs text-gray-600 pb-2 mt-4">
           <a className="underline" href="privacidad.html">Política de privacidad</a>
           <span className="mx-2">·</span>
           <a className="underline" href="aviso-legal.html">Aviso legal</a>

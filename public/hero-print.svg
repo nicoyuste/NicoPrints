@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f3f4f6"/>
+      <stop offset="1" stop-color="#e5e7eb"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#60a5fa"/>
+      <stop offset="1" stop-color="#2563eb"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+
+  <!-- Panel de contenido -->
+  <g transform="translate(120 80)">
+    <rect x="0" y="40" width="560" height="380" rx="24" fill="#fff" stroke="#e5e7eb"/>
+
+    <!-- Impresora 3D estilo Bambu A1 mini -->
+    <g transform="translate(40 80)">
+      <!-- Marco -->
+      <rect x="0" y="0" width="360" height="260" rx="20" fill="#111827"/>
+      <rect x="16" y="16" width="328" height="228" rx="12" fill="#f9fafb"/>
+
+      <!-- Eje superior y carro -->
+      <rect x="32" y="44" width="296" height="10" rx="5" fill="#9ca3af"/>
+      <rect x="160" y="40" width="48" height="24" rx="6" fill="#111827"/>
+      <!-- Boquilla -->
+      <rect x="181" y="58" width="6" height="40" rx="3" fill="#6b7280"/>
+      <path d="M178 98h12l-6 10z" fill="#374151"/>
+
+      <!-- Filamento desde carrete -->
+      <path d="M120 20 C 80 10, 60 30, 60 70 S 120 90, 181 60" fill="none" stroke="#60a5fa" stroke-width="3"/>
+
+      <!-- Cama caliente -->
+      <rect x="48" y="180" width="264" height="24" rx="6" fill="#9ca3af"/>
+      <rect x="60" y="172" width="240" height="12" rx="6" fill="#e5e7eb"/>
+
+      <!-- Pieza imprimiéndose (cubo) -->
+      <g transform="translate(150 120)">
+        <path d="M40 0l40 20v60l-40 20L0 80V20z" fill="url(#accent)"/>
+        <path d="M40 0l40 20-40 20-40-20z" fill="#3b82f6" opacity="0.6"/>
+        <path d="M80 20v60l-40 20V60z" fill="#1d4ed8" opacity="0.8"/>
+        <path d="M0 20v60l40 20V60z" fill="#60a5fa" opacity="0.8"/>
+      </g>
+    </g>
+
+    <!-- Carrete de filamento -->
+    <g transform="translate(430 80)">
+      <circle cx="70" cy="70" r="60" fill="#111827"/>
+      <circle cx="70" cy="70" r="38" fill="#1f2937"/>
+      <circle cx="70" cy="70" r="8" fill="#9ca3af"/>
+      <!-- Marca de filamento -->
+      <path d="M70 12 A58 58 0 0 1 128 70" fill="none" stroke="#60a5fa" stroke-width="6" stroke-linecap="round"/>
+    </g>
+
+    <!-- Texto UI simulado a la derecha -->
+    <g transform="translate(420 220)">
+      <rect x="0" y="0" width="140" height="14" rx="7" fill="#d1d5db"/>
+      <rect x="0" y="24" width="180" height="10" rx="5" fill="#e5e7eb"/>
+      <rect x="0" y="40" width="160" height="10" rx="5" fill="#f3f4f6"/>
+      <rect x="0" y="68" width="120" height="36" rx="10" fill="#111827"/>
+    </g>
+  </g>
+</svg>
+
