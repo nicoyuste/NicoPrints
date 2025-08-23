@@ -4,8 +4,8 @@ import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig({
   plugins: [react()],
-  // Para GitHub Pages: usar base relativa. Si usas repo bajo usuario, puedes cambiar a '/<repo>/'
-  base: './',
+  // GitHub Pages del repo nicoyuste/NicoPrints
+  base: '/NicoPrints/',
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
