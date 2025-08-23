@@ -10,8 +10,9 @@ import { Badge } from '@/components/ui/badge'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import PRODUCTS from '@/products'
 
-const PAYPAL_LINK = 'https://www.paypal.com/ncp/payment/XXXXXXXX'
 const CONTACT_EMAIL = 'info@nicoyuste.es'
+// Email de cuenta PayPal receptor de pagos
+const PAYPAL_BUSINESS_EMAIL = 'nicoyuste@gmail.com'
 
 function PayPalIcon(props) {
   return (
@@ -49,7 +50,20 @@ export default function Shop3D() {
   function updateQty(id, qty) { setCart(prev => prev.map(i => (i.id === id ? { ...i, qty: Math.max(1, qty) } : i))) }
   function clearCart() { setCart([]) }
 
-  function checkoutPayPal() { window.location.href = PAYPAL_LINK }
+  function checkoutPayPal() {
+    const itemsCount = cart.reduce((a, b) => a + b.qty, 0)
+    const itemName = encodeURIComponent(`Pedido NicoPrints (${itemsCount} artículos)`) // concepto
+    const amount = (Math.round(total * 100) / 100).toFixed(2) // 2 decimales con punto
+    const currency = 'EUR'
+    const business = encodeURIComponent(PAYPAL_BUSINESS_EMAIL)
+    const returnUrl = encodeURIComponent(window.location.origin + '#gracias')
+    const cancelUrl = encodeURIComponent(window.location.origin + '#cancelado')
+
+    const url = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${business}&item_name=${itemName}&amount=${amount}&currency_code=${currency}&no_note=1&return=${returnUrl}&cancel_return=${cancelUrl}`
+    window.location.href = url
+  }
+
+  
   function checkoutEmail() {
     const subject = encodeURIComponent('Pedido Tienda 3D')
     const body = encodeURIComponent(`Hola, me interesa este pedido:\n\n${cart.map(i => `• ${i.name} x${i.qty} — ${formatPrice(i.price * i.qty)}`).join('\n')}\n\nTotal estimado: ${formatPrice(total)}\n\nMi dirección es: \n`)

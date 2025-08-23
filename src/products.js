@@ -43,6 +43,17 @@ const PRODUCTS = [
       material: 'PETG',
       description: 'Base de pared para interruptores o hubs pequeños. Tacos y tornillos incluidos.',
     },
+    {
+      id: 'test',
+      name: 'Producto de prueba (0,50 €)',
+      price: 0.5,
+      currency: 'EUR',
+      img: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1200&auto=format&fit=crop',
+      category: 'Test',
+      color: '—',
+      material: 'PLA',
+      description: 'Solo para validar el flujo de pago. Puedes eliminarlo después.',
+    },
   ]
   
   export default PRODUCTS
