@@ -138,7 +138,7 @@ export default function Shop3D() {
             </div>
           </div>
           <div className="rounded-3xl overflow-hidden shadow bg-white">
-            <img src="/hero-print.svg" alt="Ilustración de impresión 3D" className="w-full h-full object-cover" />
+            <img src={`${import.meta.env.BASE_URL}hero-print.svg`} alt="Ilustración de impresión 3D" className="w-full h-full object-cover" />
           </div>
         </div>
       </section>
