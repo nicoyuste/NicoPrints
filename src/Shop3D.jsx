@@ -11,7 +11,7 @@ import PRODUCTS from '@/products'
 import ProductCard from '@/components/ProductCard'
 import PayPalIcon from '@/components/icons/PayPalIcon'
 import CustomOrderForm from '@/components/CustomOrderForm'
-import { CONTACT_EMAIL, PAYPAL_BUSINESS_EMAIL } from '@/config'
+import { CONTACT_EMAIL, PAYPAL_BUSINESS_EMAIL, SHIPPING_FEE_EUR } from '@/config'
 import useLocalStorage from '@/lib/useLocalStorage'
 import { formatPrice } from '@/lib/format'
 import { Badge } from '@/components/ui/badge'
@@ -20,6 +20,8 @@ import { Badge } from '@/components/ui/badge'
 export default function Shop3D() {
   const [cart, setCart] = useLocalStorage('cart3d', [])
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0)
+  const shipping = cart.length > 0 ? SHIPPING_FEE_EUR : 0
+  const grandTotal = total + shipping
 
   function addToCart(prod) {
     setCart(prev => {
@@ -36,20 +38,23 @@ export default function Shop3D() {
   function checkoutPayPal() {
     const itemsCount = cart.reduce((a, b) => a + b.qty, 0)
     const itemName = encodeURIComponent(`Pedido NicoPrints (${itemsCount} artículos)`) // concepto
-    const amount = (Math.round(total * 100) / 100).toFixed(2) // 2 decimales con punto
+    const amount = (Math.round(grandTotal * 100) / 100).toFixed(2) // 2 decimales con punto
     const currency = 'EUR'
     const business = encodeURIComponent(PAYPAL_BUSINESS_EMAIL)
     const returnUrl = encodeURIComponent(window.location.origin + '#gracias')
     const cancelUrl = encodeURIComponent(window.location.origin + '#cancelado')
 
-    const url = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${business}&item_name=${itemName}&amount=${amount}&currency_code=${currency}&no_note=1&return=${returnUrl}&cancel_return=${cancelUrl}`
+    const url = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${business}&item_name=${itemName}&amount=${amount}&currency_code=${currency}&no_note=1&no_shipping=0&return=${returnUrl}&cancel_return=${cancelUrl}`
     window.location.href = url
   }
 
   
   function checkoutEmail() {
     const subject = encodeURIComponent('Pedido Tienda 3D')
-    const body = encodeURIComponent(`Hola, me interesa este pedido:\n\n${cart.map(i => `• ${i.name} x${i.qty} — ${formatPrice(i.price * i.qty)}`).join('\n')}\n\nTotal estimado: ${formatPrice(total)}\n\nMi dirección es: \n`)
+    const lines = cart.map(i => `• ${i.name} x${i.qty} — ${formatPrice(i.price * i.qty)}`).join('\n')
+    const body = encodeURIComponent(
+      `Hola, me interesa este pedido:\n\n${lines}\n\nSubtotal: ${formatPrice(total)}\nEnvío: ${formatPrice(shipping)}\nTotal estimado: ${formatPrice(grandTotal)}\n\nMi dirección es: \n`
+    )
     window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`
   }
 
@@ -102,7 +107,15 @@ export default function Shop3D() {
                       <span>Subtotal</span>
                       <span className="font-medium">{formatPrice(total)}</span>
                     </div>
-                    <p className="text-xs text-gray-500 mt-2">* Envíos gratuitos. PLA/PETG impresos bajo pedido. Para piezas a medida, contáctame y te paso presupuesto.</p>
+                    <div className="flex justify-between text-sm mt-1">
+                      <span>Envío</span>
+                      <span className="font-medium">{formatPrice(shipping)}</span>
+                    </div>
+                    <div className="flex justify-between text-sm mt-2 border-t pt-2">
+                      <span className="font-medium">Total</span>
+                      <span className="font-semibold">{formatPrice(grandTotal)}</span>
+                    </div>
+                    <p className="text-xs text-gray-500 mt-2">* Envío fijo de {formatPrice(SHIPPING_FEE_EUR)} en España peninsular.<i>Envios solo dentro de España.</i></p>
                     <div className="grid grid-cols-1 gap-2 mt-4">
                       <Button className="gap-2" onClick={checkoutPayPal}>
                         <PayPalIcon className="w-4 h-4" /> Pagar con PayPal
@@ -129,7 +142,6 @@ export default function Shop3D() {
             <ul className="mt-4 grid gap-2 text-sm text-gray-700 sm:grid-cols-2">
               <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> PLA y PETG en varios colores</li>
               <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> Tamaño máximo 18×18×18 cm</li>
-              <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> Envíos gratuitos</li>
               <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> Encargos a medida: pide presupuesto</li>
             </ul>
             <div className="mt-5 flex gap-2">
