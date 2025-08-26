@@ -23,12 +23,14 @@ export default function Shop3D() {
   const shipping = cart.length > 0 ? SHIPPING_FEE_EUR : 0
   const grandTotal = total + shipping
 
-  function addToCart(prod) {
+  function addToCart(prod, colorObj) {
     setCart(prev => {
-      const idx = prev.findIndex(i => i.id === prod.id)
+      const colorValue = colorObj?.value || null
+      const colorLabel = colorObj?.label || null
+      const idx = prev.findIndex(i => i.id === prod.id && (i.colorValue || null) === colorValue)
       if (idx >= 0) { const copy = [...prev]; copy[idx] = { ...copy[idx], qty: copy[idx].qty + 1 }; return copy }
       const primaryImg = (prod.images && prod.images.length > 0) ? prod.images[0] : prod.img
-      return [...prev, { id: prod.id, name: prod.name, price: prod.price, currency: prod.currency, img: primaryImg, qty: 1 }]
+      return [...prev, { id: prod.id, name: prod.name, price: prod.price, currency: prod.currency, img: primaryImg, qty: 1, colorValue, colorLabel }]
     })
   }
   function removeFromCart(id) { setCart(prev => prev.filter(i => i.id !== id)) }
@@ -51,7 +53,7 @@ export default function Shop3D() {
   
   function checkoutEmail() {
     const subject = encodeURIComponent('Pedido Tienda 3D')
-    const lines = cart.map(i => `• ${i.name} x${i.qty} — ${formatPrice(i.price * i.qty)}`).join('\n')
+    const lines = cart.map(i => `• ${i.name}${i.colorLabel ? ` (${i.colorLabel})` : ''} x${i.qty} — ${formatPrice(i.price * i.qty)}`).join('\n')
     const body = encodeURIComponent(
       `Hola, me interesa este pedido:\n\n${lines}\n\nSubtotal: ${formatPrice(total)}\nEnvío: ${formatPrice(shipping)}\nTotal estimado: ${formatPrice(grandTotal)}\n\nMi dirección es: \n`
     )
@@ -88,6 +90,9 @@ export default function Shop3D() {
                             <img src={item.img} alt="" className="w-16 h-16 object-cover rounded-xl" />
                             <div className="flex-1">
                               <div className="font-medium">{item.name}</div>
+                              {item.colorLabel && (
+                                <div className="text-xs text-gray-500">Color: {item.colorLabel}</div>
+                              )}
                               <div className="text-sm text-gray-500">{formatPrice(item.price)} / ud</div>
                               <div className="flex items-center gap-2 mt-1">
                                 <Input type="number" min={1} value={item.qty} onChange={(e) => updateQty(item.id, parseInt(e.target.value || "1"))} className="w-20" />

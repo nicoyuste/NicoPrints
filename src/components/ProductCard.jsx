@@ -1,14 +1,26 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { formatPrice } from '@/lib/format'
+import { COLORS } from '@/colors'
 
 export default function ProductCard({ product, onAdd, contactEmail }) {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
-  const images = product.images && product.images.length > 0 ? product.images : [product.img]
-  const mainImage = images[Math.min(selectedIndex, images.length - 1)]
+  const [selectedColor, setSelectedColor] = useState(COLORS[0]?.value || '')
+  const imageObjs = (product.images && product.images.length > 0)
+    ? product.images.map(img => (typeof img === 'string' ? { src: img, colorValue: null } : img))
+    : [{ src: product.img, colorValue: null }]
+
+  // Si existe una imagen para el color seleccionado, sincroniza el índice
+  useEffect(() => {
+    const idx = imageObjs.findIndex(i => i.colorValue === selectedColor)
+    if (idx >= 0) setSelectedIndex(idx)
+  }, [selectedColor])
+
+  const colorMatch = imageObjs.find(i => i.colorValue === selectedColor)
+  const mainImage = (colorMatch?.src) || imageObjs[Math.min(selectedIndex, imageObjs.length - 1)]?.src
 
   return (
     <Card className="rounded-2xl overflow-hidden">
@@ -18,17 +30,17 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
             <img src={mainImage} alt={product.name} className="w-full h-full object-cover" />
           </button>
         </div>
-        {images.length > 1 && (
+        {imageObjs.length > 1 && (
           <div className="px-4 pt-3 flex gap-2 overflow-x-auto">
-            {images.map((src, idx) => (
+            {imageObjs.map((img, idx) => (
               <button
-                key={src + idx}
+                key={img.src + idx}
                 type="button"
                 onClick={() => setSelectedIndex(idx)}
                 className={`h-12 w-16 rounded-md overflow-hidden border ${idx === selectedIndex ? 'ring-2 ring-gray-900 border-gray-900' : 'border-gray-200'}`}
                 aria-label={`Vista ${idx + 1}`}
               >
-                <img src={src} alt="" className="h-full w-full object-cover" />
+                <img src={img.src} alt="" className="h-full w-full object-cover" />
               </button>
             ))}
           </div>
@@ -41,9 +53,39 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
             </div>
             <Badge>{formatPrice(product.price, product.currency)}</Badge>
           </div>
+          {selectedColor && (
+            <div className="flex items-center gap-2 mt-1 text-xs text-gray-600">
+              <span
+                className="inline-block h-3 w-3 rounded-full"
+                style={{ backgroundColor: (COLORS.find(c => c.value === selectedColor)?.hex) || '#e5e7eb' }}
+              />
+              <span>{COLORS.find(c => c.value === selectedColor)?.label}</span>
+            </div>
+          )}
           <p className="text-sm text-gray-600 mt-2 line-clamp-2">{product.description}</p>
+          <div className="mt-3">
+            <label className="block text-xs text-gray-600 mb-1">Color</label>
+            <div className="flex flex-wrap gap-2 mb-2">
+              {COLORS.map(c => (
+                <button
+                  key={c.value}
+                  type="button"
+                  onClick={() => setSelectedColor(c.value)}
+                  className={`h-7 px-2 rounded-full border text-xs flex items-center gap-2 ${selectedColor === c.value ? 'ring-2 ring-gray-900 border-gray-900' : 'border-gray-300'}`}
+                  aria-label={c.label}
+                  title={c.label}
+                >
+                  <span className="inline-block h-3.5 w-3.5 rounded-full" style={{ backgroundColor: c.hex }}></span>
+                  {c.label}
+                </button>
+              ))}
+            </div>
+          </div>
           <div className="mt-4 flex gap-2">
-            <Button className="flex-1" onClick={() => onAdd(product)}>Añadir al carrito</Button>
+            <Button className="flex-1" onClick={() => {
+              const colorObj = COLORS.find(c => c.value === selectedColor) || null
+              onAdd(product, colorObj)
+            }}>Añadir al carrito</Button>
             <a className="flex-1" href={`mailto:${contactEmail}?subject=${encodeURIComponent('Consulta: ' + product.name)}`}>
               <Button variant="outline" className="w-full">Consulta</Button>
             </a>
@@ -80,17 +122,17 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
                 ✕
               </button>
             </div>
-            {images.length > 1 && (
+            {imageObjs.length > 1 && (
               <div className="mt-3 flex gap-2 overflow-x-auto">
-                {images.map((src, idx) => (
+                {imageObjs.map((img, idx) => (
                   <button
-                    key={'modal-' + src + idx}
+                    key={'modal-' + img.src + idx}
                     type="button"
                     onClick={() => setSelectedIndex(idx)}
                     className={`h-14 w-20 rounded-md overflow-hidden border ${idx === selectedIndex ? 'ring-2 ring-white border-white' : 'border-white/40'}`}
                     aria-label={`Vista ${idx + 1}`}
                   >
-                    <img src={src} alt="" className="h-full w-full object-cover" />
+                    <img src={img.src} alt="" className="h-full w-full object-cover" />
                   </button>
                 ))}
               </div>
