@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Encargos a medida · NicoPrints</title>
+    <meta name="robots" content="index,follow">
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+      body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial; line-height: 1.6; margin: 0; color: #111827; }
+      .container { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; }
+      h1 { font-size: 1.75rem; margin: 0 0 1rem; }
+      h2 { font-size: 1.25rem; margin: 2rem 0 0.5rem; }
+      a { color: #111827; }
+      .muted { color: #6b7280; font-size: 0.9rem; }
+      .back { display: inline-block; margin-top: 1.5rem; text-decoration: underline; }
+      .card { background: #fff; border: 1px solid #e5e7eb; border-radius: 1rem; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
+      .card-body { padding: 1rem; }
+      input, textarea { display: block; width: 100%; border-radius: 0.5rem; border: 1px solid #e5e7eb; padding: .5rem .75rem; font-size: .95rem; }
+      .btn { appearance: none; border: 1px solid #111827; background: #111827; color: white; border-radius: .5rem; padding: .5rem .75rem; cursor: pointer; display: inline-block; text-decoration: none; text-align: center; }
+      button.btn { width: 100%; }
+      .btn-outline { background: transparent; color: #111827; }
+      .grid { display: grid; gap: 1rem; }
+      @media (min-width: 640px) { .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+      .grid-2 > * { min-width: 0; }
+      .note { color: #6b7280; font-size: .9rem; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <a href="./" style="display:inline-block"><img src="NicoPrints.svg" alt="NicoPrints" style="height:72px;width:auto;vertical-align:middle;margin-bottom:1rem;border-radius:.5rem" /></a>
+      <h1>Encargos a medida</h1>
+      <p class="muted">Cuéntame qué necesitas y te responderé con un presupuesto.</p>
+
+      <div class="card">
+        <div class="card-body">
+          <form class="grid" onsubmit="event.preventDefault(); handleSubmit(event)">
+            <div class="grid grid-2">
+              <input required name="name" placeholder="Tu nombre" />
+              <input required name="email" type="email" placeholder="Tu email" />
+            </div>
+            <textarea required name="details" rows="6" placeholder="Describe tu pieza: medidas, material (PLA/PETG), color, referencias..."></textarea>
+            <div class="grid">
+              <button type="submit" class="btn">Enviar solicitud</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <h2>¿Qué puedo encargar?</h2>
+      <ul>
+        <li>
+          Puedes elegir el material que prefieras (PLA o PETG).
+          <a href="materiales.html" style="margin-left:.5rem;text-decoration:underline;color:#6b7280;font-size:.9rem">¿Diferencias?</a>
+        </li>
+        <li>Si ya tienes un diseño 3D (STL/3MF), puedo imprimirlo directamente.</li>
+        <li>También puedo ayudarte a diseñar la pieza desde cero y luego imprimirla.</li>
+      </ul>
+
+      <a class="back" href="./">← Volver a la tienda</a>
+    </div>
+    <script>
+      function handleSubmit(e) {
+        var form = e.target;
+        var name = form.elements.name.value.trim();
+        var email = form.elements.email.value.trim();
+        var details = form.elements.details.value.trim();
+        if (name.length < 2) { alert('Por favor, indica un nombre válido.'); return }
+        if (!/^([^\s@]+)@([^\s@]+)\.([^\s@]+)$/.test(email)) { alert('Introduce un email válido.'); return }
+        if (details.length < 20) { alert('Cuéntame un poco más de detalles (mínimo 20 caracteres).'); return }
+        var subject = encodeURIComponent('Encargo a medida - NicoPrints');
+        var body = encodeURIComponent('Nombre: ' + name + '\nEmail: ' + email + '\n\nDetalles del encargo:\n' + details);
+        window.location.href = 'mailto:info@nicoprints.com?subject=' + subject + '&body=' + body;
+      }
+    </script>
+  </body>
+  </html>
+

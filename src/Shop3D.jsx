@@ -142,7 +142,7 @@ export default function Shop3D() {
           <div>
             <h2 className="text-3xl md:text-4xl font-bold">Tus ideas, y más cosas, impresas en 3D</h2>
             <p className="mt-3 text-gray-600 md:text-lg leading-relaxed">Aficionado a la impresión 3D. Aquí encontrarás piezas prácticas que nacen del día a día: organizadores, soportes y pequeños accesorios pensados para durar y mejorar tus espacios.</p>
-            <p className="mt-2 text-gray-600">Trabajo bajo pedido en PLA y PETG, con distintos colores y acabados. Si no ves lo que buscas, <a href="#encargos" className="underline">pide un encargo a medida</a> y lo diseñamos para que encaje justo donde lo necesitas.</p>
+            <p className="mt-2 text-gray-600">Trabajo bajo pedido en PLA y PETG, con distintos colores y acabados. Si no ves lo que buscas, <a href={`${import.meta.env.BASE_URL}encargos.html`} className="underline">pide un encargo a medida</a> y lo diseñamos para que encaje justo donde lo necesitas.</p>
             <ul className="mt-4 grid gap-2 text-sm text-gray-700 sm:grid-cols-2">
               <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> PLA y PETG en varios colores</li>
               <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> Tamaño máximo 18×18×18 cm</li>
@@ -150,12 +150,22 @@ export default function Shop3D() {
             </ul>
             <div className="mt-5 flex gap-2">
               <a href="#catalogo"><Button>Ver catálogo</Button></a>
-              <a href="#encargos"><Button variant="outline">Contacto</Button></a>
+              <a href={`${import.meta.env.BASE_URL}encargos.html`}><Button variant="outline">Contacto</Button></a>
             </div>
           </div>
           <div className="rounded-3xl overflow-hidden shadow bg-white">
             <img src={`${import.meta.env.BASE_URL}hero-print.svg`} alt="Ilustración de impresión 3D" className="w-full h-full object-cover" />
           </div>
+        </div>
+      </section>
+
+
+      <section id="catalogo" className="max-w-6xl mx-auto px-4 py-10">
+        <h3 className="text-2xl font-semibold mb-4">Catálogo</h3>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {PRODUCTS.map((p) => (
+            <ProductCard key={p.id} product={p} onAdd={addToCart} contactEmail={CONTACT_EMAIL} />
+          ))}
         </div>
       </section>
 
@@ -169,7 +179,7 @@ export default function Shop3D() {
               <h3 className="text-2xl md:text-3xl font-semibold mt-1">¿No encuentras lo que buscas?</h3>
               <p className="mt-2 text-gray-300 md:text-base">Diseñamos una pieza a medida en PLA/PETG que encaje justo donde la necesitas.</p>
               <div className="mt-4 flex flex-col sm:flex-row gap-2">
-                <a href="#encargos">
+                <a href={`${import.meta.env.BASE_URL}encargos.html`}>
                   <Button className="bg-white text-gray-900 hover:bg-gray-100">Solicitar presupuesto</Button>
                 </a>
                 <a href={`${import.meta.env.BASE_URL}materiales.html`} className="inline-flex items-center justify-center gap-2 rounded-md border border-white/30 px-4 py-2 text-sm hover:bg-white/10">Ver materiales</a>
@@ -183,20 +193,7 @@ export default function Shop3D() {
         </div>
       </section>
 
-      <section id="catalogo" className="max-w-6xl mx-auto px-4 py-10">
-        <h3 className="text-2xl font-semibold mb-4">Catálogo</h3>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {PRODUCTS.map((p) => (
-            <ProductCard key={p.id} product={p} onAdd={addToCart} contactEmail={CONTACT_EMAIL} />
-          ))}
-        </div>
-      </section>
-
-      <section id="encargos" className="max-w-4xl mx-auto px-4 pb-12">
-        <h3 className="text-2xl font-semibold mb-4">Encargos a medida</h3>
-        <p className="text-gray-600 mb-4">Cuéntame qué necesitas y te responderé con un presupuesto. Puedes indicar medidas, material (PLA/PETG) y color preferido.</p>
-        <CustomOrderForm />
-      </section>
+      {/* Sección de formulario movida a página independiente: encargos.html */}
 
       <footer className="border-t bg-white/60">
         <div className="text-center text-xs text-gray-600 pb-2 mt-4">
