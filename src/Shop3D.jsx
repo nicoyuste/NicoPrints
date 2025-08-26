@@ -22,15 +22,17 @@ export default function Shop3D() {
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0)
   const shipping = cart.length > 0 ? SHIPPING_FEE_EUR : 0
   const grandTotal = total + shipping
+  const [checkoutStatus, setCheckoutStatus] = useState('none') // 'none' | 'success' | 'cancel'
 
-  function addToCart(prod, colorObj) {
+  function addToCart(prod, colorObj, material) {
     setCart(prev => {
       const colorValue = colorObj?.value || null
       const colorLabel = colorObj?.label || null
-      const idx = prev.findIndex(i => i.id === prod.id && (i.colorValue || null) === colorValue)
+      const materialValue = material || null
+      const idx = prev.findIndex(i => i.id === prod.id && (i.colorValue || null) === colorValue && (i.material || null) === materialValue)
       if (idx >= 0) { const copy = [...prev]; copy[idx] = { ...copy[idx], qty: copy[idx].qty + 1 }; return copy }
       const primaryImg = (prod.images && prod.images.length > 0) ? prod.images[0] : prod.img
-      return [...prev, { id: prod.id, name: prod.name, price: prod.price, currency: prod.currency, img: primaryImg, qty: 1, colorValue, colorLabel }]
+      return [...prev, { id: prod.id, name: prod.name, price: prod.price, currency: prod.currency, img: primaryImg, qty: 1, colorValue, colorLabel, material: materialValue }]
     })
   }
   function removeFromCart(id) { setCart(prev => prev.filter(i => i.id !== id)) }
@@ -39,12 +41,14 @@ export default function Shop3D() {
 
   function checkoutPayPal() {
     const itemsCount = cart.reduce((a, b) => a + b.qty, 0)
-    const itemName = encodeURIComponent(`Pedido NicoPrints (${itemsCount} artículos)`) // concepto
+    const lines = cart.map(i => `#${i.id} ${i.name}${i.material ? ` [${i.material}]` : ''}${i.colorLabel ? ` (${i.colorLabel})` : ''} x${i.qty}`).join(' | ')
+    const itemName = encodeURIComponent(`Pedido NicoPrints: ${lines}`)
     const amount = (Math.round(grandTotal * 100) / 100).toFixed(2) // 2 decimales con punto
     const currency = 'EUR'
     const business = encodeURIComponent(PAYPAL_BUSINESS_EMAIL)
-    const returnUrl = encodeURIComponent(window.location.origin + '#gracias')
-    const cancelUrl = encodeURIComponent(window.location.origin + '#cancelado')
+    const baseUrl = window.location.origin + import.meta.env.BASE_URL
+    const returnUrl = encodeURIComponent(baseUrl + '#gracias')
+    const cancelUrl = encodeURIComponent(baseUrl + '#cancelado')
 
     const url = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${business}&item_name=${itemName}&amount=${amount}&currency_code=${currency}&no_note=1&no_shipping=0&return=${returnUrl}&cancel_return=${cancelUrl}`
     window.location.href = url
@@ -53,12 +57,24 @@ export default function Shop3D() {
   
   function checkoutEmail() {
     const subject = encodeURIComponent('Pedido Tienda 3D')
-    const lines = cart.map(i => `• ${i.name}${i.colorLabel ? ` (${i.colorLabel})` : ''} x${i.qty} — ${formatPrice(i.price * i.qty)}`).join('\n')
+    const lines = cart.map(i => `• ${i.name}${i.material ? ` [${i.material}]` : ''}${i.colorLabel ? ` (${i.colorLabel})` : ''} x${i.qty} — ${formatPrice(i.price * i.qty)}`).join('\n')
     const body = encodeURIComponent(
       `Hola, me interesa este pedido:\n\n${lines}\n\nSubtotal: ${formatPrice(total)}\nEnvío: ${formatPrice(shipping)}\nTotal estimado: ${formatPrice(grandTotal)}\n\nMi dirección es: \n`
     )
     window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`
   }
+
+  // Detectar retorno de PayPal por hash y mostrar aviso. Limpiar la URL después.
+  useEffect(() => {
+    const h = (window.location.hash || '').toLowerCase()
+    if (h.startsWith('#gracias')) {
+      setCheckoutStatus('success')
+      history.replaceState(null, '', import.meta.env.BASE_URL)
+    } else if (h.startsWith('#cancelado')) {
+      setCheckoutStatus('cancel')
+      history.replaceState(null, '', import.meta.env.BASE_URL)
+    }
+  }, [])
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
@@ -136,6 +152,20 @@ export default function Shop3D() {
           </div>
         </div>
       </header>
+
+      {checkoutStatus !== 'none' && (
+        <div className="max-w-6xl mx-auto px-4 mt-4">
+          {checkoutStatus === 'success' ? (
+            <div className="rounded-lg border border-green-200 bg-green-50 text-green-800 p-3 text-sm">
+              ¡Gracias por tu pedido! El pago se ha completado correctamente.
+            </div>
+          ) : (
+            <div className="rounded-lg border border-amber-200 bg-amber-50 text-amber-800 p-3 text-sm">
+              El pago fue cancelado. Si fue un error, inténtalo de nuevo o contáctame.
+            </div>
+          )}
+        </div>
+      )}
 
       <section className="max-w-6xl mx-auto px-4 pt-8">
         <div className="grid md:grid-cols-2 gap-6 items-center">

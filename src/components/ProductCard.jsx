@@ -107,7 +107,7 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
           <div className="mt-4 flex gap-2">
             <Button className="flex-1" onClick={() => {
               const colorObj = COLORS.find(c => c.value === selectedColor) || null
-              onAdd(product, colorObj)
+              onAdd(product, colorObj, selectedMaterial)
             }}>Añadir al carrito</Button>
             <a className="flex-1" href={`mailto:${contactEmail}?subject=${encodeURIComponent('Consulta: ' + product.name)}`}>
               <Button variant="outline" className="w-full">Consulta</Button>
