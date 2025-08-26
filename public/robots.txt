@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://nicoyuste.github.io/NicoPrints/sitemap.xml
+Sitemap: https://www.nicoprints.com/sitemap.xml
 
