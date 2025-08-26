@@ -8,7 +8,10 @@ import { COLORS } from '@/colors'
 export default function ProductCard({ product, onAdd, contactEmail }) {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [isOpen, setIsOpen] = useState(false)
-  const [selectedColor, setSelectedColor] = useState(COLORS[0]?.value || '')
+  const materials = Array.isArray(product.material) ? product.material : [product.material]
+  const [selectedMaterial, setSelectedMaterial] = useState(materials[0] || '')
+  const filteredColors = COLORS.filter(c => c.material === selectedMaterial)
+  const [selectedColor, setSelectedColor] = useState(filteredColors[0]?.value || '')
   const imageObjs = (product.images && product.images.length > 0)
     ? product.images.map(img => (typeof img === 'string' ? { src: img, colorValue: null } : img))
     : [{ src: product.img, colorValue: null }]
@@ -18,6 +21,12 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
     const idx = imageObjs.findIndex(i => i.colorValue === selectedColor)
     if (idx >= 0) setSelectedIndex(idx)
   }, [selectedColor])
+
+  // Si cambia el material seleccionado, asegura que el color seleccionado pertenece a ese material
+  useEffect(() => {
+    const first = filteredColors[0]?.value || ''
+    setSelectedColor(prev => (filteredColors.some(c => c.value === prev) ? prev : first))
+  }, [selectedMaterial])
 
   const colorMatch = imageObjs.find(i => i.colorValue === selectedColor)
   const mainImage = (colorMatch?.src) || imageObjs[Math.min(selectedIndex, imageObjs.length - 1)]?.src
@@ -49,24 +58,36 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
           <div className="flex items-start justify-between gap-2">
             <div>
               <h4 className="font-medium leading-tight">{product.name}</h4>
-              <p className="text-sm text-gray-500">{product.material} · {product.color} · {product.category}</p>
+              <p className="text-sm text-gray-500">{selectedMaterial || materials.join('/')} · {product.category}</p>
             </div>
             <Badge>{formatPrice(product.price, product.currency)}</Badge>
           </div>
-          {selectedColor && (
-            <div className="flex items-center gap-2 mt-1 text-xs text-gray-600">
-              <span
-                className="inline-block h-3 w-3 rounded-full"
-                style={{ backgroundColor: (COLORS.find(c => c.value === selectedColor)?.hex) || '#e5e7eb' }}
-              />
-              <span>{COLORS.find(c => c.value === selectedColor)?.label}</span>
+          {materials.length > 1 && (
+            <div className="mt-3">
+              <label className="block text-xs text-gray-600 mb-1">Material</label>
+              <div className="flex flex-wrap gap-2 items-center">
+                {materials.map((m) => (
+                  <button
+                    key={m}
+                    type="button"
+                    onClick={() => setSelectedMaterial(m)}
+                    className={`h-7 px-2 rounded-full border text-xs ${selectedMaterial === m ? 'ring-2 ring-gray-900 border-gray-900' : 'border-gray-300'}`}
+                    aria-label={m}
+                    title={m}
+                  >
+                    {m}
+                  </button>
+                ))}
+                <a href={`${import.meta.env.BASE_URL}materiales.html`} className="text-xs underline text-gray-600 ml-2" target="_blank" rel="noreferrer">¿Diferencias?</a>
+              </div>
             </div>
           )}
+          {/* Removed selected color subtitle to avoid duplication with selector */}
           <p className="text-sm text-gray-600 mt-2 line-clamp-2">{product.description}</p>
           <div className="mt-3">
             <label className="block text-xs text-gray-600 mb-1">Color</label>
             <div className="flex flex-wrap gap-2 mb-2">
-              {COLORS.map(c => (
+              {filteredColors.length > 0 ? filteredColors.map(c => (
                 <button
                   key={c.value}
                   type="button"
@@ -78,7 +99,9 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
                   <span className="inline-block h-3.5 w-3.5 rounded-full" style={{ backgroundColor: c.hex }}></span>
                   {c.label}
                 </button>
-              ))}
+              )) : (
+                <span className="text-xs text-gray-500">Sin colores disponibles para {selectedMaterial}</span>
+              )}
             </div>
           </div>
           <div className="mt-4 flex gap-2">

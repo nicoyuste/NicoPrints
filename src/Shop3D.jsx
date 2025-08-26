@@ -64,8 +64,7 @@ export default function Shop3D() {
     <div className="min-h-screen bg-gray-50 text-gray-900">
       <header className="sticky top-0 z-30 bg-white/80 backdrop-blur border-b">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Package className="w-6 h-6" />
-          <h1 className="text-xl font-semibold">NicoPrints</h1>
+          <img src={`${import.meta.env.BASE_URL}NicoPrints.svg`} alt="NicoPrints" className="h-8 w-auto" />
           <div className="ml-auto flex items-center gap-2">
             <Sheet>
               <SheetTrigger asChild>
@@ -160,28 +159,33 @@ export default function Shop3D() {
         </div>
       </section>
 
+      <section className="max-w-6xl mx-auto px-4 pt-6">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 text-white">
+          <div className="px-6 py-8 md:px-10 md:py-10 flex flex-col md:flex-row md:items-center gap-4">
+            <div className="flex-1">
+              <div className="flex items-center gap-2 text-sm text-gray-300">
+                <Package className="w-5 h-5" /> Encargos a medida
+              </div>
+              <h3 className="text-2xl md:text-3xl font-semibold mt-1">¿No encuentras lo que buscas?</h3>
+              <p className="mt-2 text-gray-300 md:text-base">Diseñamos una pieza a medida en PLA/PETG que encaje justo donde la necesitas.</p>
+              <div className="mt-4 flex flex-col sm:flex-row gap-2">
+                <a href="#encargos">
+                  <Button className="bg-white text-gray-900 hover:bg-gray-100">Solicitar presupuesto</Button>
+                </a>
+                <a href={`${import.meta.env.BASE_URL}materiales.html`} className="inline-flex items-center justify-center gap-2 rounded-md border border-white/30 px-4 py-2 text-sm hover:bg-white/10">Ver materiales</a>
+              </div>
+            </div>
+            <div className="hidden md:block">
+              <img src={`${import.meta.env.BASE_URL}hero-print.svg`} alt="Ilustración de impresión 3D" className="w-56 h-36 object-contain opacity-80 rounded-2xl" />
+            </div>
+          </div>
+          <div className="pointer-events-none absolute -bottom-20 -right-20 h-56 w-56 rounded-full bg-white/10 blur-2xl"></div>
+        </div>
+      </section>
+
       <section id="catalogo" className="max-w-6xl mx-auto px-4 py-10">
         <h3 className="text-2xl font-semibold mb-4">Catálogo</h3>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card key="custom-order" className="rounded-2xl overflow-hidden border-dashed">
-            <CardContent className="p-0">
-              <div className="aspect-video flex items-center justify-center bg-gradient-to-br from-gray-100 to-gray-200">
-                <div className="text-center p-6">
-                  <Package className="w-10 h-10 mx-auto text-gray-600" />
-                  <div className="mt-2 font-medium">Encargos a medida</div>
-                  <div className="text-sm text-gray-600">Diseña tu propia pieza y pide presupuesto</div>
-                </div>
-              </div>
-              <div className="p-4">
-                <p className="text-sm text-gray-600">Indica medidas, material (PLA/PETG) y color. Te responderé con un presupuesto rápido.</p>
-                <div className="mt-4">
-                  <a href="#encargos">
-                    <Button className="w-full">Solicitar presupuesto</Button>
-                  </a>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
           {PRODUCTS.map((p) => (
             <ProductCard key={p.id} product={p} onAdd={addToCart} contactEmail={CONTACT_EMAIL} />
           ))}

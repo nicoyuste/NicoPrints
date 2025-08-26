@@ -6,8 +6,7 @@ const PRODUCTS = [
       currency: 'EUR',
       img: 'https://images.unsplash.com/photo-1581276879432-15e50529f34b?q=80&w=1200&auto=format&fit=crop',
       category: 'Escritorio',
-      color: 'Negro',
-      material: 'PLA',
+      material: ['PLA'],
       description: 'Soporte estable para auriculares. Altura 25cm. Impreso en PLA de alta calidad.',
     },
     {
@@ -17,8 +16,7 @@ const PRODUCTS = [
       currency: 'EUR',
       img: 'https://images.unsplash.com/photo-1585386959984-a41552231653?q=80&w=1200&auto=format&fit=crop',
       category: 'Escritorio',
-      color: 'Blanco',
-      material: 'PLA',
+      material: ['PLA'],
       description: 'Clip para cables (pack de 6). Adhesivo 3M incluido.',
     },
     {
@@ -28,8 +26,7 @@ const PRODUCTS = [
       currency: 'EUR',
       img: 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?q=80&w=1200&auto=format&fit=crop',
       category: 'Hogar',
-      color: 'Gris',
-      material: 'PETG',
+      material: ['PETG', 'PLA'],
       description: 'Gancho resistente (hasta 3kg). Ideal para llaves y bolsas.',
     },
     {
@@ -39,8 +36,7 @@ const PRODUCTS = [
       currency: 'EUR',
       img: 'https://images.unsplash.com/photo-1585079542156-2755d9d9c0f4?q=80&w=1200&auto=format&fit=crop',
       category: 'Hogar',
-      color: 'Negro',
-      material: 'PETG',
+      material: ['PETG'],
       description: 'Base de pared para interruptores o hubs pequeños. Tacos y tornillos incluidos.',
     },
     {
@@ -55,8 +51,7 @@ const PRODUCTS = [
         { src: 'https://images.unsplash.com/photo-1581091014525-9a506b3c4d20?q=80&w=1200&auto=format&fit=crop', colorValue: 'azul' }
       ],
       category: 'Test',
-      color: '—',
-      material: 'PLA',
+      material: ['PLA'],
       description: 'Solo para validar el flujo de pago. Puedes eliminarlo después.',
     },
   ]
