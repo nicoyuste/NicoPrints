@@ -41,7 +41,7 @@ export default function Shop3D() {
 
   function checkoutPayPal() {
     const itemsCount = cart.reduce((a, b) => a + b.qty, 0)
-    const lines = cart.map(i => `#${i.id} ${i.name}${i.material ? ` [${i.material}]` : ''}${i.colorLabel ? ` (${i.colorLabel})` : ''} x${i.qty}`).join(' | ')
+    const lines = cart.map(i => `#${i.id}${i.material ? ` [${i.material}]` : ''}${i.colorLabel ? ` (${i.colorLabel})` : ''} x${i.qty}`).join(' | ')
     const itemName = encodeURIComponent(`Pedido NicoPrints: ${lines}`)
     const amount = (Math.round(grandTotal * 100) / 100).toFixed(2) // 2 decimales con punto
     const currency = 'EUR'

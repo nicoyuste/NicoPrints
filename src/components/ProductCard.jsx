@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -12,6 +12,9 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
   const [selectedMaterial, setSelectedMaterial] = useState(materials[0] || '')
   const filteredColors = COLORS.filter(c => c.material === selectedMaterial)
   const [selectedColor, setSelectedColor] = useState(filteredColors[0]?.value || '')
+  const [isDescExpanded, setIsDescExpanded] = useState(false)
+  const [showDescToggle, setShowDescToggle] = useState(false)
+  const descRef = useRef(null)
   const imageObjs = (product.images && product.images.length > 0)
     ? product.images.map(img => (typeof img === 'string' ? { src: img, colorValue: null } : img))
     : [{ src: product.img, colorValue: null }]
@@ -27,6 +30,19 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
     const first = filteredColors[0]?.value || ''
     setSelectedColor(prev => (filteredColors.some(c => c.value === prev) ? prev : first))
   }, [selectedMaterial])
+
+  // Mostrar el toggle solo si el texto está truncado (overflow con clamp)
+  useEffect(() => {
+    if (isDescExpanded) { setShowDescToggle(true); return }
+    const el = descRef.current
+    if (!el) return
+    // Timeout para garantizar layout después de render
+    const id = requestAnimationFrame(() => {
+      const overflowing = el.scrollHeight > el.clientHeight + 1
+      setShowDescToggle(overflowing)
+    })
+    return () => cancelAnimationFrame(id)
+  }, [product.description, isDescExpanded])
 
   const colorMatch = imageObjs.find(i => i.colorValue === selectedColor)
   const mainImage = (colorMatch?.src) || imageObjs[Math.min(selectedIndex, imageObjs.length - 1)]?.src
@@ -83,7 +99,17 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
             </div>
           )}
           {/* Removed selected color subtitle to avoid duplication with selector */}
-          <p className="text-sm text-gray-600 mt-2 line-clamp-2">{product.description}</p>
+          <p ref={descRef} className={`text-sm text-gray-600 mt-2${isDescExpanded ? '' : ' line-clamp-3'}`}>{product.description}</p>
+          {showDescToggle && (
+            <button
+              type="button"
+              className="text-xs underline text-gray-600 mt-1"
+              onClick={() => setIsDescExpanded(v => !v)}
+              aria-expanded={isDescExpanded}
+            >
+              {isDescExpanded ? 'Ver menos' : 'Ver más'}
+            </button>
+          )}
           <div className="mt-3">
             <label className="block text-xs text-gray-600 mb-1">Color</label>
             <div className="flex flex-wrap gap-2 mb-2">

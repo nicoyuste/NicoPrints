@@ -1,59 +1,17 @@
 const PRODUCTS = [
-    {
-      id: '1',
-      name: 'Soporte de auriculares',
-      price: 14.9,
-      currency: 'EUR',
-      img: 'https://images.unsplash.com/photo-1581276879432-15e50529f34b?q=80&w=1200&auto=format&fit=crop',
-      category: 'Escritorio',
-      material: ['PLA'],
-      description: 'Soporte estable para auriculares. Altura 25cm. Impreso en PLA de alta calidad.',
-    },
-    {
-      id: '2',
-      name: 'Organizador de cables',
-      price: 6.5,
-      currency: 'EUR',
-      img: 'https://images.unsplash.com/photo-1585386959984-a41552231653?q=80&w=1200&auto=format&fit=crop',
-      category: 'Escritorio',
-      material: ['PLA'],
-      description: 'Clip para cables (pack de 6). Adhesivo 3M incluido.',
-    },
-    {
-      id: '3',
-      name: 'Gancho multiuso',
-      price: 4.0,
-      currency: 'EUR',
-      img: 'https://images.unsplash.com/photo-1460353581641-37baddab0fa2?q=80&w=1200&auto=format&fit=crop',
-      category: 'Hogar',
-      material: ['PETG', 'PLA'],
-      description: 'Gancho resistente (hasta 3kg). Ideal para llaves y bolsas.',
-    },
-    {
-      id: '4',
-      name: 'Soporte de pared para Switches',
-      price: 9.9,
-      currency: 'EUR',
-      img: 'https://images.unsplash.com/photo-1585079542156-2755d9d9c0f4?q=80&w=1200&auto=format&fit=crop',
-      category: 'Hogar',
-      material: ['PETG'],
-      description: 'Base de pared para interruptores o hubs pequeños. Tacos y tornillos incluidos.',
-    },
-    {
-      id: 'test',
-      name: 'Producto de prueba (0,50 €)',
-      price: 0.5,
-      currency: 'EUR',
-      img: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1200&auto=format&fit=crop',
-      images: [
-        { src: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=1200&auto=format&fit=crop', colorValue: null },
-        { src: 'https://images.unsplash.com/photo-1527430253228-e93688616381?q=80&w=1200&auto=format&fit=crop', colorValue: 'negro-mate' },
-        { src: 'https://images.unsplash.com/photo-1581091014525-9a506b3c4d20?q=80&w=1200&auto=format&fit=crop', colorValue: 'azul' }
-      ],
-      category: 'Test',
-      material: ['PLA'],
-      description: 'Solo para validar el flujo de pago. Puedes eliminarlo después.',
-    },
-  ]
-  
-  export default PRODUCTS
+  {
+    id: 'parkside-two-batt-wall-mount',
+    name: 'Soporte pared 2 baterías Parkside',
+    price: 7,
+    currency: 'EUR',
+    img: `${import.meta.env.BASE_URL}products/parkside_two_batteries_wall_mount.jpeg`,
+    images: [
+      { src: `${import.meta.env.BASE_URL}products/parkside_two_batteries_wall_mount.jpeg`, colorValue: 'PRU-PETG-Grey' },
+    ],
+    category: 'Taller',
+    material: ['PETG'],
+    description: 'Soporte para pared que sujeta dos baterías de herramientas Parkside con ajuste firme. Impreso en PETG para mayor resistencia y durabilidad. 100% compatible con baterías Parkside.',
+  },
+]
+
+export default PRODUCTS
