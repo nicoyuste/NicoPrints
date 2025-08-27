@@ -31,7 +31,9 @@ export default function Shop3D() {
       const materialValue = material || null
       const idx = prev.findIndex(i => i.id === prod.id && (i.colorValue || null) === colorValue && (i.material || null) === materialValue)
       if (idx >= 0) { const copy = [...prev]; copy[idx] = { ...copy[idx], qty: copy[idx].qty + 1 }; return copy }
-      const primaryImg = (prod.images && prod.images.length > 0) ? prod.images[0] : prod.img
+      const primaryImg = (prod.images && prod.images.length > 0)
+        ? (typeof prod.images[0] === 'string' ? prod.images[0] : (prod.images[0]?.src || prod.img))
+        : prod.img
       return [...prev, { id: prod.id, name: prod.name, price: prod.price, currency: prod.currency, img: primaryImg, qty: 1, colorValue, colorLabel, material: materialValue }]
     })
   }

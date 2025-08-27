@@ -62,10 +62,10 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
                 key={img.src + idx}
                 type="button"
                 onClick={() => setSelectedIndex(idx)}
-                className={`h-12 w-16 rounded-md overflow-hidden border ${idx === selectedIndex ? 'ring-2 ring-gray-900 border-gray-900' : 'border-gray-200'}`}
+                className={`h-12 w-16 rounded-md overflow-hidden p-0 bg-transparent border ${idx === selectedIndex ? 'border-gray-900' : 'border-transparent'}`}
                 aria-label={`Vista ${idx + 1}`}
               >
-                <img src={img.src} alt="" className="h-full w-full object-cover" />
+                <img src={img.src} alt="" className="block h-full w-full object-cover" />
               </button>
             ))}
           </div>
@@ -145,11 +145,11 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70" onClick={() => setIsOpen(false)}>
           <div className="relative max-w-4xl w-full px-4" onClick={(e) => e.stopPropagation()}>
             <div className="relative aspect-video bg-black rounded-xl overflow-hidden">
-              <img src={mainImage} alt={product.name} className="w-full h-full object-contain" />
+              <img src={mainImage} alt={product.name} className="block w-full h-full object-contain" />
               <button
                 type="button"
                 className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full px-3 py-2 text-sm"
-                onClick={() => setSelectedIndex((selectedIndex - 1 + images.length) % images.length)}
+                onClick={() => setSelectedIndex((selectedIndex - 1 + imageObjs.length) % imageObjs.length)}
                 aria-label="Anterior"
               >
                 ‹
@@ -157,7 +157,7 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
               <button
                 type="button"
                 className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full px-3 py-2 text-sm"
-                onClick={() => setSelectedIndex((selectedIndex + 1) % images.length)}
+                onClick={() => setSelectedIndex((selectedIndex + 1) % imageObjs.length)}
                 aria-label="Siguiente"
               >
                 ›
@@ -178,10 +178,10 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
                     key={'modal-' + img.src + idx}
                     type="button"
                     onClick={() => setSelectedIndex(idx)}
-                    className={`h-14 w-20 rounded-md overflow-hidden border ${idx === selectedIndex ? 'ring-2 ring-white border-white' : 'border-white/40'}`}
+                    className={`h-14 w-20 rounded-md overflow-hidden p-0 bg-transparent border ${idx === selectedIndex ? 'ring-2 ring-white border-white' : 'border-white/40'}`}
                     aria-label={`Vista ${idx + 1}`}
                   >
-                    <img src={img.src} alt="" className="h-full w-full object-cover" />
+                    <img src={img.src} alt="" className="block h-full w-full object-cover" />
                   </button>
                 ))}
               </div>
