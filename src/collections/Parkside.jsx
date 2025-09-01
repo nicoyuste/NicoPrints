@@ -19,7 +19,7 @@ const products = [
     ],
     category: 'Taller',
     material: ['PETG'],
-    description: 'Soporte para pared que sujeta dos baterías de herramientas Parkside con ajuste firme. Impreso en PETG para mayor resistencia y durabilidad. 100% compatible con baterías Parkside.',
+    description: 'Soporte para pared que sujeta dos baterías de herramientas Parkside con ajuste firme. Impreso en PETG para mayor resistencia y durabilidad. Compatible con baterías Parkside de 20V (línea más reciente).',
   },
 ]
 

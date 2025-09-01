@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { ShoppingCart, Trash2, Package, Mail } from 'lucide-react'
+import { useEffect, useState, useRef } from 'react'
+import { ShoppingCart, Trash2, Package, Mail, Menu } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 // shadcn/ui
@@ -23,6 +23,8 @@ export default function Shop3D() {
   const grandTotal = total + shipping
   const [checkoutStatus, setCheckoutStatus] = useState('none') // 'none' | 'success' | 'cancel'
   const [currentCollectionId, setCurrentCollectionId] = useState(null)
+  const [collectionsOpen, setCollectionsOpen] = useState(false)
+  const collectionsMenuRef = useRef(null)
 
   function addToCart(prod, colorObj, material) {
     setCart(prev => {
@@ -83,10 +85,22 @@ export default function Shop3D() {
       // Router simple: páginas de colecciones dedicadas
       if (h === '#parkside') { setCurrentCollectionId('parkside'); return }
       setCurrentCollectionId(null)
+      setCollectionsOpen(false)
     }
     handleHash()
     window.addEventListener('hashchange', handleHash)
     return () => window.removeEventListener('hashchange', handleHash)
+  }, [])
+
+  // Cerrar dropdown al clicar fuera
+  useEffect(() => {
+    function onDocMouseDown(e) {
+      if (collectionsMenuRef.current && !collectionsMenuRef.current.contains(e.target)) {
+        setCollectionsOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', onDocMouseDown)
+    return () => document.removeEventListener('mousedown', onDocMouseDown)
   }, [])
 
   return (
@@ -94,7 +108,51 @@ export default function Shop3D() {
       <header className="sticky top-0 z-30 bg-white/80 backdrop-blur border-b">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
           <img src={`${import.meta.env.BASE_URL}NicoPrints.svg`} alt="NicoPrints" className="h-8 w-auto" />
+          <nav className="ml-4 hidden md:flex items-center gap-4">
+            <a href="#" className="text-sm text-gray-700 hover:text-gray-900">Inicio</a>
+            <div className="relative" ref={collectionsMenuRef}>
+              <button
+                type="button"
+                onClick={() => setCollectionsOpen(v => !v)}
+                aria-haspopup="menu"
+                aria-expanded={collectionsOpen}
+                className="text-sm text-gray-700 hover:text-gray-900 inline-flex items-center gap-1"
+              >
+                Colecciones <span aria-hidden>▾</span>
+              </button>
+              {collectionsOpen && (
+                <div className="absolute left-0 top-full mt-1 z-40">
+                  <div className="min-w-[160px] rounded-md border bg-white shadow-md py-1">
+                    <a href="#parkside" onClick={() => setCollectionsOpen(false)} className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50">Parkside</a>
+                  </div>
+                </div>
+              )}
+            </div>
+            <a href={`mailto:${CONTACT_EMAIL}`} className="text-sm text-gray-700 hover:text-gray-900">Contacto</a>
+          </nav>
+          {/* Botón menú móvil */}
           <div className="ml-auto flex items-center gap-2">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="outline" className="gap-2 md:hidden">
+                  <Menu className="w-4 h-4" />
+                  <span className="sm:inline">Menú</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left" className="w-72">
+                <SheetHeader>
+                  <SheetTitle>Navegación</SheetTitle>
+                </SheetHeader>
+                <div className="mt-4 grid gap-2">
+                  <a href="#" className="block text-sm text-gray-700 hover:underline">Inicio</a>
+                  <div>
+                    <div className="text-xs uppercase text-gray-500 mb-1">Colecciones</div>
+                    <a href="#parkside" className="block text-sm text-gray-700 hover:underline">Parkside</a>
+                  </div>
+                  <a href={`mailto:${CONTACT_EMAIL}`} className="block text-sm text-gray-700 hover:underline">Contacto</a>
+                </div>
+              </SheetContent>
+            </Sheet>
             <Sheet>
               <SheetTrigger asChild>
                 <Button variant="outline" className="gap-2">
