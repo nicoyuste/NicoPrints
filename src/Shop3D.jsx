@@ -7,8 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
-import PRODUCTS from '@/products'
-import ProductCard from '@/components/ProductCard'
+import Parkside from '@/collections/Parkside'
 import PayPalIcon from '@/components/icons/PayPalIcon'
 import CustomOrderForm from '@/components/CustomOrderForm'
 import { CONTACT_EMAIL, PAYPAL_BUSINESS_EMAIL, SHIPPING_FEE_EUR } from '@/config'
@@ -23,6 +22,7 @@ export default function Shop3D() {
   const shipping = cart.length > 0 ? SHIPPING_FEE_EUR : 0
   const grandTotal = total + shipping
   const [checkoutStatus, setCheckoutStatus] = useState('none') // 'none' | 'success' | 'cancel'
+  const [currentCollectionId, setCurrentCollectionId] = useState(null)
 
   function addToCart(prod, colorObj, material) {
     setCart(prev => {
@@ -68,14 +68,25 @@ export default function Shop3D() {
 
   // Detectar retorno de PayPal por hash y mostrar aviso. Limpiar la URL después.
   useEffect(() => {
-    const h = (window.location.hash || '').toLowerCase()
-    if (h.startsWith('#gracias')) {
-      setCheckoutStatus('success')
-      history.replaceState(null, '', import.meta.env.BASE_URL)
-    } else if (h.startsWith('#cancelado')) {
-      setCheckoutStatus('cancel')
-      history.replaceState(null, '', import.meta.env.BASE_URL)
+    const handleHash = () => {
+      const h = (window.location.hash || '').toLowerCase()
+      if (h.startsWith('#gracias')) {
+        setCheckoutStatus('success')
+        history.replaceState(null, '', import.meta.env.BASE_URL)
+        return
+      }
+      if (h.startsWith('#cancelado')) {
+        setCheckoutStatus('cancel')
+        history.replaceState(null, '', import.meta.env.BASE_URL)
+        return
+      }
+      // Router simple: páginas de colecciones dedicadas
+      if (h === '#parkside') { setCurrentCollectionId('parkside'); return }
+      setCurrentCollectionId(null)
     }
+    handleHash()
+    window.addEventListener('hashchange', handleHash)
+    return () => window.removeEventListener('hashchange', handleHash)
   }, [])
 
   return (
@@ -169,37 +180,55 @@ export default function Shop3D() {
         </div>
       )}
 
-      <section className="max-w-6xl mx-auto px-4 pt-8">
-        <div className="grid md:grid-cols-2 gap-6 items-center">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold">Tus ideas, y más cosas, impresas en 3D</h2>
-            <p className="mt-3 text-gray-600 md:text-lg leading-relaxed">Aficionado a la impresión 3D. Aquí encontrarás piezas prácticas que nacen del día a día: organizadores, soportes y pequeños accesorios pensados para durar y mejorar tus espacios.</p>
-            <p className="mt-2 text-gray-600">Trabajo bajo pedido en PLA y PETG, con distintos colores y acabados. Si no ves lo que buscas, <a href={`${import.meta.env.BASE_URL}encargos.html`} className="underline">pide un encargo a medida</a> y lo diseñamos para que encaje justo donde lo necesitas.</p>
-            <ul className="mt-4 grid gap-2 text-sm text-gray-700 sm:grid-cols-2">
-              <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> PLA y PETG en varios colores</li>
-              <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> Tamaño máximo 18×18×18 cm</li>
-              <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> Encargos a medida: pide presupuesto</li>
-            </ul>
-            <div className="mt-5 flex gap-2">
-              <a href="#catalogo"><Button>Ver catálogo</Button></a>
-              <a href={`${import.meta.env.BASE_URL}encargos.html`}><Button variant="outline">Contacto</Button></a>
+      {currentCollectionId ? null : (
+        <section className="max-w-6xl mx-auto px-4 pt-8">
+          <div className="grid md:grid-cols-2 gap-6 items-center">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold">Tus ideas, y más cosas, impresas en 3D</h2>
+              <p className="mt-3 text-gray-600 md:text-lg leading-relaxed">Aficionado a la impresión 3D. Aquí encontrarás piezas prácticas que nacen del día a día: organizadores, soportes y pequeños accesorios pensados para durar y mejorar tus espacios.</p>
+              <p className="mt-2 text-gray-600">Trabajo bajo pedido en PLA y PETG, con distintos colores y acabados. Si no ves lo que buscas, <a href={`${import.meta.env.BASE_URL}encargos.html`} className="underline">pide un encargo a medida</a> y lo diseñamos para que encaje justo donde lo necesitas.</p>
+              <ul className="mt-4 grid gap-2 text-sm text-gray-700 sm:grid-cols-2">
+                <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> PLA y PETG en varios colores</li>
+                <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> Tamaño máximo 18×18×18 cm</li>
+                <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> Encargos a medida: pide presupuesto</li>
+              </ul>
+              <div className="mt-5 flex gap-2">
+                <a href="#colecciones"><Button>Ver colecciones</Button></a>
+                <a href={`${import.meta.env.BASE_URL}encargos.html`}><Button variant="outline">Contacto</Button></a>
+              </div>
+            </div>
+            <div className="rounded-3xl overflow-hidden shadow bg-white">
+              <img src={`${import.meta.env.BASE_URL}hero-print.svg`} alt="Ilustración de impresión 3D" className="w-full h-full object-cover" />
             </div>
           </div>
-          <div className="rounded-3xl overflow-hidden shadow bg-white">
-            <img src={`${import.meta.env.BASE_URL}hero-print.svg`} alt="Ilustración de impresión 3D" className="w-full h-full object-cover" />
+        </section>
+      )}
+
+      {currentCollectionId === 'parkside' ? (
+        <Parkside onAdd={addToCart} />
+      ) : (
+        <section id="colecciones" className="max-w-6xl mx-auto px-4 py-10">
+          <h3 className="text-2xl font-semibold mb-4">Colecciones</h3>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <Card className="rounded-2xl overflow-hidden">
+              <CardContent className="p-0">
+                <div className="aspect-video overflow-hidden bg-gray-100 rounded-2xl">
+                  <img src={`${import.meta.env.BASE_URL}products/parkside_two_batteries_wall_mount.jpeg`} alt="Parkside (Lidl)" className="w-full h-full object-cover" />
+                </div>
+                <div className="p-4">
+                  <h4 className="font-medium leading-tight">Parkside (Lidl)</h4>
+                  <p className="text-sm text-gray-600 mt-1 line-clamp-3">Accesorios y soportes para herramientas Parkside.</p>
+                  <div className="mt-3">
+                    <a href="#parkside">
+                      <Button>Ver colección</Button>
+                    </a>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </div>
-        </div>
-      </section>
-
-
-      <section id="catalogo" className="max-w-6xl mx-auto px-4 py-10">
-        <h3 className="text-2xl font-semibold mb-4">Catálogo</h3>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {PRODUCTS.map((p) => (
-            <ProductCard key={p.id} product={p} onAdd={addToCart} contactEmail={CONTACT_EMAIL} />
-          ))}
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="max-w-6xl mx-auto px-4 pt-6 pb-10">
         <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 text-white">

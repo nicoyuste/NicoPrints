@@ -1,0 +1,33 @@
+---
+description: Contexto del proyecto NicoPrints
+alwaysApply: true
+---
+
+## What is this project?
+- Este es un proyecto de una tienda virtual en la que vendo artículos 3D diseñados e impresos por mí mismo.
+- También ofrezco servicios de diseño 3D con figuras personalizadas.
+
+## Technology
+- El sitio está publicado en GitHub Pages; con solo hacer push a la rama main se despliega automáticamente.
+
+## Colecciones
+- Enfoque: páginas dedicadas por colección (no genérico). Cada colección tiene su propio `.jsx` bajo `src/collections/` con contenido y maquetación a medida.
+- Routing: hash simple gestionado en `src/Shop3D.jsx`.
+  - Ejemplo actual: `#parkside` renderiza `src/collections/Parkside.jsx`.
+- Home: la sección "Colecciones" muestra tarjetas manuales que enlazan a `#<id>` de cada colección. Actualmente solo Parkside.
+- Datos: cada página de colección define internamente su lista de `products` y utiliza `ProductCard`. No usar `src/products.js` ni módulos genéricos de colecciones.
+- Carrito/checkout: `Shop3D.jsx` pasa `onAdd` a la página de colección; mantener la firma del componente: `export default function Nombre({ onAdd })`.
+- Assets: imágenes en `public/products/`; usar `import.meta.env.BASE_URL` para rutas de imágenes.
+
+### Añadir una nueva colección
+1. Crear `src/collections/<Id>.jsx` con un componente por defecto que reciba `onAdd`, defina su array `products` y renderice `ProductCard` usando `CONTACT_EMAIL`.
+2. Importar el componente en `src/Shop3D.jsx` y ampliar el router hash:
+   - Añadir la condición `if (h === '#<id>') setCurrentCollectionId('<id>')`.
+   - En el render, si `currentCollectionId === '<id>'`, mostrar el componente de la colección.
+3. En la home (sección "Colecciones" de `Shop3D.jsx`), añadir una tarjeta con imagen de portada y enlace `#<id>`.
+4. Limpiar imágenes y ficheros no usados tras la migración.
+
+### Convenciones
+- `id` de colección en minúsculas, sin espacios (usar guiones si hace falta). El hash debe coincidir con el `id` (`#<id>`).
+- Mantener coherencia visual con el resto del sitio (tipografías, botones, badges).
+
