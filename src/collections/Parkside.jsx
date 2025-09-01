@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
 import { CONTACT_EMAIL } from '@/config'
 import ProductCard from '@/components/ProductCard'
 
@@ -8,9 +9,13 @@ const products = [
     name: 'Soporte pared 2 baterías Parkside',
     price: 7,
     currency: 'EUR',
-    img: `${import.meta.env.BASE_URL}products/parkside_two_batteries_wall_mount.jpeg`,
+    img: `${import.meta.env.BASE_URL}products/parkside-two-batt-wall-mount_main.png`,
     images: [
-      { src: `${import.meta.env.BASE_URL}products/parkside_two_batteries_wall_mount.jpeg`, colorValue: 'PRU-PETG-Grey' },
+      { src: `${import.meta.env.BASE_URL}products/parkside-two-batt-wall-mount_main.png`, colorValue: 'PRU-PETG-Grey' },
+      { src: `${import.meta.env.BASE_URL}products/parkside-two-batt-wall-mount_1.png`, colorValue: 'PRU-PETG-Grey' },
+      { src: `${import.meta.env.BASE_URL}products/parkside-two-batt-wall-mount_2.png`, colorValue: 'PRU-PETG-Grey' },
+      { src: `${import.meta.env.BASE_URL}products/parkside-two-batt-wall-mount_3.png`, colorValue: 'PRU-PETG-Grey' },
+      { src: `${import.meta.env.BASE_URL}products/parkside-two-batt-wall-mount_4.png`, colorValue: 'PRU-PETG-Grey' },
     ],
     category: 'Taller',
     material: ['PETG'],
@@ -56,6 +61,33 @@ export default function Parkside({ onAdd }) {
         {products.map((p) => (
           <ProductCard key={p.id} product={p} onAdd={onAdd} contactEmail={CONTACT_EMAIL} />
         ))}
+        <Card className="rounded-2xl overflow-hidden">
+          <CardContent className="p-0 bg-[#0b7a3b] h-full flex flex-col min-h-[24rem] sm:min-h-[26rem]">
+            {/* Foto superior (crece/encoge para ocupar el espacio disponible) */}
+            <div className="relative overflow-hidden bg-gray-100 flex-1 min-h-[10rem]">
+              <img
+                src={`${import.meta.env.BASE_URL}parkside_a_medida.png`}
+                alt="Soportes a medida Parkside"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </div>
+            <div className="h-12 sm:h-14 overflow-hidden bg-[#0b7a3b] flex items-center justify-center">
+              <div className="text-white text-sm sm:text-base font-semibold px-4 text-center">Soportes a medida</div>
+            </div>
+            <div className="p-4 text-white text-center">
+              <h4 className="font-medium leading-tight">¿Necesitas un soporte personalizado?</h4>
+              <p className="text-sm text-white/90 mt-2">Diseño e imprimo bajo pedido soportes para baterías Parkside u otras marcas. Cuéntame tu idea y lo adapto a tu espacio y herramientas.</p>
+              <div className="mt-3 flex flex-col sm:flex-row gap-2 items-center justify-center">
+                <a href={`${import.meta.env.BASE_URL}encargos.html`}>
+                  <Button className="bg-white text-gray-900 hover:bg-white/90">Solicitar a medida</Button>
+                </a>
+                <a href={`mailto:${CONTACT_EMAIL}`}>
+                  <Button className="bg-white text-gray-900 hover:bg-white/90 w-full sm:w-auto">Escribir email</Button>
+                </a>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </section>
   )

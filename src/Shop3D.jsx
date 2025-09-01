@@ -213,7 +213,7 @@ export default function Shop3D() {
             <Card className="rounded-2xl overflow-hidden">
               <CardContent className="p-0">
                 <div className="aspect-video overflow-hidden bg-gray-100 rounded-2xl">
-                  <img src={`${import.meta.env.BASE_URL}products/parkside_two_batteries_wall_mount.jpeg`} alt="Parkside (Lidl)" className="w-full h-full object-cover" />
+                  <img src={`${import.meta.env.BASE_URL}products/parkside-two-batt-wall-mount_main.png`} alt="Parkside (Lidl)" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-4">
                   <h4 className="font-medium leading-tight">Parkside (Lidl)</h4>
