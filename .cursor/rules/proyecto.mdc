@@ -23,7 +23,20 @@ alwaysApply: true
 1. Crear `src/collections/<Id>.jsx` con un componente por defecto que reciba `onAdd`, defina su array `products` y renderice `ProductCard`.
 
 ### Convenciones
-- `id` de colección en minúsculas, sin espacios (usar guiones si hace falta). El hash debe coincidir con el `id` (`#<id>`).
+- `id` de colección en minúsculas, sin espacios (usar guiones si hace falta). El hash debe coincidir con el `slug` (`#<slug>`).
 - Mantener coherencia visual con el resto del sitio (tipografías, botones, badges).
+
+
+## Detalles de producto (Product Detail)
+- Identidad: los productos usan `slug` único.
+- Datos: centralizados en `src/data/products.js`.
+- Routing: hash simple `#p/<slug>` gestionado en `src/Shop3D.jsx`.
+  - Si el hash empieza por `#p/`, se establece `currentProductSlug` y se renderiza la página de detalle.
+  - Se desactiva la colección activa al entrar a un producto.
+- Página de detalle: `src/components/ProductDetail.jsx`.
+- Enlace desde tarjetas: `src/components/ProductCard.jsx` añade “Ver detalles” a `#p/${product.slug}`. También permite añadir al carrito directamente.
+
+### Añadir un producto al catálogo
+1. Editar `src/data/products.js` y añadir un objeto con un `slug` unico.
 
 

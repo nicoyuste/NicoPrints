@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
 import Parkside from '@/collections/Parkside'
 import Magic from '@/collections/Magic'
+import ProductDetail from '@/components/ProductDetail'
 import PayPalIcon from '@/components/icons/PayPalIcon'
 import CustomOrderForm from '@/components/CustomOrderForm'
 import { CONTACT_EMAIL, PAYPAL_BUSINESS_EMAIL, SHIPPING_FEE_EUR } from '@/config'
@@ -24,6 +25,7 @@ export default function Shop3D() {
   const grandTotal = total + shipping
   const [checkoutStatus, setCheckoutStatus] = useState('none') // 'none' | 'success' | 'cancel'
   const [currentCollectionId, setCurrentCollectionId] = useState(null)
+  const [currentProductSlug, setCurrentProductSlug] = useState(null)
   const [collectionsOpen, setCollectionsOpen] = useState(false)
   const collectionsMenuRef = useRef(null)
 
@@ -32,12 +34,13 @@ export default function Shop3D() {
       const colorValue = colorObj?.value || null
       const colorLabel = colorObj?.label || null
       const materialValue = material || null
-      const idx = prev.findIndex(i => i.id === prod.id && (i.colorValue || null) === colorValue && (i.material || null) === materialValue)
+      const productId = prod.slug || prod.id
+      const idx = prev.findIndex(i => i.id === productId && (i.colorValue || null) === colorValue && (i.material || null) === materialValue)
       if (idx >= 0) { const copy = [...prev]; copy[idx] = { ...copy[idx], qty: copy[idx].qty + 1 }; return copy }
       const primaryImg = (prod.images && prod.images.length > 0)
         ? (typeof prod.images[0] === 'string' ? prod.images[0] : (prod.images[0]?.src || prod.img))
         : prod.img
-      return [...prev, { id: prod.id, name: prod.name, price: prod.price, currency: prod.currency, img: primaryImg, qty: 1, colorValue, colorLabel, material: materialValue }]
+      return [...prev, { id: productId, name: prod.name, price: prod.price, currency: prod.currency, img: primaryImg, qty: 1, colorValue, colorLabel, material: materialValue }]
     })
   }
   function removeFromCart(id) { setCart(prev => prev.filter(i => i.id !== id)) }
@@ -83,7 +86,14 @@ export default function Shop3D() {
         history.replaceState(null, '', import.meta.env.BASE_URL)
         return
       }
-      // Router simple: páginas de colecciones dedicadas
+      // Router simple: producto y colecciones
+      if (h.startsWith('#p/')) {
+        const slug = h.replace('#p/', '').trim()
+        setCurrentProductSlug(slug || null)
+        setCurrentCollectionId(null)
+        return
+      }
+      setCurrentProductSlug(null)
       if (h === '#parkside') { setCurrentCollectionId('parkside'); return }
       if (h === '#magic') { setCurrentCollectionId('magic'); return }
       setCurrentCollectionId(null)
@@ -242,7 +252,7 @@ export default function Shop3D() {
         </div>
       )}
 
-      {currentCollectionId ? null : (
+      {currentCollectionId || currentProductSlug ? null : (
         <section className="max-w-6xl mx-auto px-4 pt-8">
           <div className="grid md:grid-cols-2 gap-6 items-center">
             <div>
@@ -266,7 +276,9 @@ export default function Shop3D() {
         </section>
       )}
 
-      {currentCollectionId === 'parkside' ? (
+      {currentProductSlug ? (
+        <ProductDetail slug={currentProductSlug} onAdd={addToCart} onBack={() => history.back()} />
+      ) : currentCollectionId === 'parkside' ? (
         <Parkside onAdd={addToCart} />
       ) : currentCollectionId === 'magic' ? (
         <Magic onAdd={addToCart} />

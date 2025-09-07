@@ -2,24 +2,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { CONTACT_EMAIL } from '@/config'
 import ProductCard from '@/components/ProductCard'
-
-const products = [
-  {
-    id: 'mtg-deck-box-simple',
-    name: 'Deck box MTG (sencillo)',
-    price: 12,
-    currency: 'EUR',
-    img: `${import.meta.env.BASE_URL}products/placeholder_mtg_deckbox_main.png`,
-    images: [
-      { src: `${import.meta.env.BASE_URL}products/placeholder_mtg_deckbox_main.png`, colorValue: 'B_PLA_Ma_Black' },
-      { src: `${import.meta.env.BASE_URL}products/placeholder_mtg_deckbox_1.png`, colorValue: 'B_PLA_Ba_Red' },
-      { src: `${import.meta.env.BASE_URL}products/placeholder_mtg_deckbox_2.png`, colorValue: 'B_PLA_Ba_Blue' },
-    ],
-    category: 'Magic: The Gathering',
-    material: ['PLA', 'PLA Mate'],
-    description: 'Caja para mazo de cartas Magic: The Gathering con tapa a presión y logo MTG en relieve. Capacidad aproximada para 100 cartas con fundas estándar. Borde interior suave para proteger las fundas.',
-  },
-]
+import { products as allProducts } from '@/data/products'
 
 export default function Magic({ onAdd }) {
   return (
@@ -52,8 +35,8 @@ export default function Magic({ onAdd }) {
       </div>
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-        {products.map((p) => (
-          <ProductCard key={p.id} product={p} onAdd={onAdd} contactEmail={CONTACT_EMAIL} />
+        {allProducts.filter(p => p.collectionId === 'magic').map((p) => (
+          <ProductCard key={p.slug} product={p} onAdd={onAdd} contactEmail={CONTACT_EMAIL} />
         ))}
         <Card className="rounded-2xl overflow-hidden">
           <CardContent className="p-0 bg-[#D6632C] h-full flex flex-col min-h-[24rem] sm:min-h-[26rem]">
@@ -85,6 +68,7 @@ export default function Magic({ onAdd }) {
     </section>
   )
 }
+
 
 
 
