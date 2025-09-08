@@ -31,9 +31,9 @@ export const products = [
       { src: `${import.meta.env.BASE_URL}products/deck_box_100_green_yellow.jpg`, colorValue: 'B_PLA_Ba_Green' },
       { src: `${import.meta.env.BASE_URL}products/deck_box_100_green_yellow_2.jpg`, colorValue: 'B_PLA_Ba_Green' },
       { src: `${import.meta.env.BASE_URL}products/deck_box_100_green_yellow_3.jpg`, colorValue: 'B_PLA_Ba_Yellow' },
-      { src: `${import.meta.env.BASE_URL}products/deck_box_100_white_black.png`, colorValue: 'B_PLA_Ma_White' },
-      { src: `${import.meta.env.BASE_URL}products/deck_box_100_black_yellow.png`, colorValue: 'B_PLA_Ba_Black' },
-      { src: `${import.meta.env.BASE_URL}products/deck_box_100_red_blue.png`, colorValue: 'B_PLA_Ba_Red' },
+      { src: `${import.meta.env.BASE_URL}products/deck_box_100_white_black.jpg`, colorValue: 'B_PLA_Ma_White' },
+      { src: `${import.meta.env.BASE_URL}products/deck_box_100_black_yellow.jpg`, colorValue: 'B_PLA_Ba_Black' },
+      { src: `${import.meta.env.BASE_URL}products/deck_box_100_red_blue.jpg`, colorValue: 'B_PLA_Ba_Red' },
     ],
     otherImages: [
       { src: `${import.meta.env.BASE_URL}products/deck_box_100_other_blue_green.jpg`},

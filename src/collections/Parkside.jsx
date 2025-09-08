@@ -10,7 +10,7 @@ export default function Parkside({ onAdd }) {
       <div className="relative rounded-3xl overflow-hidden">
         {/* Imagen de taller con hombre (placeholder Unsplash). Sustituir por propia si se desea. */}
         <img
-          src={`${import.meta.env.BASE_URL}banner_parkside.png`}
+          src={`${import.meta.env.BASE_URL}banner_parkside.jpg`}
           alt="Taller de herramientas"
           className="w-full h-56 sm:h-72 md:h-80 object-cover"
         />
@@ -47,7 +47,7 @@ export default function Parkside({ onAdd }) {
             {/* Foto superior (crece/encoge para ocupar el espacio disponible) */}
             <div className="relative overflow-hidden bg-gray-100 flex-1 min-h-[10rem]">
               <img
-                src={`${import.meta.env.BASE_URL}parkside_a_medida.png`}
+                src={`${import.meta.env.BASE_URL}parkside_a_medida.jpg`}
                 alt="Soportes a medida Parkside"
                 className="absolute inset-0 w-full h-full object-cover"
               />

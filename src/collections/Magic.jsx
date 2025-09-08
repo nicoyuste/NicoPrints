@@ -42,7 +42,7 @@ export default function Magic({ onAdd }) {
           <CardContent className="p-0 bg-[#D6632C] h-full flex flex-col min-h-[24rem] sm:min-h-[26rem]">
             <div className="relative overflow-hidden bg-gray-100 flex-1 min-h-[10rem]">
               <img
-                src={`${import.meta.env.BASE_URL}deck_examples.png`}
+                src={`${import.meta.env.BASE_URL}deck_examples.jpg`}
                 alt="Deck boxes a medida"
                 className="absolute inset-0 w-full h-full object-cover"
               />
