@@ -15,11 +15,14 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
   const imageObjs = (product?.images && product.images.length > 0)
     ? product.images.map(img => (typeof img === 'string' ? { src: img, colorValue: null } : img))
     : (product ? [{ src: product.img, colorValue: null }] : [])
-  const colorMatch = imageObjs.find(i => i.colorValue === selectedColor)
-  const mainImage = (colorMatch?.src) || imageObjs[Math.min(selectedIndex, Math.max(0, imageObjs.length - 1))]?.src
+  const mainImage = imageObjs[Math.min(selectedIndex, Math.max(0, imageObjs.length - 1))]?.src
+  const otherImageObjs = (product?.otherImages && Array.isArray(product.otherImages))
+    ? product.otherImages.map(img => (typeof img === 'string' ? { src: img } : img))
+    : []
   const descRef = useRef(null)
   const [isDescExpanded, setIsDescExpanded] = useState(false)
   const [showDescToggle, setShowDescToggle] = useState(false)
+  const currentColorObj = COLORS.find(c => c.value === selectedColor) || null
 
   useEffect(() => {
     if (!product) return
@@ -27,10 +30,7 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
     setSelectedColor(prev => (filteredColors.some(c => c.value === prev) ? prev : first))
   }, [selectedMaterial])
 
-  useEffect(() => {
-    const idx = imageObjs.findIndex(i => i.colorValue === selectedColor)
-    if (idx >= 0) setSelectedIndex(idx)
-  }, [selectedColor])
+  // Ya no sincronizamos la imagen con el color seleccionado
 
   useEffect(() => {
     if (isDescExpanded) { setShowDescToggle(true); return }
@@ -55,7 +55,7 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
   }
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-10 overflow-x-hidden">
+    <section className="max-w-6xl mx-auto px-4 py-10 pb-12 overflow-x-hidden">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
         <div>
           <div className="aspect-video overflow-hidden bg-gray-100 rounded-2xl">
@@ -136,13 +136,7 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
             </div>
           </div>
 
-          <div className="mt-5 flex gap-2">
-            <Button className="flex-1" onClick={() => {
-              const colorObj = COLORS.find(c => c.value === selectedColor) || null
-              onAdd(product, colorObj, selectedMaterial)
-            }}>Añadir al carrito</Button>
-            <Button variant="outline" className="flex-1" onClick={onBack}>Volver</Button>
-          </div>
+          {/* Botón de añadir se mueve a la barra inferior fija */}
         </div>
       </div>
 
@@ -152,6 +146,37 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
           <p className="text-sm text-gray-700 mt-2 whitespace-pre-line break-words">{product.longDescription || product.longDescripcion}</p>
         </div>
       )}
+
+      {otherImageObjs.length > 0 && (
+        <div className="mt-10">
+          <h3 className="font-semibold">Personalizaciones para clientes</h3>
+          <div className="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+            {otherImageObjs.map((img, idx) => (
+              <div key={(img.src || 'other') + idx} className="aspect-square bg-gray-100 rounded-lg overflow-hidden">
+                <img src={img.src} alt="Personalización de cliente" className="w-full h-full object-cover" />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Barra inferior fija con CTA */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 border-t bg-white/95 backdrop-blur">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center gap-4" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 12px)' }}>
+          <div className="min-w-0 flex-1">
+            <div className="text-sm font-medium truncate">{selectedMaterial || ''}</div>
+            {currentColorObj && (
+              <div className="text-xs text-gray-600 truncate">{currentColorObj.label}</div>
+            )}
+          </div>
+          <div className="hidden sm:block">
+            <Badge className="bg-gray-900 text-white text-base px-3 py-1.5 rounded-md">{formatPrice(product.price, product.currency)}</Badge>
+          </div>
+          <Button className="min-w-[200px]" onClick={() => {
+            onAdd(product, currentColorObj, selectedMaterial)
+          }}>Añadir al carrito</Button>
+        </div>
+      </div>
     </section>
   )
 }

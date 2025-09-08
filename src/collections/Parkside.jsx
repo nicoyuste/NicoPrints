@@ -33,8 +33,8 @@ export default function Parkside({ onAdd }) {
         {/* Título superpuesto opcional en el lado izquierdo */}
         <div className="absolute inset-0 flex items-end">
           <div className="p-4 sm:p-6 md:p-8 max-w-xl">
-            <h1 className="text-white text-2xl sm:text-3xl md:text-4xl font-bold drop-shadow">Colección Parkside</h1>
-            <p className="text-white/90 mt-1 md:mt-2 drop-shadow">Accesorios y soportes compatibles con herramientas Parkside, diseñados para optimizar tu espacio de trabajo. Soluciones robustas y prácticas, impresas en 3D, para ordenar, proteger y tener siempre a mano tus herramientas.</p>
+            <h1 className="text-white text-2xl sm:text-3xl md:text-4xl font-bold drop-shadow">Colección accesorios Parkside</h1>
+            <p className="text-white/90 mt-1 md:mt-2 drop-shadow">Accesorios compatibles con herramientas Parkside, diseñados para tu espacio de trabajo. Soluciones robustas y prácticas, impresas en 3D, para ordenar tus herramientas.</p>
           </div>
         </div>
       </div>

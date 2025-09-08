@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -7,7 +7,6 @@ import { COLORS } from '@/colors'
 
 export default function ProductCard({ product, onAdd, contactEmail }) {
   const [selectedIndex, setSelectedIndex] = useState(0)
-  const [isOpen, setIsOpen] = useState(false)
   const materials = Array.isArray(product.material) ? product.material : [product.material]
   const descRef = useRef(null)
   const imageObjs = (product.images && product.images.length > 0)
@@ -21,9 +20,9 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
     <Card className="rounded-2xl overflow-hidden">
       <CardContent className="p-0">
         <div className="aspect-video overflow-hidden bg-gray-100">
-          <button type="button" className="w-full h-full p-0 m-0 border-0 focus:outline-none focus-visible:outline-none cursor-zoom-in" onClick={() => setIsOpen(true)} aria-label="Abrir galería">
+          <a href={`#p/${product.slug || product.id}`} className="block w-full h-full" aria-label="Ver detalles">
             <img src={mainImage} alt={product.name} className="w-full h-full object-cover" />
-          </button>
+          </a>
         </div>
         {imageObjs.length > 1 && (
           <div className="px-4 pt-3 flex gap-2 overflow-x-auto">
@@ -66,54 +65,6 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
           </div>
         </div>
       </CardContent>
-      {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70" onClick={() => setIsOpen(false)}>
-          <div className="relative max-w-4xl w-full px-4" onClick={(e) => e.stopPropagation()}>
-            <div className="relative aspect-video bg-black rounded-xl overflow-hidden">
-              <img src={mainImage} alt={product.name} className="block w-full h-full object-contain" />
-              <button
-                type="button"
-                className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full px-3 py-2 text-sm"
-                onClick={() => setSelectedIndex((selectedIndex - 1 + imageObjs.length) % imageObjs.length)}
-                aria-label="Anterior"
-              >
-                ‹
-              </button>
-              <button
-                type="button"
-                className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white rounded-full px-3 py-2 text-sm"
-                onClick={() => setSelectedIndex((selectedIndex + 1) % imageObjs.length)}
-                aria-label="Siguiente"
-              >
-                ›
-              </button>
-              <button
-                type="button"
-                className="absolute top-2 right-2 bg-white/80 hover:bg-white rounded-full px-3 py-1 text-sm"
-                onClick={() => setIsOpen(false)}
-                aria-label="Cerrar"
-              >
-                ✕
-              </button>
-            </div>
-            {imageObjs.length > 1 && (
-              <div className="mt-3 flex gap-2 overflow-x-auto">
-                {imageObjs.map((img, idx) => (
-                  <button
-                    key={'modal-' + img.src + idx}
-                    type="button"
-                    onClick={() => setSelectedIndex(idx)}
-                    className={`h-14 w-20 rounded-md overflow-hidden p-0 bg-transparent border ${idx === selectedIndex ? 'ring-2 ring-white border-white' : 'border-white/40'}`}
-                    aria-label={`Vista ${idx + 1}`}
-                  >
-                    <img src={img.src} alt="" className="block h-full w-full object-cover" />
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
     </Card>
   )
 }

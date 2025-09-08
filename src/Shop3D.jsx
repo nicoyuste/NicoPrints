@@ -27,6 +27,7 @@ export default function Shop3D() {
   const [currentCollectionId, setCurrentCollectionId] = useState(null)
   const [currentProductSlug, setCurrentProductSlug] = useState(null)
   const [collectionsOpen, setCollectionsOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const collectionsMenuRef = useRef(null)
 
   function addToCart(prod, colorObj, material) {
@@ -145,7 +146,7 @@ export default function Shop3D() {
           </nav>
           {/* Botón menú móvil */}
           <div className="ml-auto flex items-center gap-2">
-            <Sheet>
+            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild>
                 <Button variant="outline" className="gap-2 md:hidden">
                   <Menu className="w-4 h-4" />
@@ -157,13 +158,13 @@ export default function Shop3D() {
                   <SheetTitle>Navegación</SheetTitle>
                 </SheetHeader>
                 <div className="mt-4 grid gap-2">
-                  <a href="#" className="block text-sm text-gray-700 hover:underline">Inicio</a>
+                  <a href="#" className="block text-sm text-gray-700 hover:underline" onClick={() => setMobileMenuOpen(false)}>Inicio</a>
                   <div>
                     <div className="text-xs uppercase text-gray-500 mb-1">Colecciones</div>
-                    <a href="#parkside" className="block text-sm text-gray-700 hover:underline">Parkside</a>
-                    <a href="#magic" className="block text-sm text-gray-700 hover:underline">Magic: The Gathering</a>
+                    <a href="#parkside" className="block text-sm text-gray-700 hover:underline" onClick={() => setMobileMenuOpen(false)}>Parkside</a>
+                    <a href="#magic" className="block text-sm text-gray-700 hover:underline" onClick={() => setMobileMenuOpen(false)}>Magic: The Gathering</a>
                   </div>
-                  <a href={`mailto:${CONTACT_EMAIL}`} className="block text-sm text-gray-700 hover:underline">Contacto</a>
+                  <a href={`mailto:${CONTACT_EMAIL}`} className="block text-sm text-gray-700 hover:underline" onClick={() => setMobileMenuOpen(false)}>Contacto</a>
                 </div>
               </SheetContent>
             </Sheet>
