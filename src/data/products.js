@@ -13,8 +13,8 @@ export const products = [
     ],
     category: 'Taller',
     material: ['PETG'],
-    description: 'Soporte para pared que sujeta dos baterías de herramientas con ajuste firme. Impreso en PETG para mayor resistencia y durabilidad. Compatible con baterías de 20V.',
-    longDescription: 'Soporte robusto para organizar dos baterías de 20V en la pared. El diseño garantiza un ajuste firme y seguro, evitando caídas accidentales. Incluye agujeros avellanados para tornillería estándar y tolerancias pensadas para impresión en PETG. Ideal para talleres domésticos y para aprovechar mejor el espacio en paneles y estanterías.',
+    description: 'Soporte para pared que sujeta dos baterías de herramientas con ajuste firme. Impreso en PETG para mayor resistencia y durabilidad.',
+    longDescription: 'Soporte robusto para organizar dos baterías en la pared. El diseño garantiza un ajuste firme y seguro, evitando caídas accidentales. Incluye agujeros avellanados para tornillería estándar y tolerancias pensadas para impresión en PETG. Ideal para talleres domésticos y para aprovechar mejor el espacio en paneles y estanterías.',
     crossReferences: ['two-batt-modular-middle', 'two-batt-modular-left-end', 'two-batt-modular-right-end', 'one-batt-standalone'],
   },
   // Modulares 2 baterías
@@ -34,7 +34,7 @@ export const products = [
     category: 'Taller',
     material: ['PETG'],
     description: 'Módulo central para 2 baterías con encajes a ambos lados. Permite crear filas continuas uniéndolo con otros módulos.',
-    longDescription: 'Este módulo de 2 baterías está diseñado para colocarse entre otros módulos. Dispone de encaje a izquierda y derecha para extender la capacidad de almacenaje en tu pared. Compatible con baterías de 20V.',
+    longDescription: 'Módulo central para organizar dos baterías entre otros tramos del sistema. Incorpora encajes a izquierda y derecha para prolongar la hilera de forma segura y estable. Incluye agujeros avellanados y tolerancias ajustadas para impresión en PETG, garantizando deslizamiento suave y agarre firme. Ideal para paneles y estanterías; compatible con baterías de 20V.',
     crossReferences: ['two-batt-modular-left-end', 'two-batt-modular-right-end', 'two-batt-wall-mount'],
   },
   {
@@ -44,13 +44,13 @@ export const products = [
     price: 7.75,
     currency: 'EUR',
     images: [
-      { src: `${import.meta.env.BASE_URL}products/battery_example_2.jpg`, colorValue: 'PRU_PETG_Grey' },
       { src: `${import.meta.env.BASE_URL}products/two-batt-modular-left-end_1.png`, colorValue: 'PRU_PETG_Grey' },
+      { src: `${import.meta.env.BASE_URL}products/battery_example_1.jpg`, colorValue: 'PRU_PETG_Grey' },
     ],
     category: 'Taller',
     material: ['PETG'],
     description: 'Módulo de 2 baterías con encaje solo a la izquierda. Pensado para cerrar la fila por la derecha.',
-    longDescription: 'Versión de extremo derecho: permite acoplar otro módulo solo por el lado izquierdo y deja el lado derecho rematado. Ideal para terminar una hilera de soportes.',
+    longDescription: 'Versión de extremo derecho del sistema modular de 2 baterías: encaje únicamente en el lado izquierdo para cerrar la hilera con un acabado limpio. Mantiene un ajuste firme y estable, con agujeros avellanados y tolerancias pensadas para impresión en PETG. Recomendado para rematar instalaciones en pared y optimizar el espacio del taller.',
     crossReferences: ['two-batt-modular-middle', 'two-batt-modular-right-end', 'two-batt-wall-mount'],
   },
   {
@@ -60,13 +60,13 @@ export const products = [
     price: 7.75,
     currency: 'EUR',
     images: [
+      { src: `${import.meta.env.BASE_URL}products/battery_example_2.jpg`, colorValue: 'PRU_PETG_Grey' },
       { src: `${import.meta.env.BASE_URL}products/two-batt-modular-right-end_1.png`, colorValue: 'PRU_PETG_Grey' },
-      { src: `${import.meta.env.BASE_URL}products/battery_example_1.jpg`, colorValue: 'PRU_PETG_Grey' },
     ],
     category: 'Taller',
     material: ['PETG'],
     description: 'Módulo de 2 baterías con encaje solo a la derecha. Pensado para iniciar la fila por la izquierda.',
-    longDescription: 'Versión de extremo izquierdo: permite acoplar otro módulo solo por el lado derecho y deja el lado izquierdo rematado. Úsalo para comenzar una hilera de soportes.',
+    longDescription: 'Versión de extremo izquierdo del sistema modular de 2 baterías: encaje únicamente en el lado derecho para iniciar la hilera por la izquierda. Conserva el perfil robusto y el agarre seguro, con agujeros avellanados y tolerancias optimizadas para PETG. Útil para comenzar instalaciones en pared y ampliar capacidad progresivamente.',
     crossReferences: ['two-batt-modular-middle', 'two-batt-modular-left-end', 'two-batt-wall-mount'],
   },
   // Modulares 1 batería
@@ -83,7 +83,7 @@ export const products = [
     category: 'Taller',
     material: ['PETG'],
     description: 'Soporte para una batería sin encajes laterales. Compacto y resistente para puntos sueltos.',
-    longDescription: 'Soporte individual de 1 batería para colocar de forma aislada donde necesites. Sin encajes laterales para un acabado limpio y compacto. Impreso en PETG.',
+    longDescription: 'Soporte individual para una batería, pensado para puntos sueltos y espacios reducidos. El diseño evita bamboleos y caídas, con agujeros avellanados y tolerancias optimizadas para impresión en PETG. Ideal para paneles y laterales de estantería; compatible con baterías de 20V.',
     crossReferences: ['two-batt-wall-mount', 'two-batt-modular-middle'],
   },
   {
@@ -100,7 +100,7 @@ export const products = [
     category: 'Taller',
     material: ['PETG'],
     description: 'Módulo de 1 batería con encaje solo a la izquierda. Para rematar la fila por la derecha.',
-    longDescription: 'Versión de extremo derecho para 1 batería: encaje únicamente en el lado izquierdo, lado derecho rematado. Ideal para cerrar hileras modulares.',
+    longDescription: 'Módulo de 1 batería con encaje a la izquierda para cerrar la fila por la derecha. Ofrece el mismo ajuste firme del sistema modular, con geometrías optimizadas para impresión en PETG y montaje con tornillería estándar. Perfecto para rematar instalaciones en pared sin perder capacidad.',
     crossReferences: ['one-batt-modular-right-end', 'one-batt-standalone', 'two-batt-modular-middle'],
   },
   {
@@ -117,7 +117,7 @@ export const products = [
     category: 'Taller',
     material: ['PETG'],
     description: 'Módulo de 1 batería con encaje solo a la derecha. Para iniciar la fila por la izquierda.',
-    longDescription: 'Versión de extremo izquierdo para 1 batería: encaje únicamente en el lado derecho, lado izquierdo rematado. Útil para comenzar hileras modulares.',
+    longDescription: 'Módulo de 1 batería con encaje a la derecha para iniciar la fila por la izquierda. Mantiene un agarre seguro de la batería y un montaje sencillo gracias a los agujeros avellanados. Diseñado para PETG, con tolerancias que favorecen la repetibilidad de impresión y la durabilidad en taller.',
     crossReferences: ['one-batt-modular-left-end', 'one-batt-standalone', 'two-batt-modular-middle'],
   },
   {
