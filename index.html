@@ -21,6 +21,18 @@
     <meta name="twitter:description" content="Impresión 3D en PLA y PETG. Piezas útiles para casa y escritorio. Encargos a medida y envíos gratuitos." />
     <meta name="twitter:image" content="/og-image.svg" />
 
+    <!-- Google tag (gtag.js) - GA4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);} 
+      gtag('js', new Date());
+      // Replace with your GA4 Measurement ID
+      gtag('config', 'G-XXXXXXXXXX', {
+        send_page_view: false // we'll send manual pageviews for hash routing
+      });
+    </script>
+
     <!-- JSON-LD WebSite -->
     <script type="application/ld+json">
       {
