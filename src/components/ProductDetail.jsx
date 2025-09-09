@@ -12,9 +12,9 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
   const [selectedMaterial, setSelectedMaterial] = useState(materials[0] || '')
   const filteredColors = COLORS.filter(c => c.material === selectedMaterial)
   const [selectedColor, setSelectedColor] = useState(filteredColors[0]?.value || '')
-  const imageObjs = (product?.images && product.images.length > 0)
+  const imageObjs = Array.isArray(product?.images)
     ? product.images.map(img => (typeof img === 'string' ? { src: img, colorValue: null } : img))
-    : (product?.img ? [{ src: product.img, colorValue: null }] : [])
+    : []
   const mainImage = imageObjs[Math.min(selectedIndex, Math.max(0, imageObjs.length - 1))]?.src
   const otherImageObjs = (product?.otherImages && Array.isArray(product.otherImages))
     ? product.otherImages.map(img => (typeof img === 'string' ? { src: img } : img))

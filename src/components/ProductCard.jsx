@@ -9,9 +9,9 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const materials = Array.isArray(product.material) ? product.material : [product.material]
   const descRef = useRef(null)
-  const imageObjs = (product.images && product.images.length > 0)
+  const imageObjs = Array.isArray(product.images)
     ? product.images.map(img => (typeof img === 'string' ? { src: img, colorValue: null } : img))
-    : (product.img ? [{ src: product.img, colorValue: null }] : [])
+    : []
 
   const mainImage = imageObjs[Math.min(selectedIndex, imageObjs.length - 1)]?.src
   const availableColors = COLORS.filter(c => materials.includes(c.material))

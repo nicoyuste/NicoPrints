@@ -7,7 +7,6 @@ export const products = [
     name: 'Soporte pared 2 baterías',
     price: 7.75,
     currency: 'EUR',
-    img: `${import.meta.env.BASE_URL}products/two-batt-wall-mount_1.jpg`,
     images: [
       { src: `${import.meta.env.BASE_URL}products/two-batt-wall-mount_1.jpg`, colorValue: 'PRU_PETG_Grey' },
       { src: `${import.meta.env.BASE_URL}products/two-batt-wall-mount_2.jpg`, colorValue: 'PRU_PETG_Grey' },
@@ -24,7 +23,6 @@ export const products = [
     name: 'Soporte modular 2 baterías (centro)',
     price: 7.75,
     currency: 'EUR',
-    img: `${import.meta.env.BASE_URL}products/two-batt-modular-middle_1.jpg`,
     images: [
       { src: `${import.meta.env.BASE_URL}products/two-batt-modular-middle_1.jpg`, colorValue: 'PRU_PETG_Grey' },
       { src: `${import.meta.env.BASE_URL}products/two-batt-modular-middle_2.jpg`, colorValue: 'PRU_PETG_Grey' },
@@ -43,7 +41,6 @@ export const products = [
     name: 'Soporte modular 2 baterías (extremo derecho)',
     price: 7.75,
     currency: 'EUR',
-    img: `${import.meta.env.BASE_URL}products/two-batt-modular-left-end_1.png`,
     images: [
       { src: `${import.meta.env.BASE_URL}products/battery_example_2.jpg`, colorValue: 'PRU_PETG_Grey' },
       { src: `${import.meta.env.BASE_URL}products/two-batt-modular-left-end_1.png`, colorValue: 'PRU_PETG_Grey' },
@@ -59,7 +56,6 @@ export const products = [
     name: 'Soporte modular 2 baterías (extremo izquierdo)',
     price: 7.75,
     currency: 'EUR',
-    img: `${import.meta.env.BASE_URL}products/two-batt-modular-right-end_1.png`,
     images: [
       { src: `${import.meta.env.BASE_URL}products/two-batt-modular-right-end_1.png`, colorValue: 'PRU_PETG_Grey' },
       { src: `${import.meta.env.BASE_URL}products/battery_example_1.jpg`, colorValue: 'PRU_PETG_Grey' },
@@ -76,7 +72,6 @@ export const products = [
     name: 'Soporte pared 1 batería',
     price: 5.40,
     currency: 'EUR',
-    img: `${import.meta.env.BASE_URL}products/one-batt-standalone_1.jpg`,
     images: [
       { src: `${import.meta.env.BASE_URL}products/one-batt-standalone_1.jpg`, colorValue: 'PRU_PETG_Grey' },
       { src: `${import.meta.env.BASE_URL}products/one-batt-standalone_2.jpg`, colorValue: 'PRU_PETG_Grey' },
@@ -92,7 +87,6 @@ export const products = [
     name: 'Soporte modular 1 batería (extremo derecho)',
     price: 5.85,
     currency: 'EUR',
-    img: `${import.meta.env.BASE_URL}products/one-batt-modular-left-end_1.jpg`,
     images: [
       { src: `${import.meta.env.BASE_URL}products/one-batt-modular-left-end_1.jpg`, colorValue: 'PRU_PETG_Grey' },
       { src: `${import.meta.env.BASE_URL}products/one-batt-modular-left-end_2.jpg`, colorValue: 'PRU_PETG_Grey' },
@@ -109,7 +103,6 @@ export const products = [
     name: 'Soporte modular 1 batería (extremo izquierdo)',
     price: 5.85,
     currency: 'EUR',
-    img: `${import.meta.env.BASE_URL}products/one-batt-modular-right-end_1.jpg`,
     images: [
       { src: `${import.meta.env.BASE_URL}products/one-batt-modular-right-end_1.jpg`, colorValue: 'PRU_PETG_Grey' },
       { src: `${import.meta.env.BASE_URL}products/one-batt-modular-right-end_2.jpg`, colorValue: 'PRU_PETG_Grey' },
@@ -126,7 +119,6 @@ export const products = [
     name: 'Deck box MTG 100 cartas',
     price: 12,
     currency: 'EUR',
-    img: `${import.meta.env.BASE_URL}products/deck_box_100_green_yellow.jpg`,
     images: [
       { src: `${import.meta.env.BASE_URL}products/deck_box_100_green_yellow.jpg`, colorValue: 'B_PLA_Ba_Green' },
       { src: `${import.meta.env.BASE_URL}products/deck_box_100_green_yellow_2.jpg`, colorValue: 'B_PLA_Ba_Green' },
