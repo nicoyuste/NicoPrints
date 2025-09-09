@@ -15,6 +15,7 @@ export const products = [
     material: ['PETG'],
     description: 'Soporte para pared que sujeta dos baterías de herramientas con ajuste firme. Impreso en PETG para mayor resistencia y durabilidad. Compatible con baterías de 20V.',
     longDescription: 'Soporte robusto para organizar dos baterías de 20V en la pared. El diseño garantiza un ajuste firme y seguro, evitando caídas accidentales. Incluye agujeros avellanados para tornillería estándar y tolerancias pensadas para impresión en PETG. Ideal para talleres domésticos y para aprovechar mejor el espacio en paneles y estanterías.',
+    crossReferences: ['two-batt-modular-middle', 'two-batt-modular-left-end', 'two-batt-modular-right-end', 'one-batt-standalone'],
   },
   // Modulares 2 baterías
   {
@@ -34,6 +35,7 @@ export const products = [
     material: ['PETG'],
     description: 'Módulo central para 2 baterías con encajes a ambos lados. Permite crear filas continuas uniéndolo con otros módulos.',
     longDescription: 'Este módulo de 2 baterías está diseñado para colocarse entre otros módulos. Dispone de encaje a izquierda y derecha para extender la capacidad de almacenaje en tu pared. Compatible con baterías de 20V.',
+    crossReferences: ['two-batt-modular-left-end', 'two-batt-modular-right-end', 'two-batt-wall-mount'],
   },
   {
     slug: 'two-batt-modular-left-end',
@@ -49,6 +51,7 @@ export const products = [
     material: ['PETG'],
     description: 'Módulo de 2 baterías con encaje solo a la izquierda. Pensado para cerrar la fila por la derecha.',
     longDescription: 'Versión de extremo derecho: permite acoplar otro módulo solo por el lado izquierdo y deja el lado derecho rematado. Ideal para terminar una hilera de soportes.',
+    crossReferences: ['two-batt-modular-middle', 'two-batt-modular-right-end', 'two-batt-wall-mount'],
   },
   {
     slug: 'two-batt-modular-right-end',
@@ -64,6 +67,7 @@ export const products = [
     material: ['PETG'],
     description: 'Módulo de 2 baterías con encaje solo a la derecha. Pensado para iniciar la fila por la izquierda.',
     longDescription: 'Versión de extremo izquierdo: permite acoplar otro módulo solo por el lado derecho y deja el lado izquierdo rematado. Úsalo para comenzar una hilera de soportes.',
+    crossReferences: ['two-batt-modular-middle', 'two-batt-modular-left-end', 'two-batt-wall-mount'],
   },
   // Modulares 1 batería
   {
@@ -80,6 +84,7 @@ export const products = [
     material: ['PETG'],
     description: 'Soporte para una batería sin encajes laterales. Compacto y resistente para puntos sueltos.',
     longDescription: 'Soporte individual de 1 batería para colocar de forma aislada donde necesites. Sin encajes laterales para un acabado limpio y compacto. Impreso en PETG.',
+    crossReferences: ['two-batt-wall-mount', 'two-batt-modular-middle'],
   },
   {
     slug: 'one-batt-modular-left-end',
@@ -96,6 +101,7 @@ export const products = [
     material: ['PETG'],
     description: 'Módulo de 1 batería con encaje solo a la izquierda. Para rematar la fila por la derecha.',
     longDescription: 'Versión de extremo derecho para 1 batería: encaje únicamente en el lado izquierdo, lado derecho rematado. Ideal para cerrar hileras modulares.',
+    crossReferences: ['one-batt-modular-right-end', 'one-batt-standalone', 'two-batt-modular-middle'],
   },
   {
     slug: 'one-batt-modular-right-end',
@@ -112,6 +118,7 @@ export const products = [
     material: ['PETG'],
     description: 'Módulo de 1 batería con encaje solo a la derecha. Para iniciar la fila por la izquierda.',
     longDescription: 'Versión de extremo izquierdo para 1 batería: encaje únicamente en el lado derecho, lado izquierdo rematado. Útil para comenzar hileras modulares.',
+    crossReferences: ['one-batt-modular-left-end', 'one-batt-standalone', 'two-batt-modular-middle'],
   },
   {
     slug: 'mtg-deck-box-100-cartas',
@@ -136,6 +143,7 @@ export const products = [
     material: ['PLA', 'PLA Mate'],
     description: 'Deck box para 100 cartas (ideal Commander). Cierre con imanes para mayor seguridad. Protege las cartas con o sin funda gracias al ajuste preciso y al cuerpo rígido. Logo superior personalizable.',
     longDescription: 'Caja para mazos de hasta 100 cartas, compatible con fundas estándar. El cierre imantado ayuda a que no se abra durante el transporte. El ajuste interior mantiene las cartas firmes sin holguras y la rigidez de la impresión ofrece protección fiable. El logotipo de la tapa puede personalizarse (texto o imagen); si quieres un diseño distinto al de las fotos, ponte en contacto. Impreso en PLA o PLA Mate con varias opciones de color.',
+    crossReferences: [],
   },
 ]
 

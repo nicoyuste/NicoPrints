@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { productBySlug } from '@/data/products'
+import ProductCard from '@/components/ProductCard'
 import { formatPrice } from '@/lib/format'
 import { COLORS } from '@/colors'
 
@@ -23,6 +24,12 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
   const [isDescExpanded, setIsDescExpanded] = useState(false)
   const [showDescToggle, setShowDescToggle] = useState(false)
   const currentColorObj = COLORS.find(c => c.value === selectedColor) || null
+  const referencedProducts = useMemo(() => {
+    if (!product || !Array.isArray(product.crossReferences)) return []
+    return product.crossReferences
+      .map(sl => productBySlug.get(sl))
+      .filter(p => p && p.slug !== product.slug)
+  }, [product])
 
   useEffect(() => {
     if (!product) return
@@ -148,6 +155,21 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
         <div className="mt-10">
           <h3 className="font-semibold">Descripción</h3>
           <p className="text-sm text-gray-700 mt-2 whitespace-pre-line break-words">{product.longDescription || product.longDescripcion}</p>
+        </div>
+      )}
+
+      {referencedProducts.length > 0 && (
+        <div className="mt-10">
+          <h3 className="font-semibold">También te puede interesar</h3>
+          <div className="mt-3 -mx-4 px-4 overflow-x-auto">
+            <div className="flex gap-4">
+              {referencedProducts.map((p) => (
+                <div key={p.slug} className="w-72 flex-shrink-0">
+                  <ProductCard product={p} onAdd={onAdd} />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       )}
 
