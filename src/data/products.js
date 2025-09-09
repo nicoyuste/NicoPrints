@@ -78,7 +78,6 @@ export const products = [
     currency: 'EUR',
     images: [
       { src: `${import.meta.env.BASE_URL}products/one-batt-standalone_1.jpg`, colorValue: 'PRU_PETG_Grey' },
-      { src: `${import.meta.env.BASE_URL}products/one-batt-standalone_2.jpg`, colorValue: 'PRU_PETG_Grey' },
     ],
     category: 'Taller',
     material: ['PETG'],
