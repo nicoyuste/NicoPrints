@@ -3,7 +3,7 @@
 export const products = [
   {
     slug: 'two-batt-wall-mount',
-    collectionId: 'parkside',
+    collectionId: 'taller',
     name: 'Soporte pared 2 baterías',
     price: 7.75,
     currency: 'EUR',
@@ -19,7 +19,7 @@ export const products = [
   // Modulares 2 baterías
   {
     slug: 'two-batt-modular-middle',
-    collectionId: 'parkside',
+    collectionId: 'taller',
     name: 'Soporte modular 2 baterías (centro)',
     price: 7.75,
     currency: 'EUR',
@@ -37,7 +37,7 @@ export const products = [
   },
   {
     slug: 'two-batt-modular-left-end',
-    collectionId: 'parkside',
+    collectionId: 'taller',
     name: 'Soporte modular 2 baterías (extremo derecho)',
     price: 7.75,
     currency: 'EUR',
@@ -52,7 +52,7 @@ export const products = [
   },
   {
     slug: 'two-batt-modular-right-end',
-    collectionId: 'parkside',
+    collectionId: 'taller',
     name: 'Soporte modular 2 baterías (extremo izquierdo)',
     price: 7.75,
     currency: 'EUR',
@@ -68,7 +68,7 @@ export const products = [
   // Modulares 1 batería
   {
     slug: 'one-batt-standalone',
-    collectionId: 'parkside',
+    collectionId: 'taller',
     name: 'Soporte pared 1 batería',
     price: 5.40,
     currency: 'EUR',
@@ -83,7 +83,7 @@ export const products = [
   },
   {
     slug: 'one-batt-modular-left-end',
-    collectionId: 'parkside',
+    collectionId: 'taller',
     name: 'Soporte modular 1 batería (extremo derecho)',
     price: 5.85,
     currency: 'EUR',
@@ -99,7 +99,7 @@ export const products = [
   },
   {
     slug: 'one-batt-modular-right-end',
-    collectionId: 'parkside',
+    collectionId: 'taller',
     name: 'Soporte modular 1 batería (extremo izquierdo)',
     price: 5.85,
     currency: 'EUR',

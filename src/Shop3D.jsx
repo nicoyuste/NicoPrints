@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet'
-import Parkside from '@/collections/Parkside'
+import Taller from '@/collections/Taller'
 import Magic from '@/collections/Magic'
 import ProductDetail from '@/components/ProductDetail'
 import PayPalIcon from '@/components/icons/PayPalIcon'
@@ -95,7 +95,7 @@ export default function Shop3D() {
         return
       }
       setCurrentProductSlug(null)
-      if (h === '#parkside') { setCurrentCollectionId('parkside'); return }
+      if (h === '#taller') { setCurrentCollectionId('taller'); return }
       if (h === '#magic') { setCurrentCollectionId('magic'); return }
       setCurrentCollectionId(null)
       setCollectionsOpen(false)
@@ -136,7 +136,7 @@ export default function Shop3D() {
               {collectionsOpen && (
                 <div className="absolute left-0 top-full mt-1 z-40">
                   <div className="min-w-[160px] rounded-md border bg-white shadow-md py-1">
-                    <a href="#parkside" onClick={() => setCollectionsOpen(false)} className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50">Parkside</a>
+                    <a href="#taller" onClick={() => setCollectionsOpen(false)} className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50">Taller y organización</a>
                     <a href="#magic" onClick={() => setCollectionsOpen(false)} className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50">Magic: The Gathering</a>
                   </div>
                 </div>
@@ -161,7 +161,7 @@ export default function Shop3D() {
                   <a href="#" className="block text-sm text-gray-700 hover:underline" onClick={() => setMobileMenuOpen(false)}>Inicio</a>
                   <div>
                     <div className="text-xs uppercase text-gray-500 mb-1">Colecciones</div>
-                    <a href="#parkside" className="block text-sm text-gray-700 hover:underline" onClick={() => setMobileMenuOpen(false)}>Parkside</a>
+                    <a href="#taller" className="block text-sm text-gray-700 hover:underline" onClick={() => setMobileMenuOpen(false)}>Taller y organización</a>
                     <a href="#magic" className="block text-sm text-gray-700 hover:underline" onClick={() => setMobileMenuOpen(false)}>Magic: The Gathering</a>
                   </div>
                   <a href={`mailto:${CONTACT_EMAIL}`} className="block text-sm text-gray-700 hover:underline" onClick={() => setMobileMenuOpen(false)}>Contacto</a>
@@ -279,8 +279,8 @@ export default function Shop3D() {
 
       {currentProductSlug ? (
         <ProductDetail slug={currentProductSlug} onAdd={addToCart} onBack={() => history.back()} />
-      ) : currentCollectionId === 'parkside' ? (
-        <Parkside onAdd={addToCart} />
+      ) : currentCollectionId === 'taller' ? (
+        <Taller onAdd={addToCart} />
       ) : currentCollectionId === 'magic' ? (
         <Magic onAdd={addToCart} />
       ) : (
@@ -290,13 +290,13 @@ export default function Shop3D() {
             <Card className="rounded-2xl overflow-hidden">
               <CardContent className="p-0">
                 <div className="aspect-video overflow-hidden bg-gray-100 rounded-2xl">
-                  <img src={`${import.meta.env.BASE_URL}products/parkside-two-batt-wall-mount_main.png`} alt="Parkside (Lidl)" className="w-full h-full object-cover" />
+                  <img src={`${import.meta.env.BASE_URL}taller_a_medida.jpg`} alt="Taller y organización" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-4">
-                  <h4 className="font-medium leading-tight">Parkside (Lidl)</h4>
-                  <p className="text-sm text-gray-600 mt-1 line-clamp-3">Accesorios y soportes para herramientas Parkside.</p>
+                  <h4 className="font-medium leading-tight">Taller y organización</h4>
+                  <p className="text-sm text-gray-600 mt-1 line-clamp-3">Soportes para baterías y accesorios para ordenar tu taller.</p>
                   <div className="mt-3">
-                    <a href="#parkside">
+                    <a href="#taller">
                       <Button>Ver colección</Button>
                     </a>
                   </div>
@@ -306,7 +306,7 @@ export default function Shop3D() {
             <Card className="rounded-2xl overflow-hidden">
               <CardContent className="p-0">
                 <div className="aspect-video overflow-hidden bg-gray-100 rounded-2xl">
-                  <img src={`${import.meta.env.BASE_URL}products/placeholder_mtg_deckbox_main.png`} alt="Magic: The Gathering" className="w-full h-full object-cover" />
+                  <img src={`${import.meta.env.BASE_URL}deck_examples.jpg`} alt="Magic: The Gathering" className="w-full h-full object-cover" />
                 </div>
                 <div className="p-4">
                   <h4 className="font-medium leading-tight">Magic: The Gathering</h4>
