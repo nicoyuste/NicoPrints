@@ -17,6 +17,7 @@ import { trackEventGA4 } from '@/lib/utils'
 import useLocalStorage from '@/lib/useLocalStorage'
 import { formatPrice } from '@/lib/format'
 import { Badge } from '@/components/ui/badge'
+import { COLORS } from '@/colors'
 
 
 export default function Shop3D() {
@@ -30,6 +31,14 @@ export default function Shop3D() {
   const [collectionsOpen, setCollectionsOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const collectionsMenuRef = useRef(null)
+
+  // Microtask scheduler to avoid blocking state updates
+  const scheduleMicrotask = (cb) => {
+    try {
+      if (typeof queueMicrotask === 'function') { queueMicrotask(cb); return }
+    } catch(_) {}
+    Promise.resolve().then(cb)
+  }
 
   function addToCart(prod, arg2, material) {
     setCart(prev => {
@@ -55,7 +64,7 @@ export default function Shop3D() {
         const lineKey = `${productId}|${serialized}`
         const idx = prev.findIndex(i => i.lineKey === lineKey)
         if (idx >= 0) { const copy = [...prev]; copy[idx] = { ...copy[idx], qty: copy[idx].qty + 1 }; return copy }
-        onQueueMicrotask(() => {
+        scheduleMicrotask(() => {
           trackEventGA4('add_to_cart', {
             currency: prod.currency || 'EUR',
             value: prod.price || 0,
@@ -77,7 +86,7 @@ export default function Shop3D() {
       const lineKey = `${productId}|${materialValue || ''}|${colorValue || ''}`
       const idx = prev.findIndex(i => i.lineKey === lineKey)
       if (idx >= 0) { const copy = [...prev]; copy[idx] = { ...copy[idx], qty: copy[idx].qty + 1 }; return copy }
-      onQueueMicrotask(() => {
+      scheduleMicrotask(() => {
         trackEventGA4('add_to_cart', {
           currency: prod.currency || 'EUR',
           value: prod.price || 0,
@@ -256,7 +265,7 @@ export default function Shop3D() {
                       <p className="text-sm text-gray-500">Aún no hay productos.</p>
                     ) : (
                       cart.map(item => (
-                        <motion.div key={item.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
+                        <motion.div key={item.lineKey} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
                           <div className="flex items-center gap-3 border rounded-2xl p-3 bg-white shadow-sm">
                             <img src={item.img} alt="" className="w-16 h-16 object-cover rounded-xl" />
                             <div className="flex-1">
@@ -264,10 +273,27 @@ export default function Shop3D() {
                               {item.colorLabel && (
                                 <div className="text-xs text-gray-500">Color: {item.colorLabel}</div>
                               )}
+                              {Array.isArray(item.selections) && item.selections.length > 0 && (
+                                <div className="mt-1 space-y-0.5">
+                                  {item.selections.map(sel => {
+                                    const colorObj = COLORS.find(c => c.value === sel.colorValue)
+                                    return (
+                                      <div key={sel.partId} className="text-xs text-gray-500 flex items-center gap-1.5">
+                                        <span className="text-gray-600">{sel.partLabel}:</span>
+                                        {colorObj ? (
+                                          <span className="inline-block h-3 w-3 rounded-full border border-gray-300" style={{ backgroundColor: colorObj.hex }}></span>
+                                        ) : null}
+                                        <span>{sel.colorLabel || sel.colorValue || '—'}</span>
+                                        {sel.material ? <span className="text-gray-400">[{sel.material}]</span> : null}
+                                      </div>
+                                    )
+                                  })}
+                                </div>
+                              )}
                               <div className="text-sm text-gray-500">{formatPrice(item.price)} / ud</div>
                               <div className="flex items-center gap-2 mt-1">
-                                <Input type="number" min={1} value={item.qty} onChange={(e) => updateQty(item.id, parseInt(e.target.value || "1"))} className="w-20" />
-                                <Button size="icon" className="bg-white text-gray-900 hover:bg-gray-100" onClick={() => removeFromCart(item.id)}>
+                                <Input type="number" min={1} value={item.qty} onChange={(e) => updateQty(item.lineKey, parseInt(e.target.value || "1"))} className="w-20" />
+                                <Button size="icon" className="bg-white text-gray-900 hover:bg-gray-100" onClick={() => removeFromCart(item.lineKey)}>
                                   <Trash2 className="w-4 h-4" />
                                 </Button>
                               </div>
