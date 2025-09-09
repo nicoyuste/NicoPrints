@@ -123,7 +123,7 @@ export const products = [
     slug: 'mtg-deck-box-100-cartas',
     collectionId: 'magic',
     name: 'Deck box MTG 100 cartas',
-    price: 12,
+    price: 7.5,
     currency: 'EUR',
     images: [
       { src: `${import.meta.env.BASE_URL}products/deck_box_100_green_yellow.jpg`, colorValue: 'B_PLA_Ba_Green' },
