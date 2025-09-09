@@ -30,27 +30,57 @@ export default function Shop3D() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const collectionsMenuRef = useRef(null)
 
-  function addToCart(prod, colorObj, material) {
+  function addToCart(prod, arg2, material) {
     setCart(prev => {
-      const colorValue = colorObj?.value || null
-      const colorLabel = colorObj?.label || null
-      const materialValue = material || null
       const productId = prod.slug || prod.id
-      const idx = prev.findIndex(i => i.id === productId && (i.colorValue || null) === colorValue && (i.material || null) === materialValue)
-      if (idx >= 0) { const copy = [...prev]; copy[idx] = { ...copy[idx], qty: copy[idx].qty + 1 }; return copy }
       const primaryImg = (prod.images && prod.images.length > 0)
         ? (typeof prod.images[0] === 'string' ? prod.images[0] : (prod.images[0]?.src || null))
         : null
-      return [...prev, { id: productId, name: prod.name, price: prod.price, currency: prod.currency, img: primaryImg, qty: 1, colorValue, colorLabel, material: materialValue }]
+
+      // Nueva firma: onAdd(product, selections[])
+      if (Array.isArray(arg2)) {
+        const selections = (arg2 || []).map(s => ({
+          partId: s.partId,
+          partLabel: s.partLabel || s.partId,
+          material: s.material || null,
+          colorValue: s.colorValue || null,
+          colorLabel: s.colorLabel || null,
+        }))
+        const serialized = selections
+          .slice()
+          .sort((a, b) => (a.partId || '').localeCompare(b.partId || ''))
+          .map(s => `${s.partId}:${s.material || ''}:${s.colorValue || ''}`)
+          .join(';')
+        const lineKey = `${productId}|${serialized}`
+        const idx = prev.findIndex(i => i.lineKey === lineKey)
+        if (idx >= 0) { const copy = [...prev]; copy[idx] = { ...copy[idx], qty: copy[idx].qty + 1 }; return copy }
+        return [...prev, { id: productId, lineKey, name: prod.name, price: prod.price, currency: prod.currency, img: primaryImg, qty: 1, selections }]
+      }
+
+      // Compat: firma antigua onAdd(product, colorObj, material)
+      const colorObj = arg2
+      const colorValue = colorObj?.value || null
+      const colorLabel = colorObj?.label || null
+      const materialValue = material || null
+      const lineKey = `${productId}|${materialValue || ''}|${colorValue || ''}`
+      const idx = prev.findIndex(i => i.lineKey === lineKey)
+      if (idx >= 0) { const copy = [...prev]; copy[idx] = { ...copy[idx], qty: copy[idx].qty + 1 }; return copy }
+      return [...prev, { id: productId, lineKey, name: prod.name, price: prod.price, currency: prod.currency, img: primaryImg, qty: 1, colorValue, colorLabel, material: materialValue }]
     })
   }
-  function removeFromCart(id) { setCart(prev => prev.filter(i => i.id !== id)) }
-  function updateQty(id, qty) { setCart(prev => prev.map(i => (i.id === id ? { ...i, qty: Math.max(1, qty) } : i))) }
+  function removeFromCart(lineKey) { setCart(prev => prev.filter(i => i.lineKey !== lineKey)) }
+  function updateQty(lineKey, qty) { setCart(prev => prev.map(i => (i.lineKey === lineKey ? { ...i, qty: Math.max(1, qty) } : i))) }
   function clearCart() { setCart([]) }
 
   function checkoutPayPal() {
     const itemsCount = cart.reduce((a, b) => a + b.qty, 0)
-    const lines = cart.map(i => `#${i.id}${i.material ? ` [${i.material}]` : ''}${i.colorLabel ? ` (${i.colorLabel})` : ''} x${i.qty}`).join(' | ')
+    const lines = cart.map(i => {
+      if (Array.isArray(i.selections) && i.selections.length > 0) {
+        const parts = i.selections.map(p => `${p.partLabel || p.partId}: ${p.colorLabel || p.colorValue || '—'}${p.material ? ` [${p.material}]` : ''}`).join('; ')
+        return `#${i.id} (${parts}) x${i.qty}`
+      }
+      return `#${i.id}${i.material ? ` [${i.material}]` : ''}${i.colorLabel ? ` (${i.colorLabel})` : ''} x${i.qty}`
+    }).join(' | ')
     const itemName = encodeURIComponent(`Pedido NicoPrints: ${lines}`)
     const amount = (Math.round(grandTotal * 100) / 100).toFixed(2) // 2 decimales con punto
     const currency = 'EUR'
@@ -66,7 +96,13 @@ export default function Shop3D() {
   
   function checkoutEmail() {
     const subject = encodeURIComponent('Pedido Tienda 3D')
-    const lines = cart.map(i => `• ${i.name}${i.material ? ` [${i.material}]` : ''}${i.colorLabel ? ` (${i.colorLabel})` : ''} x${i.qty} — ${formatPrice(i.price * i.qty)}`).join('\n')
+    const lines = cart.map(i => {
+      if (Array.isArray(i.selections) && i.selections.length > 0) {
+        const parts = i.selections.map(p => `${p.partLabel || p.partId}: ${p.colorLabel || p.colorValue || '—'}${p.material ? ` [${p.material}]` : ''}`).join('; ')
+        return `• ${i.name} (${parts}) x${i.qty} — ${formatPrice(i.price * i.qty)}`
+      }
+      return `• ${i.name}${i.material ? ` [${i.material}]` : ''}${i.colorLabel ? ` (${i.colorLabel})` : ''} x${i.qty} — ${formatPrice(i.price * i.qty)}`
+    }).join('\n')
     const body = encodeURIComponent(
       `Hola, me interesa este pedido:\n\n${lines}\n\nSubtotal: ${formatPrice(total)}\nEnvío: ${formatPrice(shipping)}\nTotal estimado: ${formatPrice(grandTotal)}\n\nMi dirección es: \n`
     )

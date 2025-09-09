@@ -140,10 +140,40 @@ export const products = [
     ],
     category: 'Magic: The Gathering',
     material: ['PLA', 'PLA Mate'],
+    parts: [
+      { id: 'lid', label: 'Tapa', materials: ['PLA', 'PLA Mate'] },
+      { id: 'logo', label: 'Logo', materials: ['PLA', 'PLA Mate'] },
+      { id: 'box', label: 'Caja', materials: ['PLA', 'PLA Mate'] },
+    ],
     description: 'Deck box para 100 cartas (ideal Commander). Cierre con imanes para mayor seguridad. Protege las cartas con o sin funda gracias al ajuste preciso y al cuerpo rígido. Logo superior personalizable.',
     longDescription: 'Caja para mazos de hasta 100 cartas, compatible con fundas estándar. El cierre imantado ayuda a que no se abra durante el transporte. El ajuste interior mantiene las cartas firmes sin holguras y la rigidez de la impresión ofrece protección fiable. El logotipo de la tapa puede personalizarse (texto o imagen); si quieres un diseño distinto al de las fotos, ponte en contacto. Impreso en PLA o PLA Mate con varias opciones de color.',
-    crossReferences: [],
+    // crossReferences: ['mtg-deck-box-60-cartas'],
   },
+  // {
+  //   slug: 'mtg-deck-box-60-cartas',
+  //   collectionId: 'magic',
+  //   name: 'Deck box MTG 60 cartas',
+  //   price: 6.5,
+  //   currency: 'EUR',
+  //   images: [
+  //     // { src: `${import.meta.env.BASE_URL}products/deck_box_100_green_yellow.jpg`, colorValue: 'B_PLA_Ba_Green' },
+  //     // { src: `${import.meta.env.BASE_URL}products/deck_box_100_green_yellow_2.jpg`, colorValue: 'B_PLA_Ba_Green' },
+  //     // { src: `${import.meta.env.BASE_URL}products/deck_box_100_green_yellow_3.jpg`, colorValue: 'B_PLA_Ba_Yellow' },
+  //     // { src: `${import.meta.env.BASE_URL}products/deck_box_100_white_black.jpg`, colorValue: 'B_PLA_Ma_White' },
+  //     // { src: `${import.meta.env.BASE_URL}products/deck_box_100_black_yellow.jpg`, colorValue: 'B_PLA_Ba_Black' },
+  //     // { src: `${import.meta.env.BASE_URL}products/deck_box_100_red_blue.jpg`, colorValue: 'B_PLA_Ba_Red' },
+  //   ],
+  //   otherImages: [
+  //     // { src: `${import.meta.env.BASE_URL}products/deck_box_100_other_blue_green.jpg`},
+  //     // { src: `${import.meta.env.BASE_URL}products/deck_box_100_other_red_black.jpg`},
+  //     // { src: `${import.meta.env.BASE_URL}products/deck_box_100_other_red_white.jpg`},
+  //   ],
+  //   category: 'Magic: The Gathering',
+  //   material: ['PLA', 'PLA Mate'],
+  //   description: 'Deck box para 60 cartas (ideal Standard). Cierre con imanes para mayor seguridad. Protege las cartas con o sin funda gracias al ajuste preciso y al cuerpo rígido. Logo superior personalizable.',
+  //   longDescription: 'Caja para mazos de hasta 60 cartas, compatible con fundas estándar. El cierre imantado ayuda a que no se abra durante el transporte. El ajuste interior mantiene las cartas firmes sin holguras y la rigidez de la impresión ofrece protección fiable. El logotipo de la tapa puede personalizarse (texto o imagen); si quieres un diseño distinto al de las fotos, ponte en contacto. Impreso en PLA o PLA Mate con varias opciones de color.',
+  //   crossReferences: ['mtg-deck-box-60-cartas'],
+  // },
 ]
 
 export const productBySlug = new Map(products.map(p => [p.slug, p]))

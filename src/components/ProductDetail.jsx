@@ -10,9 +10,12 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
   const product = productBySlug.get(slug)
   const [selectedIndex, setSelectedIndex] = useState(0)
   const materials = useMemo(() => (Array.isArray(product?.material) ? product.material : [product?.material].filter(Boolean)), [product])
+  const parts = Array.isArray(product?.parts) ? product.parts : []
   const [selectedMaterial, setSelectedMaterial] = useState(materials[0] || '')
   const filteredColors = COLORS.filter(c => c.material === selectedMaterial)
   const [selectedColor, setSelectedColor] = useState(filteredColors[0]?.value || '')
+  const [selectedByPart, setSelectedByPart] = useState({})
+  const [errorMsg, setErrorMsg] = useState('')
   const imageObjs = Array.isArray(product?.images)
     ? product.images.map(img => (typeof img === 'string' ? { src: img, colorValue: null } : img))
     : []
@@ -42,6 +45,32 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
     setSelectedColor(prev => (filteredColors.some(c => c.value === prev) ? prev : first))
   }, [selectedMaterial])
 
+  // Inicializar selección por partes cuando cambia el producto
+  useEffect(() => {
+    if (!product || parts.length === 0) { setSelectedByPart({}); return }
+    const init = {}
+    for (const part of parts) {
+      const allowedMaterials = Array.isArray(part.materials) && part.materials.length > 0 ? part.materials : materials
+      const material = allowedMaterials[0] || ''
+      // No seleccionar color por defecto
+      init[part.id] = { material, colorValue: '' }
+    }
+    setSelectedByPart(init)
+  }, [product])
+
+  function setPartMaterial(partId, material) {
+    setSelectedByPart(prev => {
+      const keepColor = prev[partId]?.colorValue && COLORS.some(c => c.material === material && c.value === prev[partId].colorValue)
+      return { ...prev, [partId]: { material, colorValue: keepColor ? prev[partId].colorValue : '' } }
+    })
+    setErrorMsg('')
+  }
+
+  function setPartColor(partId, colorValue) {
+    setSelectedByPart(prev => ({ ...prev, [partId]: { material: prev[partId]?.material || materials[0] || '', colorValue } }))
+    setErrorMsg('')
+  }
+
   // Ya no sincronizamos la imagen con el color seleccionado
 
   useEffect(() => {
@@ -65,6 +94,8 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
       </section>
     )
   }
+
+  const allPartsSelected = parts.length === 0 || parts.every(p => Boolean(selectedByPart[p.id]?.colorValue))
 
   return (
     <section className="max-w-6xl mx-auto px-4 py-10 overflow-x-hidden">
@@ -112,7 +143,8 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
             )}
           </div>
 
-          {materials.length > 1 && (
+          {/* Picker global (productos simples) */}
+          {parts.length === 0 && materials.length > 1 && (
             <div className="mt-4">
               <div className="text-xs text-gray-600 mb-1">Material</div>
               <div className="flex flex-wrap gap-2 items-center">
@@ -131,32 +163,119 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
             </div>
           )}
 
-          <div className="mt-4">
-            <div className="text-xs text-gray-600 mb-1">Color</div>
-            <div className="flex flex-wrap gap-2">
-              {filteredColors.length > 0 ? filteredColors.map(c => (
-                <button
-                  key={c.value}
-                  type="button"
-                  onClick={() => setSelectedColor(c.value)}
-                  className={`h-8 px-3 rounded-full border text-xs flex items-center gap-2 bg-white text-gray-900 ${selectedColor === c.value ? 'ring-2 ring-gray-900 border-gray-900' : 'border-gray-300'}`}
-                  aria-label={c.label}
-                  title={c.label}
-                >
-                  <span className="inline-block h-4 w-4 rounded-full" style={{ backgroundColor: c.hex }}></span>
-                  {c.label}
-                </button>
-              )) : (
-                <span className="text-xs text-gray-500">Sin colores disponibles para {selectedMaterial}</span>
-              )}
+          {parts.length === 0 ? (
+            <div className="mt-4">
+              <div className="text-xs text-gray-600 mb-1">Color</div>
+              <div className="flex flex-wrap gap-2">
+                {filteredColors.length > 0 ? filteredColors.map(c => (
+                  <button
+                    key={c.value}
+                    type="button"
+                    onClick={() => setSelectedColor(c.value)}
+                    className={`h-8 px-3 rounded-full border text-xs flex items-center gap-2 bg-white text-gray-900 ${selectedColor === c.value ? 'ring-2 ring-gray-900 border-gray-900' : 'border-gray-300'}`}
+                    aria-label={c.label}
+                    title={c.label}
+                  >
+                    <span className="inline-block h-4 w-4 rounded-full" style={{ backgroundColor: c.hex }}></span>
+                    {c.label}
+                  </button>
+                )) : (
+                  <span className="text-xs text-gray-500">Sin colores disponibles para {selectedMaterial}</span>
+                )}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="mt-4 space-y-3">
+              {parts.map((part, idx) => {
+                const allowedMaterials = Array.isArray(part.materials) && part.materials.length > 0 ? part.materials : materials
+                const sel = selectedByPart[part.id] || { material: allowedMaterials[0] || '', colorValue: '' }
+                const colorsForPart = COLORS.filter(c => c.material === sel.material)
+                const colorObj = COLORS.find(c => c.value === sel.colorValue) || null
+                return (
+                  <details key={part.id} className="border rounded-xl bg-white overflow-hidden">
+                    <summary className="cursor-pointer select-none list-none flex items-center justify-between gap-3 px-3 py-2">
+                      <span className="text-sm font-medium">{part.label}</span>
+                      <span className="flex items-center gap-2 text-xs text-gray-700">
+                        {sel.material ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-gray-300 bg-white text-gray-900">{sel.material}</span>
+                        ) : null}
+                        {colorObj ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-gray-300 bg-white text-gray-900">
+                            <span className="inline-block h-3.5 w-3.5 rounded-full border" style={{ backgroundColor: colorObj.hex }}></span>
+                            {colorObj.label}
+                          </span>
+                        ) : (
+                          <span className="text-gray-500">Sin color</span>
+                        )}
+                        <span aria-hidden className="ml- text-lg md:text-xl leading-none">▾</span>
+                      </span>
+                    </summary>
+                    <div className="px-3 pb-3">
+                      {allowedMaterials.length > 1 && (
+                        <div className="mb-2">
+                          <div className="text-xs text-gray-600 mb-1">Material</div>
+                          <div className="flex flex-wrap gap-2 items-center">
+                            {allowedMaterials.map(m => (
+                              <button
+                                key={m}
+                                type="button"
+                                onClick={() => setPartMaterial(part.id, m)}
+                                className={`h-8 px-3 rounded-full border text-xs bg-white text-gray-900 ${sel.material === m ? 'ring-2 ring-gray-900 border-gray-900' : 'border-gray-300'}`}
+                              >
+                                {m}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      <div>
+                        <div className="text-xs text-gray-600 mb-1">Color</div>
+                        <div className="flex flex-wrap gap-2">
+                          {colorsForPart.length > 0 ? colorsForPart.map(c => (
+                            <button
+                              key={c.value}
+                              type="button"
+                              onClick={() => setPartColor(part.id, c.value)}
+                              className={`h-8 px-3 rounded-full border text-xs flex items-center gap-2 bg-white text-gray-900 ${sel.colorValue === c.value ? 'ring-2 ring-gray-900 border-gray-900' : 'border-gray-300'}`}
+                              aria-label={c.label}
+                              title={c.label}
+                            >
+                              <span className="inline-block h-4 w-4 rounded-full" style={{ backgroundColor: c.hex }}></span>
+                              {c.label}
+                            </button>
+                          )) : (
+                            <span className="text-xs text-gray-500">Sin colores disponibles para {sel.material}</span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </details>
+                )
+              })}
+            </div>
+          )}
 
           {/* CTA secundario: añadir al carrito bajo los colores */}
           <div className="mt-5">
             <Button className="w-full sm:w-auto" onClick={() => {
-              onAdd(product, currentColorObj, selectedMaterial)
+              if (parts.length > 0) {
+                if (!allPartsSelected) {
+                  setErrorMsg('Selecciona un color para todas las partes antes de continuar.')
+                  return
+                }
+                const selections = parts.map(p => {
+                  const s = selectedByPart[p.id] || { material: '', colorValue: '' }
+                  const colorObj = COLORS.find(c => c.value === s.colorValue) || null
+                  return { partId: p.id, partLabel: p.label, material: s.material || '', colorValue: s.colorValue || '', colorLabel: colorObj?.label || null }
+                })
+                onAdd(product, selections)
+              } else {
+                onAdd(product, currentColorObj, selectedMaterial)
+              }
             }}>Añadir al carrito</Button>
+            {errorMsg && (
+              <div className="mt-2 text-xs text-red-600">{errorMsg}</div>
+            )}
           </div>
 
           {/* CTA principal está bajo los colores */}
