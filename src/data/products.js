@@ -14,7 +14,7 @@ export const products = [
     category: 'Taller',
     material: ['PETG'],
     description: 'Soporte para pared que sujeta dos baterías de herramientas con ajuste firme. Impreso en PETG para mayor resistencia y durabilidad.',
-    longDescription: 'Soporte robusto para organizar dos baterías en la pared. El diseño garantiza un ajuste firme y seguro, evitando caídas accidentales. Incluye agujeros avellanados para tornillería estándar y tolerancias pensadas para impresión en PETG. Ideal para talleres domésticos y para aprovechar mejor el espacio en paneles y estanterías.',
+    longDescription: 'Soporte robusto para organizar dos baterías en la pared. El diseño garantiza un ajuste firme y seguro, evitando caídas accidentales. Incluye agujeros avellanados para tornillería estándar y tolerancias pensadas para impresión en PETG. Ideal para talleres domésticos y para aprovechar mejor el espacio en paneles y estanterías.\n\n<em>Nota: las imágenes mostradas corresponden a batería de <a href="https://www.lidl.es/es/bateria-inteligente-20-v-4-ah/p75400" target="_blank" rel="noreferrer">20V Parkside</a>. Otras marcas o modelos pueden variar en dimensiones y habría que ajustar las medidas. Ponte en contacto conmigo para imprimir una pieza que se ajuste a tus necesidades.</em>',
     crossReferences: ['two-batt-modular-middle', 'two-batt-modular-left-end', 'two-batt-modular-right-end', 'one-batt-standalone'],
   },
   // Modulares 2 baterías
@@ -34,7 +34,7 @@ export const products = [
     category: 'Taller',
     material: ['PETG'],
     description: 'Módulo central para 2 baterías con encajes a ambos lados. Permite crear filas continuas uniéndolo con otros módulos.',
-    longDescription: 'Módulo central para organizar dos baterías entre otros tramos del sistema. Incorpora encajes a izquierda y derecha para prolongar la hilera de forma segura y estable. Incluye agujeros avellanados y tolerancias ajustadas para impresión en PETG, garantizando deslizamiento suave y agarre firme. Ideal para paneles y estanterías; compatible con baterías de 20V.',
+    longDescription: 'Módulo central para organizar dos baterías entre otros tramos del sistema. Incorpora encajes a izquierda y derecha para prolongar la hilera de forma segura y estable. Incluye agujeros avellanados y tolerancias ajustadas para impresión en PETG, garantizando deslizamiento suave y agarre firme. Ideal para paneles y estanterías.\n\n<em>Nota: las imágenes mostradas corresponden a batería de <a href="https://www.lidl.es/es/bateria-inteligente-20-v-4-ah/p75400" target="_blank" rel="noreferrer">20V Parkside</a>. Otras marcas o modelos pueden variar en dimensiones y habría que ajustar las medidas. Ponte en contacto conmigo para imprimir una pieza que se ajuste a tus necesidades.</em>',
     crossReferences: ['two-batt-modular-left-end', 'two-batt-modular-right-end', 'two-batt-wall-mount'],
   },
   {
@@ -50,7 +50,7 @@ export const products = [
     category: 'Taller',
     material: ['PETG'],
     description: 'Módulo de 2 baterías con encaje solo a la izquierda. Pensado para cerrar la fila por la derecha.',
-    longDescription: 'Versión de extremo derecho del sistema modular de 2 baterías: encaje únicamente en el lado izquierdo para cerrar la hilera con un acabado limpio. Mantiene un ajuste firme y estable, con agujeros avellanados y tolerancias pensadas para impresión en PETG. Recomendado para rematar instalaciones en pared y optimizar el espacio del taller.',
+    longDescription: 'Versión de extremo derecho del sistema modular de 2 baterías: encaje únicamente en el lado izquierdo para cerrar la hilera con un acabado limpio. Mantiene un ajuste firme y estable, con agujeros avellanados y tolerancias pensadas para impresión en PETG. Recomendado para rematar instalaciones en pared y optimizar el espacio del taller.\n\n<em>Nota: las imágenes mostradas corresponden a batería de <a href="https://www.lidl.es/es/bateria-inteligente-20-v-4-ah/p75400" target="_blank" rel="noreferrer">20V Parkside</a>. Otras marcas o modelos pueden variar en dimensiones y habría que ajustar las medidas. Ponte en contacto conmigo para imprimir una pieza que se ajuste a tus necesidades.</em>',
     crossReferences: ['two-batt-modular-middle', 'two-batt-modular-right-end', 'two-batt-wall-mount'],
   },
   {
@@ -66,7 +66,7 @@ export const products = [
     category: 'Taller',
     material: ['PETG'],
     description: 'Módulo de 2 baterías con encaje solo a la derecha. Pensado para iniciar la fila por la izquierda.',
-    longDescription: 'Versión de extremo izquierdo del sistema modular de 2 baterías: encaje únicamente en el lado derecho para iniciar la hilera por la izquierda. Conserva el perfil robusto y el agarre seguro, con agujeros avellanados y tolerancias optimizadas para PETG. Útil para comenzar instalaciones en pared y ampliar capacidad progresivamente.',
+    longDescription: 'Versión de extremo izquierdo del sistema modular de 2 baterías: encaje únicamente en el lado derecho para iniciar la hilera por la izquierda. Conserva el perfil robusto y el agarre seguro, con agujeros avellanados y tolerancias optimizadas para PETG. Útil para comenzar instalaciones en pared y ampliar capacidad progresivamente.\n\n<em>Nota: las imágenes mostradas corresponden a batería de <a href="https://www.lidl.es/es/bateria-inteligente-20-v-4-ah/p75400" target="_blank" rel="noreferrer">20V Parkside</a>. Otras marcas o modelos pueden variar en dimensiones y habría que ajustar las medidas. Ponte en contacto conmigo para imprimir una pieza que se ajuste a tus necesidades.</em>',
     crossReferences: ['two-batt-modular-middle', 'two-batt-modular-left-end', 'two-batt-wall-mount'],
   },
   // Modulares 1 batería
@@ -83,7 +83,7 @@ export const products = [
     category: 'Taller',
     material: ['PETG'],
     description: 'Soporte para una batería sin encajes laterales. Compacto y resistente para puntos sueltos.',
-    longDescription: 'Soporte individual para una batería, pensado para puntos sueltos y espacios reducidos. El diseño evita bamboleos y caídas, con agujeros avellanados y tolerancias optimizadas para impresión en PETG. Ideal para paneles y laterales de estantería; compatible con baterías de 20V.',
+    longDescription: 'Soporte individual para una batería, pensado para puntos sueltos y espacios reducidos. El diseño evita bamboleos y caídas, con agujeros avellanados y tolerancias optimizadas para impresión en PETG. Ideal para paneles y laterales de estantería.\n\n<em>Nota: las imágenes mostradas corresponden a batería de <a href="https://www.lidl.es/es/bateria-inteligente-20-v-4-ah/p75400" target="_blank" rel="noreferrer">20V Parkside</a>. Otras marcas o modelos pueden variar en dimensiones y habría que ajustar las medidas. Ponte en contacto conmigo para imprimir una pieza que se ajuste a tus necesidades.</em>',
     crossReferences: ['two-batt-wall-mount', 'two-batt-modular-middle'],
   },
   {
@@ -100,7 +100,7 @@ export const products = [
     category: 'Taller',
     material: ['PETG'],
     description: 'Módulo de 1 batería con encaje solo a la izquierda. Para rematar la fila por la derecha.',
-    longDescription: 'Módulo de 1 batería con encaje a la izquierda para cerrar la fila por la derecha. Ofrece el mismo ajuste firme del sistema modular, con geometrías optimizadas para impresión en PETG y montaje con tornillería estándar. Perfecto para rematar instalaciones en pared sin perder capacidad.',
+    longDescription: 'Módulo de 1 batería con encaje a la izquierda para cerrar la fila por la derecha. Ofrece el mismo ajuste firme del sistema modular, con geometrías optimizadas para impresión en PETG y montaje con tornillería estándar. Perfecto para rematar instalaciones en pared sin perder capacidad.\n\n<em>Nota: las imágenes mostradas corresponden a batería de <a href="https://www.lidl.es/es/bateria-inteligente-20-v-4-ah/p75400" target="_blank" rel="noreferrer">20V Parkside</a>. Otras marcas o modelos pueden variar en dimensiones y habría que ajustar las medidas. Ponte en contacto conmigo para imprimir una pieza que se ajuste a tus necesidades.</em>',
     crossReferences: ['one-batt-modular-right-end', 'one-batt-standalone', 'two-batt-modular-middle'],
   },
   {
@@ -117,7 +117,7 @@ export const products = [
     category: 'Taller',
     material: ['PETG'],
     description: 'Módulo de 1 batería con encaje solo a la derecha. Para iniciar la fila por la izquierda.',
-    longDescription: 'Módulo de 1 batería con encaje a la derecha para iniciar la fila por la izquierda. Mantiene un agarre seguro de la batería y un montaje sencillo gracias a los agujeros avellanados. Diseñado para PETG, con tolerancias que favorecen la repetibilidad de impresión y la durabilidad en taller.',
+    longDescription: 'Módulo de 1 batería con encaje a la derecha para iniciar la fila por la izquierda. Mantiene un agarre seguro de la batería y un montaje sencillo gracias a los agujeros avellanados. Diseñado para PETG, con tolerancias que favorecen la repetibilidad de impresión y la durabilidad en taller.\n\n<em>Nota: las imágenes mostradas corresponden a batería de <a href="https://www.lidl.es/es/bateria-inteligente-20-v-4-ah/p75400" target="_blank" rel="noreferrer">20V Parkside</a>. Otras marcas o modelos pueden variar en dimensiones y habría que ajustar las medidas. Ponte en contacto conmigo para imprimir una pieza que se ajuste a tus necesidades.</em>',
     crossReferences: ['one-batt-modular-left-end', 'one-batt-standalone', 'two-batt-modular-middle'],
   },
   {

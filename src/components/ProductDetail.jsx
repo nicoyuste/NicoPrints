@@ -72,7 +72,7 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
         <div>
           <div className="aspect-video overflow-hidden bg-gray-100 rounded-2xl">
             {mainImage ? (
-              <img src={mainImage} alt={product.name} className="w-full h-full object-contain" />
+              <img src={mainImage} alt={product.name} className="w-full h-full object-cover" />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-gray-500 text-sm">Sin imagen</div>
             )}
@@ -166,7 +166,10 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
       {product.longDescription && (
         <div className="mt-10">
           <h3 className="font-semibold">Descripción</h3>
-          <p className="text-sm text-gray-700 mt-2 whitespace-pre-line break-words">{product.longDescription || product.longDescripcion}</p>
+          <div
+            className="text-sm text-gray-700 mt-2 break-words"
+            dangerouslySetInnerHTML={{ __html: (product.longDescription || product.longDescripcion || '').replace(/\n/g, '<br/>') }}
+          />
         </div>
       )}
 
