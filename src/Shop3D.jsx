@@ -287,33 +287,33 @@ export default function Shop3D() {
         <section id="colecciones" className="max-w-6xl mx-auto px-4 py-10">
           <h3 className="text-2xl font-semibold mb-4">Colecciones</h3>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Card className="rounded-2xl overflow-hidden">
+            <Card className="rounded-2xl overflow-hidden bg-green-700">
               <CardContent className="p-0">
-                <div className="aspect-video overflow-hidden bg-gray-100 rounded-2xl">
+                <div className="aspect-video overflow-hidden">
                   <img src={`${import.meta.env.BASE_URL}taller_a_medida.jpg`} alt="Taller y organización" className="w-full h-full object-cover" />
                 </div>
-                <div className="p-4">
+                <div className="p-4 bg-green-700 text-white">
                   <h4 className="font-medium leading-tight">Taller y organización</h4>
-                  <p className="text-sm text-gray-600 mt-1 line-clamp-3">Soportes para baterías y accesorios para ordenar tu taller.</p>
+                  <p className="text-sm mt-1 line-clamp-3 text-white/90">Soportes para baterías y accesorios para ordenar tu taller.</p>
                   <div className="mt-3">
                     <a href="#taller">
-                      <Button>Ver colección</Button>
+                      <Button className="bg-white text-gray-900 hover:bg-white/90">Ver colección</Button>
                     </a>
                   </div>
                 </div>
               </CardContent>
             </Card>
-            <Card className="rounded-2xl overflow-hidden">
+            <Card className="rounded-2xl overflow-hidden bg-orange-600">
               <CardContent className="p-0">
-                <div className="aspect-video overflow-hidden bg-gray-100 rounded-2xl">
+                <div className="aspect-video overflow-hidden">
                   <img src={`${import.meta.env.BASE_URL}deck_examples.jpg`} alt="Magic: The Gathering" className="w-full h-full object-cover" />
                 </div>
-                <div className="p-4">
+                <div className="p-4 bg-orange-600 text-white">
                   <h4 className="font-medium leading-tight">Magic: The Gathering</h4>
-                  <p className="text-sm text-gray-600 mt-1 line-clamp-3">Accesorios impresos en 3D para cartas y partidas.</p>
+                  <p className="text-sm mt-1 line-clamp-3 text-white/90">Accesorios impresos en 3D para cartas y partidas.</p>
                   <div className="mt-3">
                     <a href="#magic">
-                      <Button>Ver colección</Button>
+                      <Button className="bg-white text-gray-900 hover:bg-white/90">Ver colección</Button>
                     </a>
                   </div>
                 </div>
