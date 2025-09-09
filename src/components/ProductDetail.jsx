@@ -14,7 +14,7 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
   const [selectedColor, setSelectedColor] = useState(filteredColors[0]?.value || '')
   const imageObjs = (product?.images && product.images.length > 0)
     ? product.images.map(img => (typeof img === 'string' ? { src: img, colorValue: null } : img))
-    : (product ? [{ src: product.img, colorValue: null }] : [])
+    : (product?.img ? [{ src: product.img, colorValue: null }] : [])
   const mainImage = imageObjs[Math.min(selectedIndex, Math.max(0, imageObjs.length - 1))]?.src
   const otherImageObjs = (product?.otherImages && Array.isArray(product.otherImages))
     ? product.otherImages.map(img => (typeof img === 'string' ? { src: img } : img))
@@ -59,7 +59,11 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
         <div>
           <div className="aspect-video overflow-hidden bg-gray-100 rounded-2xl">
-            <img src={mainImage} alt={product.name} className="w-full h-full object-contain" />
+            {mainImage ? (
+              <img src={mainImage} alt={product.name} className="w-full h-full object-contain" />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-gray-500 text-sm">Sin imagen</div>
+            )}
           </div>
           {imageObjs.length > 1 && (
             <div className="mt-3 flex gap-2 overflow-x-auto">

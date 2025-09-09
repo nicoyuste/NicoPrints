@@ -11,7 +11,7 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
   const descRef = useRef(null)
   const imageObjs = (product.images && product.images.length > 0)
     ? product.images.map(img => (typeof img === 'string' ? { src: img, colorValue: null } : img))
-    : [{ src: product.img, colorValue: null }]
+    : (product.img ? [{ src: product.img, colorValue: null }] : [])
 
   const mainImage = imageObjs[Math.min(selectedIndex, imageObjs.length - 1)]?.src
   const availableColors = COLORS.filter(c => materials.includes(c.material))
@@ -21,7 +21,11 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
       <CardContent className="p-0">
         <div className="aspect-video overflow-hidden bg-gray-100">
           <a href={`#p/${product.slug || product.id}`} className="block w-full h-full" aria-label="Ver detalles">
-            <img src={mainImage} alt={product.name} className="w-full h-full object-cover" />
+            {mainImage ? (
+              <img src={mainImage} alt={product.name} className="w-full h-full object-cover" />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-gray-500 text-sm">Sin imagen</div>
+            )}
           </a>
         </div>
         {imageObjs.length > 1 && (
