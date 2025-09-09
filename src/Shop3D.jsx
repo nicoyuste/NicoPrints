@@ -13,6 +13,7 @@ import ProductDetail from '@/components/ProductDetail'
 import PayPalIcon from '@/components/icons/PayPalIcon'
 import CustomOrderForm from '@/components/CustomOrderForm'
 import { CONTACT_EMAIL, PAYPAL_BUSINESS_EMAIL, SHIPPING_FEE_EUR } from '@/config'
+import { trackEventGA4 } from '@/lib/utils'
 import useLocalStorage from '@/lib/useLocalStorage'
 import { formatPrice } from '@/lib/format'
 import { Badge } from '@/components/ui/badge'
@@ -54,6 +55,17 @@ export default function Shop3D() {
         const lineKey = `${productId}|${serialized}`
         const idx = prev.findIndex(i => i.lineKey === lineKey)
         if (idx >= 0) { const copy = [...prev]; copy[idx] = { ...copy[idx], qty: copy[idx].qty + 1 }; return copy }
+        onQueueMicrotask(() => {
+          trackEventGA4('add_to_cart', {
+            currency: prod.currency || 'EUR',
+            value: prod.price || 0,
+            items: [{
+              item_id: productId,
+              item_name: prod.name,
+              quantity: 1,
+            }]
+          })
+        })
         return [...prev, { id: productId, lineKey, name: prod.name, price: prod.price, currency: prod.currency, img: primaryImg, qty: 1, selections }]
       }
 
@@ -65,6 +77,17 @@ export default function Shop3D() {
       const lineKey = `${productId}|${materialValue || ''}|${colorValue || ''}`
       const idx = prev.findIndex(i => i.lineKey === lineKey)
       if (idx >= 0) { const copy = [...prev]; copy[idx] = { ...copy[idx], qty: copy[idx].qty + 1 }; return copy }
+      onQueueMicrotask(() => {
+        trackEventGA4('add_to_cart', {
+          currency: prod.currency || 'EUR',
+          value: prod.price || 0,
+          items: [{
+            item_id: productId,
+            item_name: prod.name,
+            quantity: 1,
+          }]
+        })
+      })
       return [...prev, { id: productId, lineKey, name: prod.name, price: prod.price, currency: prod.currency, img: primaryImg, qty: 1, colorValue, colorLabel, material: materialValue }]
     })
   }
@@ -90,6 +113,7 @@ export default function Shop3D() {
     const cancelUrl = encodeURIComponent(baseUrl + '#cancelado')
 
     const url = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${business}&item_name=${itemName}&amount=${amount}&currency_code=${currency}&no_note=1&no_shipping=0&return=${returnUrl}&cancel_return=${cancelUrl}`
+    try { trackEventGA4('pay_with_paypal', { value: parseFloat(amount), currency, items: cart.map(i => ({ item_id: i.id, item_name: i.name, quantity: i.qty })) }) } catch (_) {}
     window.location.href = url
   }
 
@@ -106,6 +130,7 @@ export default function Shop3D() {
     const body = encodeURIComponent(
       `Hola, me interesa este pedido:\n\n${lines}\n\nSubtotal: ${formatPrice(total)}\nEnvío: ${formatPrice(shipping)}\nTotal estimado: ${formatPrice(grandTotal)}\n\nMi dirección es: \n`
     )
+    try { trackEventGA4('buy_with_email', { value: grandTotal, currency: 'EUR', items: cart.map(i => ({ item_id: i.id, item_name: i.name, quantity: i.qty })) }) } catch (_) {}
     window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`
   }
 

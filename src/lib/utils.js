@@ -43,3 +43,9 @@ export function initHashPageviewTracking() {
     trackPageViewGA4();
   });
 }
+
+// --- Generic GA4 event helper ---
+export function trackEventGA4(eventName, params = {}) {
+  if (typeof window === 'undefined' || typeof window.gtag !== 'function') return;
+  window.gtag('event', eventName, params);
+}
