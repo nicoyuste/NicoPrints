@@ -31,6 +31,11 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
       .filter(p => p && p.slug !== product.slug)
   }, [product])
 
+  // Al abrir un producto o cambiar de slug, forzar scroll al inicio
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' })
+  }, [slug])
+
   useEffect(() => {
     if (!product) return
     const first = filteredColors[0]?.value || ''
@@ -62,7 +67,7 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
   }
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-10 pb-12 overflow-x-hidden">
+    <section className="max-w-6xl mx-auto px-4 py-10 overflow-x-hidden">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
         <div>
           <div className="aspect-video overflow-hidden bg-gray-100 rounded-2xl">
@@ -116,7 +121,7 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
                     key={m}
                     type="button"
                     onClick={() => setSelectedMaterial(m)}
-                    className={`h-8 px-3 rounded-full border text-xs ${selectedMaterial === m ? 'ring-2 ring-gray-900 border-gray-900' : 'border-gray-300'}`}
+                    className={`h-8 px-3 rounded-full border text-xs bg-white text-gray-900 ${selectedMaterial === m ? 'ring-2 ring-gray-900 border-gray-900' : 'border-gray-300'}`}
                   >
                     {m}
                   </button>
@@ -134,7 +139,7 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
                   key={c.value}
                   type="button"
                   onClick={() => setSelectedColor(c.value)}
-                  className={`h-8 px-3 rounded-full border text-xs flex items-center gap-2 ${selectedColor === c.value ? 'ring-2 ring-gray-900 border-gray-900' : 'border-gray-300'}`}
+                  className={`h-8 px-3 rounded-full border text-xs flex items-center gap-2 bg-white text-gray-900 ${selectedColor === c.value ? 'ring-2 ring-gray-900 border-gray-900' : 'border-gray-300'}`}
                   aria-label={c.label}
                   title={c.label}
                 >
@@ -147,7 +152,14 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
             </div>
           </div>
 
-          {/* Botón de añadir se mueve a la barra inferior fija */}
+          {/* CTA secundario: añadir al carrito bajo los colores */}
+          <div className="mt-5">
+            <Button className="w-full sm:w-auto" onClick={() => {
+              onAdd(product, currentColorObj, selectedMaterial)
+            }}>Añadir al carrito</Button>
+          </div>
+
+          {/* CTA principal está bajo los colores */}
         </div>
       </div>
 
@@ -168,6 +180,7 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
                   <ProductCard product={p} onAdd={onAdd} />
                 </div>
               ))}
+              <div className="w-2 flex-shrink-0"></div>
             </div>
           </div>
         </div>
@@ -186,23 +199,7 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
         </div>
       )}
 
-      {/* Barra inferior fija con CTA */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 border-t bg-white/95 backdrop-blur">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center gap-4" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 12px)' }}>
-          <div className="min-w-0 flex-1">
-            <div className="text-sm font-medium truncate">{selectedMaterial || ''}</div>
-            {currentColorObj && (
-              <div className="text-xs text-gray-600 truncate">{currentColorObj.label}</div>
-            )}
-          </div>
-          <div className="hidden sm:block">
-            <Badge className="bg-gray-900 text-white text-base px-3 py-1.5 rounded-md">{formatPrice(product.price, product.currency)}</Badge>
-          </div>
-          <Button className="min-w-[200px]" onClick={() => {
-            onAdd(product, currentColorObj, selectedMaterial)
-          }}>Añadir al carrito</Button>
-        </div>
-      </div>
+      
     </section>
   )
 }

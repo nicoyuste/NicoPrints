@@ -105,6 +105,13 @@ export default function Shop3D() {
     return () => window.removeEventListener('hashchange', handleHash)
   }, [])
 
+  // Al entrar en una colección, forzar scroll al inicio
+  useEffect(() => {
+    if (currentCollectionId) {
+      window.scrollTo({ top: 0, behavior: 'auto' })
+    }
+  }, [currentCollectionId])
+
   // Cerrar dropdown al clicar fuera
   useEffect(() => {
     function onDocMouseDown(e) {
@@ -120,7 +127,9 @@ export default function Shop3D() {
     <div className="min-h-screen bg-gray-50 text-gray-900">
       <header className="sticky top-0 z-30 bg-white/80 backdrop-blur border-b">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
-          <img src={`${import.meta.env.BASE_URL}NicoPrints.svg`} alt="NicoPrints" className="h-8 w-auto" />
+          <a href="#" aria-label="Inicio">
+            <img src={`${import.meta.env.BASE_URL}NicoPrints.svg`} alt="NicoPrints" className="h-8 w-auto" />
+          </a>
           <nav className="ml-4 hidden md:flex items-center gap-4">
             <a href="#" className="text-sm text-gray-700 hover:text-gray-900">Inicio</a>
             <div className="relative" ref={collectionsMenuRef}>
@@ -197,7 +206,7 @@ export default function Shop3D() {
                               <div className="text-sm text-gray-500">{formatPrice(item.price)} / ud</div>
                               <div className="flex items-center gap-2 mt-1">
                                 <Input type="number" min={1} value={item.qty} onChange={(e) => updateQty(item.id, parseInt(e.target.value || "1"))} className="w-20" />
-                                <Button size="icon" variant="ghost" onClick={() => removeFromCart(item.id)}>
+                                <Button size="icon" className="bg-white text-gray-900 hover:bg-gray-100" onClick={() => removeFromCart(item.id)}>
                                   <Trash2 className="w-4 h-4" />
                                 </Button>
                               </div>
@@ -221,15 +230,15 @@ export default function Shop3D() {
                       <span className="font-medium">Total</span>
                       <span className="font-semibold">{formatPrice(grandTotal)}</span>
                     </div>
-                    <p className="text-xs text-gray-500 mt-2">* Envío fijo de {formatPrice(SHIPPING_FEE_EUR)} en España peninsular.<i>Envios solo dentro de España.</i></p>
+                    <p className="text-xs text-gray-500 mt-2">* Envío fijo de {formatPrice(SHIPPING_FEE_EUR)} en España peninsular. <i>Envios solo dentro de España.</i></p>
                     <div className="grid grid-cols-1 gap-2 mt-4">
                       <Button className="gap-2" onClick={checkoutPayPal}>
                         <PayPalIcon className="w-4 h-4" /> Pagar con PayPal
                       </Button>
-                      <Button variant="ghost" className="gap-2" onClick={checkoutEmail}>
+                      <Button className="gap-2 bg-white text-gray-900 hover:bg-gray-100" onClick={checkoutEmail}>
                         <Mail className="w-4 h-4" /> Reservar por email
                       </Button>
-                      <Button variant="secondary" onClick={clearCart}>Vaciar carrito</Button>
+                      <Button className="bg-white text-gray-900 hover:bg-gray-100" onClick={clearCart}>Vaciar carrito</Button>
                     </div>
                   </div>
                 </div>
@@ -332,11 +341,10 @@ export default function Shop3D() {
               </div>
               <h3 className="text-2xl md:text-3xl font-semibold mt-1">¿No encuentras lo que buscas?</h3>
               <p className="mt-2 text-gray-300 md:text-base">Diseñamos una pieza a medida en PLA/PETG que encaje justo donde la necesitas.</p>
-              <div className="mt-4 flex flex-col sm:flex-row gap-2">
-                <a href={`${import.meta.env.BASE_URL}encargos.html`}>
-                  <Button className="bg-white text-gray-900 hover:bg-gray-100">Solicitar presupuesto</Button>
+              <div className="mt-4 flex flex-col gap-2">
+                <a href={`${import.meta.env.BASE_URL}encargos.html`} className="w-full">
+                  <Button className="w-full bg-white text-gray-900 hover:bg-gray-100">Solicitar presupuesto</Button>
                 </a>
-                <a href={`${import.meta.env.BASE_URL}materiales.html`} className="inline-flex items-center justify-center gap-2 rounded-md border border-white/30 px-4 py-2 text-sm hover:bg-white/10">Ver materiales</a>
               </div>
             </div>
             <div className="hidden md:block">
