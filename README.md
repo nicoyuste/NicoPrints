@@ -21,3 +21,33 @@ Material es:
 
 Image principal esta en: 
 Imagen para color con referencia [RED] esta en:
+
+## Google Analytics (GA4)
+
+### Qué usamos
+- GA4 con `gtag.js` cargado en `index.html`.
+- Page views manuales para SPA con rutas por hash.
+
+### Dónde está y cómo se configura
+- `index.html`: incluye el script de GA4 con Measurement ID. Cambiar `G-86JXT84TKQ` si fuese necesario.
+- `src/lib/utils.js`:
+  - `initHashPageviewTracking()`: envía `page_view` en la carga inicial y en `hashchange`.
+  - `trackPageViewGA4(path?)`: helper para enviar page_view.
+  - `trackEventGA4(eventName, params)`: helper genérico para eventos.
+- `src/main.jsx`: llama a `initHashPageviewTracking()` al iniciar la app.
+
+### Qué se envía
+- `page_view` con parámetros: `page_title`, `page_location`, `page_path` (incluye `/#taller`, `/#magic`, `/#p/<slug>`, etc.).
+- Eventos personalizados:
+  - `add_to_cart`: al añadir al carrito.
+  - `pay_with_paypal`: al pulsar pagar con PayPal (antes del redirect).
+  - `buy_with_email`: al pulsar reservar por email (antes de abrir mailto).
+- Parámetros típicos de eventos: `currency`, `value`, `items[{ item_id, item_name, quantity }]`.
+
+### Campañas (UTM)
+- Usa parámetros UTM en los enlaces de campaña: `utm_source`, `utm_medium`, `utm_campaign` (opcional `utm_content`, `utm_term`).
+- Ejemplo: `https://www.nicoprints.com/#magic?utm_source=instagram&utm_medium=social&utm_campaign=lanzamiento_magic`.
+
+### Verificación
+- GA4 → Realtime: ver `page_view` y eventos anteriores.
+- Marca `pay_with_paypal` y/o `buy_with_email` como conversiones si procede.
