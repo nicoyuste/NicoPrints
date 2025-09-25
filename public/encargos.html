@@ -30,7 +30,19 @@
     <div class="container">
       <a href="./" style="display:inline-block"><img src="NicoPrints.svg" alt="NicoPrints" style="height:72px;width:auto;vertical-align:middle;margin-bottom:1rem;border-radius:.5rem" /></a>
       <h1>Encargos a medida</h1>
-      <p class="muted">Cuéntame qué necesitas y te responderé con un presupuesto.</p>
+      <!-- WhatsApp CTA -->
+      <div style="margin: 0.75rem 0 1.25rem;">
+        <a
+          id="cta-whatsapp"
+          href="#"
+          class="btn"
+          style="display:flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1rem;font-size:1rem;border-color:#22c55e;background:#22c55e;width:100%;"
+        >
+          <img src="whatsapp.svg" alt="WhatsApp" style="width:20px;height:20px" />
+          Enviarme un WhatsApp
+        </a>
+      </div>
+      <p class="muted">O cuéntame qué necesitas...</p>
 
       <div class="card">
         <div class="card-body">
@@ -60,6 +72,23 @@
       <a class="back" href="./">← Volver a la tienda</a>
     </div>
     <script>
+      // Build WhatsApp link using site config if available, else fallback
+      (function(){
+        var phone = (window.WHATSAPP_PHONE || '34600111222');
+        // sanitize: keep digits and plus, drop spaces
+        phone = String(phone).replace(/[^+\d]/g,'').replace(/^\+/, '');
+        var defaultMsg = window.WHATSAPP_DEFAULT_MESSAGE || 'Hola Nico, me interesa un encargo a medida.';
+        var waUrl = 'https://wa.me/' + encodeURIComponent(phone) + '?text=' + encodeURIComponent(defaultMsg);
+        var cta = document.getElementById('cta-whatsapp');
+        if (cta) {
+          cta.setAttribute('href', waUrl);
+          cta.setAttribute('target', '_blank');
+          cta.setAttribute('rel', 'noopener noreferrer');
+          cta.addEventListener('click', function(){
+            try { if (typeof window.gtag === 'function') window.gtag('event', 'contact_whatsapp_click', { location: 'encargos_page' }); } catch(_) {}
+          });
+        }
+      })();
       function handleSubmit(e) {
         var form = e.target;
         var name = form.elements.name.value.trim();

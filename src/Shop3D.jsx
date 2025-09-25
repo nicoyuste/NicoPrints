@@ -12,7 +12,7 @@ import Magic from '@/collections/Magic'
 import ProductDetail from '@/components/ProductDetail'
 import PayPalIcon from '@/components/icons/PayPalIcon'
 import CustomOrderForm from '@/components/CustomOrderForm'
-import { CONTACT_EMAIL, PAYPAL_BUSINESS_EMAIL, SHIPPING_FEE_EUR } from '@/config'
+import { CONTACT_EMAIL, PAYPAL_BUSINESS_EMAIL, SHIPPING_FEE_EUR, WHATSAPP_PHONE, WHATSAPP_DEFAULT_MESSAGE } from '@/config'
 import { trackEventGA4 } from '@/lib/utils'
 import useLocalStorage from '@/lib/useLocalStorage'
 import { formatPrice } from '@/lib/format'
@@ -221,10 +221,20 @@ export default function Shop3D() {
                 </div>
               )}
             </div>
-            <a href={`mailto:${CONTACT_EMAIL}`} className="text-sm text-gray-700 hover:text-gray-900">Contacto</a>
           </nav>
           {/* Botón menú móvil */}
-          <div className="ml-auto flex items-center gap-2">
+          <div className="ml-auto flex items-center gap-3">
+            {/* WhatsApp button next to cart (desktop only) */}
+            <a
+              href={`https://wa.me/${encodeURIComponent((WHATSAPP_PHONE || '').replace(/[^+\d]/g, '').replace(/^\+/, ''))}?text=${encodeURIComponent(WHATSAPP_DEFAULT_MESSAGE || '')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => { try { trackEventGA4('contact_whatsapp_click', { location: 'header_right' }) } catch (_) {} }}
+              className="hidden md:inline-flex items-center gap-2 text-sm text-green-600 hover:text-green-700 pr-2"
+            >
+              <img src={`${import.meta.env.BASE_URL}whatsapp.svg`} alt="WhatsApp" className="w-4 h-4" />
+              <span>WhatsApp</span>
+            </a>
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild>
                 <Button variant="outline" className="gap-2 md:hidden">
@@ -243,7 +253,18 @@ export default function Shop3D() {
                     <a href="#taller" className="block text-sm text-gray-700 hover:underline" onClick={() => setMobileMenuOpen(false)}>Taller y organización</a>
                     <a href="#magic" className="block text-sm text-gray-700 hover:underline" onClick={() => setMobileMenuOpen(false)}>Magic: The Gathering</a>
                   </div>
-                  <a href={`mailto:${CONTACT_EMAIL}`} className="block text-sm text-gray-700 hover:underline" onClick={() => setMobileMenuOpen(false)}>Contacto</a>
+                  <a
+                    href={`https://wa.me/${encodeURIComponent((WHATSAPP_PHONE || '').replace(/[^+\d]/g, '').replace(/^\+/, ''))}?text=${encodeURIComponent(WHATSAPP_DEFAULT_MESSAGE || '')}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-sm text-green-600 hover:underline"
+                    onClick={() => {
+                      try { trackEventGA4('contact_whatsapp_click', { location: 'mobile_menu' }) } catch (_) {}
+                      setMobileMenuOpen(false)
+                    }}
+                  >
+                    <img src={`${import.meta.env.BASE_URL}whatsapp.svg`} alt="WhatsApp" className="w-4 h-4" /> WhatsApp
+                  </a>
                 </div>
               </SheetContent>
             </Sheet>
