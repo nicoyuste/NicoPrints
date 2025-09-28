@@ -15,6 +15,7 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
 
   const mainImage = imageObjs[Math.min(selectedIndex, imageObjs.length - 1)]?.src
   const availableColors = COLORS.filter(c => materials.includes(c.material))
+  const canPickColor = product?.allowColorSelection !== false
 
   return (
     <Card className="rounded-2xl overflow-hidden">
@@ -52,7 +53,7 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
             <Badge>{formatPrice(product.price, product.currency)}</Badge>
           </div>
           <p ref={descRef} className="text-sm text-gray-600 mt-2 line-clamp-3">{product.description}</p>
-          {availableColors.length > 0 && (
+          {canPickColor && availableColors.length > 0 && (
             <div className="mt-3">
               <label className="block text-xs text-gray-600 mb-1">Colores disponibles</label>
               <div className="flex flex-wrap gap-2 mb-2">

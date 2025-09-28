@@ -8,6 +8,7 @@ import { COLORS } from '@/colors'
 
 export default function ProductDetail({ slug, onAdd, onBack }) {
   const product = productBySlug.get(slug)
+  const canPickColor = product?.allowColorSelection !== false
   const [selectedIndex, setSelectedIndex] = useState(0)
   const materials = useMemo(() => (Array.isArray(product?.material) ? product.material : [product?.material].filter(Boolean)), [product])
   const parts = Array.isArray(product?.parts) ? product.parts : []
@@ -164,26 +165,28 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
           )}
 
           {parts.length === 0 ? (
-            <div className="mt-4">
-              <div className="text-xs text-gray-600 mb-1">Color</div>
-              <div className="flex flex-wrap gap-2">
-                {filteredColors.length > 0 ? filteredColors.map(c => (
-                  <button
-                    key={c.value}
-                    type="button"
-                    onClick={() => setSelectedColor(c.value)}
-                    className={`h-8 px-3 rounded-full border text-xs flex items-center gap-2 bg-white text-gray-900 ${selectedColor === c.value ? 'ring-2 ring-gray-900 border-gray-900' : 'border-gray-300'}`}
-                    aria-label={c.label}
-                    title={c.label}
-                  >
-                    <span className="inline-block h-4 w-4 rounded-full" style={{ backgroundColor: c.hex }}></span>
-                    {c.label}
-                  </button>
-                )) : (
-                  <span className="text-xs text-gray-500">Sin colores disponibles para {selectedMaterial}</span>
-                )}
+            canPickColor ? (
+              <div className="mt-4">
+                <div className="text-xs text-gray-600 mb-1">Color</div>
+                <div className="flex flex-wrap gap-2">
+                  {filteredColors.length > 0 ? filteredColors.map(c => (
+                    <button
+                      key={c.value}
+                      type="button"
+                      onClick={() => setSelectedColor(c.value)}
+                      className={`h-8 px-3 rounded-full border text-xs flex items-center gap-2 bg-white text-gray-900 ${selectedColor === c.value ? 'ring-2 ring-gray-900 border-gray-900' : 'border-gray-300'}`}
+                      aria-label={c.label}
+                      title={c.label}
+                    >
+                      <span className="inline-block h-4 w-4 rounded-full" style={{ backgroundColor: c.hex }}></span>
+                      {c.label}
+                    </button>
+                  )) : (
+                    <span className="text-xs text-gray-500">Sin colores disponibles para {selectedMaterial}</span>
+                  )}
+                </div>
               </div>
-            </div>
+            ) : null
           ) : (
             <div className="mt-4 space-y-3">
               {parts.map((part, idx) => {
@@ -270,7 +273,8 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
                 })
                 onAdd(product, selections)
               } else {
-                onAdd(product, currentColorObj, selectedMaterial)
+                const colorArg = canPickColor ? currentColorObj : null
+                onAdd(product, colorArg, selectedMaterial)
               }
             }}>Añadir al carrito</Button>
             {errorMsg && (
