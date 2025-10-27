@@ -13,7 +13,7 @@ If you are developing a production application, we recommend using TypeScript wi
 
 # Prompts
 ------------------------
-### ara añadir un producto.
+### Para añadir un producto.
 Necesito que me ayudes a añadir el siguiente producto al catalogo.
 
 [Descripcion de producto]. Crea la descripcion para ello.
