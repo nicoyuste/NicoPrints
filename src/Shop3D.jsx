@@ -146,7 +146,9 @@ export default function Shop3D() {
   // Detectar retorno de PayPal por hash y mostrar aviso. Limpiar la URL después.
   useEffect(() => {
     const handleHash = () => {
-      const h = (window.location.hash || '').toLowerCase()
+      // Normalize hash: ignore anything after '?' (UTM or other params)
+      const rawHash = (window.location.hash || '').toLowerCase()
+      const h = rawHash.split('?')[0]
       if (h.startsWith('#gracias')) {
         setCheckoutStatus('success')
         history.replaceState(null, '', import.meta.env.BASE_URL)
