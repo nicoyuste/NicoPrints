@@ -30,13 +30,13 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
           </a>
         </div>
         {imageObjs.length > 1 && (
-          <div className="px-4 pt-3 flex gap-2 overflow-x-auto">
+          <div className="px-4 pt-3 flex gap-2 overflow-x-auto no-scrollbar">
             {imageObjs.map((img, idx) => (
               <button
                 key={img.src + idx}
                 type="button"
                 onClick={() => setSelectedIndex(idx)}
-                className={`h-12 w-16 rounded-md overflow-hidden p-0 bg-transparent border ${idx === selectedIndex ? 'border-foreground' : 'border-transparent'}`}
+                className={`flex-none h-12 w-16 rounded-md overflow-hidden p-0 bg-secondary border ${idx === selectedIndex ? 'border-foreground' : 'border-transparent'}`}
                 aria-label={`Vista ${idx + 1}`}
               >
                 <img src={img.src} alt="" className="block h-full w-full object-cover" />

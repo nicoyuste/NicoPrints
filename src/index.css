@@ -28,3 +28,9 @@
     * { animation: none !important; transition: none !important; }
   }
 }
+
+@layer utilities {
+  /* Hide scrollbars but keep scroll functionality */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}

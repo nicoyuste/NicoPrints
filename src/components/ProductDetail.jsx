@@ -110,13 +110,13 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
             )}
           </div>
           {imageObjs.length > 1 && (
-            <div className="mt-3 flex gap-2 overflow-x-auto">
+            <div className="mt-3 flex gap-2 overflow-x-auto no-scrollbar">
               {imageObjs.map((img, idx) => (
                 <button
                   key={img.src + idx}
                   type="button"
                   onClick={() => setSelectedIndex(idx)}
-                  className={`h-16 w-24 rounded-md overflow-hidden p-0 bg-transparent border ${idx === selectedIndex ? 'border-gray-900' : 'border-transparent'}`}
+                  className={`flex-none h-16 w-24 rounded-md overflow-hidden p-0 bg-gray-100 border ${idx === selectedIndex ? 'border-gray-900' : 'border-transparent'}`}
                   aria-label={`Vista ${idx + 1}`}
                 >
                   <img src={img.src} alt="" className="block h-full w-full object-cover" />
