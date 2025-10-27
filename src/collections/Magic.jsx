@@ -39,7 +39,7 @@ export default function Magic({ onAdd }) {
           <ProductCard key={p.slug} product={p} onAdd={onAdd} contactEmail={CONTACT_EMAIL} />
         ))}
         <Card className="rounded-2xl overflow-hidden">
-          <CardContent className="p-0 bg-[#D6632C] h-full flex flex-col min-h-[24rem] sm:min-h-[26rem]">
+          <CardContent className="p-0 bg-primary h-full flex flex-col min-h-[24rem] sm:min-h-[26rem]">
             <div className="relative overflow-hidden bg-gray-100 flex-1 min-h-[10rem]">
               <img
                 src={`${import.meta.env.BASE_URL}deck_examples.jpg`}
@@ -47,12 +47,12 @@ export default function Magic({ onAdd }) {
                 className="absolute inset-0 w-full h-full object-cover"
               />
             </div>
-            <div className="h-12 sm:h-14 overflow-hidden bg-[#D6632C] flex items-center justify-center">
-              <div className="text-white text-sm sm:text-base font-semibold px-4 text-center">Accesorios a medida</div>
+            <div className="h-12 sm:h-14 overflow-hidden bg-primary flex items-center justify-center">
+              <div className="text-primary-foreground text-sm sm:text-base font-semibold px-4 text-center">Accesorios a medida</div>
             </div>
-            <div className="p-4 text-white text-center">
+            <div className="p-4 text-primary-foreground text-center">
               <h4 className="font-medium leading-tight">¿Buscas algo específico para tu mazo?</h4>
-              <p className="text-sm text-white/90 mt-2">Diseño e imprimo por encargo deck boxes con el logo y el texto que mas te guste.</p>
+              <p className="text-sm text-primary-foreground/90 mt-2">Diseño e imprimo por encargo deck boxes con el logo y el texto que mas te guste.</p>
               <div className="mt-3 flex flex-col sm:flex-row gap-2 items-center justify-center">
                 <a href={`${import.meta.env.BASE_URL}encargos.html`}>
                   <Button className="bg-white text-gray-900 hover:bg-white/90">Solicitar a medida</Button>

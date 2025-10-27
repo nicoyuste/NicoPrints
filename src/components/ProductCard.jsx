@@ -20,12 +20,12 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
   return (
     <Card className="rounded-2xl overflow-hidden">
       <CardContent className="p-0">
-        <div className="aspect-video overflow-hidden bg-gray-100">
+        <div className="aspect-video overflow-hidden bg-secondary">
           <a href={`#p/${product.slug || product.id}`} className="block w-full h-full" aria-label="Ver detalles">
             {mainImage ? (
               <img src={mainImage} alt={product.name} className="w-full h-full object-cover" />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-gray-500 text-sm">Sin imagen</div>
+              <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">Sin imagen</div>
             )}
           </a>
         </div>
@@ -36,7 +36,7 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
                 key={img.src + idx}
                 type="button"
                 onClick={() => setSelectedIndex(idx)}
-                className={`h-12 w-16 rounded-md overflow-hidden p-0 bg-transparent border ${idx === selectedIndex ? 'border-gray-900' : 'border-transparent'}`}
+                className={`h-12 w-16 rounded-md overflow-hidden p-0 bg-transparent border ${idx === selectedIndex ? 'border-foreground' : 'border-transparent'}`}
                 aria-label={`Vista ${idx + 1}`}
               >
                 <img src={img.src} alt="" className="block h-full w-full object-cover" />
@@ -48,17 +48,17 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
           <div className="flex items-start justify-between gap-2">
             <div>
               <h4 className="font-medium leading-tight">{product.name}</h4>
-              <p className="text-sm text-gray-500">{materials.join('/')}</p>
+              <p className="text-sm text-muted-foreground">{materials.join('/')}</p>
             </div>
             <Badge>{formatPrice(product.price, product.currency)}</Badge>
           </div>
-          <p ref={descRef} className="text-sm text-gray-600 mt-2 line-clamp-3">{product.description}</p>
+          <p ref={descRef} className="text-sm text-muted-foreground mt-2 line-clamp-3">{product.description}</p>
           {canPickColor && availableColors.length > 0 && (
             <div className="mt-3">
-              <label className="block text-xs text-gray-600 mb-1">Colores disponibles</label>
+              <label className="block text-xs text-muted-foreground mb-1">Colores disponibles</label>
               <div className="flex flex-wrap gap-2 mb-2">
                 {availableColors.slice(0, 12).map(c => (
-                  <span key={c.value} className="inline-block h-3.5 w-3.5 rounded-full border border-gray-300" title={c.label} aria-label={c.label} style={{ backgroundColor: c.hex }}></span>
+                  <span key={c.value} className="inline-block h-3.5 w-3.5 rounded-full border border-border" title={c.label} aria-label={c.label} style={{ backgroundColor: c.hex }}></span>
                 ))}
               </div>
             </div>

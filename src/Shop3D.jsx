@@ -441,7 +441,7 @@ export default function Shop3D() {
       )}
 
       <section className="max-w-6xl mx-auto px-4 pt-6 pb-10">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 text-white">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#4C4B4C] via-[#737A78] to-[#B0B5B3] text-white">
           <div className="px-6 py-8 md:px-10 md:py-10 flex flex-col md:flex-row md:items-center gap-4">
             <div className="flex-1">
               <div className="flex items-center gap-2 text-sm text-gray-300">

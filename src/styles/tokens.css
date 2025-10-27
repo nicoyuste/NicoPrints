@@ -1,0 +1,83 @@
+:root {
+  /* NicoPrints design tokens */
+  --np-black: 0 0% 0%;
+  --np-white: 0 0% 100%;
+  --np-gray: 0 1% 30%; /* #4C4B4C approx. */
+  --np-accent: 190 100% 42%; /* #00B4D8 */
+  --np-accent-hover: 190 100% 38%; /* 8–12% darker */
+  --np-accent-2: 164 66% 69%; /* #7BE4C8 */
+
+  /* Font families */
+  --font-sans: Inter, Roboto, system-ui, Arial, sans-serif;
+  --font-heading: Montserrat, Poppins, "Segoe UI", Roboto, Arial, sans-serif;
+
+  /* App theme tokens (consumed via Tailwind hsl(var(--...))) */
+  --background: var(--np-white);
+  --foreground: var(--np-black);
+
+  --card: var(--background);
+  --card-foreground: var(--foreground);
+
+  --popover: var(--background);
+  --popover-foreground: var(--foreground);
+
+  /* Primary = brand accent */
+  --primary: var(--np-accent);
+  --primary-foreground: var(--np-white);
+
+  /* Secondary surfaces and text */
+  --secondary: 0 0% 98%;
+  --secondary-foreground: var(--foreground);
+
+  /* Muted content */
+  --muted: 0 0% 96%;
+  --muted-foreground: var(--np-gray);
+
+  /* Subtle accent backgrounds (for hovers, ghost, etc.) */
+  --accent: 190 100% 96%;
+  --accent-foreground: 190 100% 20%;
+
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: var(--np-white);
+
+  /* Borders/inputs/ring */
+  --border: 0 0% 90%;
+  --input: 0 0% 88%;
+  --ring: var(--np-accent);
+
+  /* Radii */
+  --radius: 0.75rem; /* 12px */
+}
+
+.dark {
+  /* Keep a simple, accessible dark mapping */
+  --background: 0 0% 7%;
+  --foreground: 0 0% 98%;
+
+  --card: 0 0% 10%;
+  --card-foreground: var(--foreground);
+
+  --popover: 0 0% 10%;
+  --popover-foreground: var(--foreground);
+
+  --primary: var(--np-accent);
+  --primary-foreground: var(--np-black);
+
+  --secondary: 0 0% 16%;
+  --secondary-foreground: var(--foreground);
+
+  --muted: 0 0% 16%;
+  --muted-foreground: 0 0% 65%;
+
+  --accent: 190 100% 18%;
+  --accent-foreground: var(--foreground);
+
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: var(--foreground);
+
+  --border: 0 0% 20%;
+  --input: 0 0% 22%;
+  --ring: var(--np-accent);
+}
+
+

@@ -7,7 +7,11 @@ export default {
     './components/**/*.{js,jsx,ts,tsx}',
   ],
   theme: {
-  	extend: {
+		fontFamily: {
+			sans: ['var(--font-sans)'],
+			heading: ['var(--font-heading)'],
+		},
+		extend: {
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
