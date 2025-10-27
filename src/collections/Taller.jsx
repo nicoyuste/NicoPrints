@@ -15,7 +15,7 @@ export default function Taller({ onAdd }) {
           className="w-full h-56 sm:h-72 md:h-80 object-cover"
         />
         {/* Degradado neutro */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent to-gray-800"></div>
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent to-green-700"></div>
         {/* Título superpuesto opcional en el lado izquierdo */}
         <div className="absolute inset-0 flex items-end">
           <div className="p-4 sm:p-6 md:p-8 max-w-xl">
