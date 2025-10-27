@@ -1,0 +1,46 @@
+---
+description: Cómo generar/actualizar el CSV para Predis.ai con productos de Magic
+alwaysApply: true
+---
+
+## Predis CSV (productos Magic)
+
+Objetivo: generar `predis_magic_products.csv` con columnas `id,title,description,images` para que Predis.ai autogenere contenido.
+
+Fuente de datos:
+- `src/data/products.js` (catálogo centralizado)
+- Filtrar por `collectionId === 'magic'`
+- Usar `slug` como `id`, `name` como `title`, `description` como `description`
+- `images`: concatenar las URLs públicas separadas por coma. Acepta tanto strings como objetos `{ src }`.
+- En el caso de los separadores de cartas MTG, que en el catalogo y en la web tengo un producto para cada color, quiero que en el .csv de predis se vea solo como un solo producto y todas las imagenes en el mismo producto.
+
+
+URL públicas de imágenes:
+- El sitio sirve en dominio de `public/CNAME`: `www.nicoprints.com`
+- Generar URLs absolutas: `https://www.nicoprints.com/...`
+- Para productos con `otherImages`, concatenar también sus `src`.
+
+Campos actuales incluidos:
+- id, title, description, images
+
+Notas de formato CSV:
+- La columna `images` debe ir entre comillas si contiene varias URLs separadas por comas.
+- Mantener la cabecera exacta: `id,title,description,images`.
+
+Ruta de salida:
+- `predis_magic_products.csv` en la raíz del repo.
+
+Sugerencia de procedimiento manual:
+1) Abrir `src/data/products.js` y localizar productos `collectionId: 'magic'`.
+2) Copiar `slug`, `name`, `description`.
+3) Construir lista de imágenes a partir de `images` y `otherImages`:
+   - Si el item es string, usar tal cual.
+   - Si es objeto, usar `obj.src`.
+4) Sustituir el prefijo relativo por URL absoluta:
+   - Reemplazar `${import.meta.env.BASE_URL}` por `https://www.nicoprints.com/`.
+5) Unir las URLs por comas y encerrar en comillas.
+6) Guardar/actualizar `predis_magic_products.csv` con la cabecera y filas.
+
+Ampliaciones futuras (opcionales):
+- Añadir columnas extra si Predis lo soporta (p.ej. `price`, `category`).
+- Incluir productos de otras colecciones creando archivos CSV por colección.
