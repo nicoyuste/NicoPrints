@@ -11,22 +11,9 @@ Currently, two official plugins are available:
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
 
-# Prompts
-------------------------
-### Para añadir un producto.
-Necesito que me ayudes a añadir el siguiente producto al catalogo.
-
-[Descripcion de producto]. Crea la descripcion para ello.
-
-Precio es: 
-Material es:
-
-Image principal esta en: 
-Imagen para color con referencia [RED] esta en:
-
 ### Campañas (UTM)
 - Usa parámetros UTM en los enlaces de campaña: `utm_source`, `utm_medium`, `utm_campaign` (opcional `utm_content`, `utm_term`).
-- Ejemplo: `https://www.nicoprints.com/#magic?utm_source=instagram&utm_medium=social&utm_campaign=lanzamiento_magic`.
+- Ejemplo: `https://www.nicoprints.com/#magic?utm_source=cardBinder&utm_medium=settings&utm_campaign=settings_button`.
 
 ### Verificación
 - GA4 → Realtime: ver `page_view` y eventos anteriores.
