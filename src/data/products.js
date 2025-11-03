@@ -1,6 +1,11 @@
 // Catálogo centralizado de productos
 
 export const products = [
+
+  //
+  // Battery holders para Parkside
+  // 
+
   {
     slug: 'two-batt-wall-mount',
     collectionId: 'taller',
@@ -17,7 +22,6 @@ export const products = [
     longDescription: 'Soporte robusto para organizar dos baterías en la pared. El diseño garantiza un ajuste firme y seguro, evitando caídas accidentales. Incluye agujeros avellanados para tornillería estándar y tolerancias pensadas para impresión en PETG. Ideal para talleres domésticos y para aprovechar mejor el espacio en paneles y estanterías.\n\n<em>Nota: las imágenes mostradas corresponden a batería de <a href="https://www.lidl.es/es/bateria-inteligente-20-v-4-ah/p75400" target="_blank" rel="noreferrer">20V Parkside</a>. Otras marcas o modelos pueden variar en dimensiones y habría que ajustar las medidas. Ponte en contacto conmigo para imprimir una pieza que se ajuste a tus necesidades.</em>',
     crossReferences: ['two-batt-modular-middle', 'two-batt-modular-left-end', 'two-batt-modular-right-end', 'one-batt-standalone'],
   },
-  // Modulares 2 baterías
   {
     slug: 'two-batt-modular-middle',
     collectionId: 'taller',
@@ -119,11 +123,16 @@ export const products = [
     longDescription: 'Módulo de 1 batería con encaje a la derecha para iniciar la fila por la izquierda. Mantiene un agarre seguro de la batería y un montaje sencillo gracias a los agujeros avellanados. Diseñado para PETG, con tolerancias que favorecen la repetibilidad de impresión y la durabilidad en taller.\n\n<em>Nota: las imágenes mostradas corresponden a batería de <a href="https://www.lidl.es/es/bateria-inteligente-20-v-4-ah/p75400" target="_blank" rel="noreferrer">20V Parkside</a>. Otras marcas o modelos pueden variar en dimensiones y habría que ajustar las medidas. Ponte en contacto conmigo para imprimir una pieza que se ajuste a tus necesidades.</em>',
     crossReferences: ['one-batt-modular-left-end', 'one-batt-standalone', 'two-batt-modular-middle'],
   },
+
+  //
+  // Magic: The Gathering
+  //
+
   {
     slug: 'mtg-deck-box-60-cartas-bisagra',
     collectionId: 'magic',
     name: 'Deck box MTG 60 cartas (bisagra)',
-    price: 7,
+    price: 9.5,
     currency: 'EUR',
     images: [
       `${import.meta.env.BASE_URL}products/deck_box_latch_1_blueAndCyan_800x600.jpg`,
@@ -150,7 +159,7 @@ export const products = [
     slug: 'mtg-deck-box-60-cartas',
     collectionId: 'magic',
     name: 'Deck box MTG 60 cartas',
-    price: 6.5,
+    price: 11.20,
     currency: 'EUR',
     images: [
       `${import.meta.env.BASE_URL}products/deck_box_60_black_blue_1.png`,
@@ -172,7 +181,7 @@ export const products = [
     slug: 'mtg-deck-box-100-cartas',
     collectionId: 'magic',
     name: 'Deck box MTG 100 cartas',
-    price: 7.5,
+    price: 12.20,
     currency: 'EUR',
     images: [
       { src: `${import.meta.env.BASE_URL}products/deck_box_100_green_yellow.jpg`, colorValue: 'B_PLA_Ba_Green' },
@@ -202,7 +211,7 @@ export const products = [
     slug: 'mtg-separadores-rojo',
     collectionId: 'magic',
     name: 'Separadores MTG Rojo (lote 5)',
-    price: 3.8,
+    price: 4,
     currency: 'EUR',
     allowColorSelection: false,
     images: [
@@ -224,7 +233,7 @@ export const products = [
     slug: 'mtg-separadores-azul',
     collectionId: 'magic',
     name: 'Separadores MTG Azul (lote 5)',
-    price: 3.8,
+    price: 4,
     currency: 'EUR',
     allowColorSelection: false,
     images: [
@@ -246,7 +255,7 @@ export const products = [
     slug: 'mtg-separadores-negro',
     collectionId: 'magic',
     name: 'Separadores MTG Negro (lote 5)',
-    price: 3.8,
+    price: 4,
     currency: 'EUR',
     allowColorSelection: false,
     images: [
@@ -265,7 +274,7 @@ export const products = [
     slug: 'mtg-separadores-blanco',
     collectionId: 'magic',
     name: 'Separadores MTG Blanco (lote 5)',
-    price: 3.8,
+    price: 4,
     currency: 'EUR',
     allowColorSelection: false,
     images: [
@@ -284,7 +293,7 @@ export const products = [
     slug: 'mtg-separadores-verde',
     collectionId: 'magic',
     name: 'Separadores MTG Verde (lote 5)',
-    price: 3.8,
+    price: 4,
     currency: 'EUR',
     allowColorSelection: false,
     images: [
