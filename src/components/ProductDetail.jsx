@@ -19,13 +19,9 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
   const traits = Array.isArray(product?.traits) ? product.traits : []
   const [selectedTraits, setSelectedTraits] = useState({})
   const [errorMsg, setErrorMsg] = useState('')
-  const imageObjs = Array.isArray(product?.images)
-    ? product.images.map(img => (typeof img === 'string' ? { src: img, colorValue: null } : img))
-    : []
+  const imageObjs = Array.isArray(product?.images) ? product.images : []
   const mainImage = imageObjs[Math.min(selectedIndex, Math.max(0, imageObjs.length - 1))]?.src
-  const otherImageObjs = (product?.otherImages && Array.isArray(product.otherImages))
-    ? product.otherImages.map(img => (typeof img === 'string' ? { src: img } : img))
-    : []
+  const otherImageObjs = Array.isArray(product?.otherImages) ? product.otherImages : []
   const descRef = useRef(null)
   const [isDescExpanded, setIsDescExpanded] = useState(false)
   const [showDescToggle, setShowDescToggle] = useState(false)

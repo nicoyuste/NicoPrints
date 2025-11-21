@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -7,11 +7,8 @@ import { COLORS } from '@/colors'
 
 export default function ProductCard({ product, onAdd, contactEmail }) {
   const [selectedIndex, setSelectedIndex] = useState(0)
-  const materials = Array.isArray(product.material) ? product.material : [product.material]
-  const descRef = useRef(null)
-  const imageObjs = Array.isArray(product.images)
-    ? product.images.map(img => (typeof img === 'string' ? { src: img, colorValue: null } : img))
-    : []
+  const materials = Array.isArray(product.material) ? product.material : [product.material].filter(Boolean)
+  const imageObjs = Array.isArray(product.images) ? product.images : []
 
   const mainImage = imageObjs[Math.min(selectedIndex, imageObjs.length - 1)]?.src
   const availableColors = COLORS.filter(c => materials.includes(c.material))
@@ -77,7 +74,7 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
                 : formatPrice(product.price, product.currency)}
             </Badge>
           </div>
-          <p ref={descRef} className="text-sm text-muted-foreground mt-2 line-clamp-3">{product.description}</p>
+          <p className="text-sm text-muted-foreground mt-2 line-clamp-3">{product.description}</p>
           {canPickColor && availableColors.length > 0 && (
             <div className="mt-3">
               <label className="block text-xs text-muted-foreground mb-1">Colores disponibles</label>
