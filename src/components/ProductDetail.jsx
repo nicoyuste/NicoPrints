@@ -16,6 +16,8 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
   const filteredColors = COLORS.filter(c => c.material === selectedMaterial)
   const [selectedColor, setSelectedColor] = useState(filteredColors[0]?.value || '')
   const [selectedByPart, setSelectedByPart] = useState({})
+  const traits = Array.isArray(product?.traits) ? product.traits : []
+  const [selectedTraits, setSelectedTraits] = useState({})
   const [errorMsg, setErrorMsg] = useState('')
   const imageObjs = Array.isArray(product?.images)
     ? product.images.map(img => (typeof img === 'string' ? { src: img, colorValue: null } : img))
@@ -34,6 +36,37 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
       .map(sl => productBySlug.get(sl))
       .filter(p => p && p.slug !== product.slug)
   }, [product])
+
+  // Inicializar selección de traits cuando cambia el producto
+  useEffect(() => {
+    if (!product || traits.length === 0) { setSelectedTraits({}); return }
+    const init = {}
+    for (const trait of traits) {
+      const first = Array.isArray(trait.options) && trait.options.length > 0 ? trait.options[0] : null
+      init[trait.id] = first ? String(first.value) : ''
+    }
+    setSelectedTraits(init)
+  }, [product])
+
+  const computedPrice = useMemo(() => {
+    if (!product) return 0
+    let base = product.price || 0
+    if (traits.length > 0) {
+      const baseTrait = traits.find(t => t.mode === 'base')
+      if (baseTrait) {
+        const val = selectedTraits[baseTrait.id]
+        const opt = (baseTrait.options || []).find(o => String(o.value) === String(val))
+        if (opt && typeof opt.price === 'number') base = opt.price
+      }
+      for (const t of traits) {
+        if (t.mode !== 'addon') continue
+        const val = selectedTraits[t.id]
+        const opt = (t.options || []).find(o => String(o.value) === String(val))
+        if (opt && typeof opt.price === 'number') base += opt.price
+      }
+    }
+    return base
+  }, [product, traits, selectedTraits])
 
   // Al abrir un producto o cambiar de slug, forzar scroll al inicio
   useEffect(() => {
@@ -132,7 +165,7 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
           </div>
 
           <div className="mt-2">
-            <Badge className="bg-gray-900 text-white text-base px-3 py-1.5 rounded-md">{formatPrice(product.price, product.currency)}</Badge>
+            <Badge className="bg-gray-900 text-white text-base px-3 py-1.5 rounded-md">{formatPrice(computedPrice, product.currency)}</Badge>
           </div>
 
           <div className="mt-3">
@@ -143,6 +176,35 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
               </button>
             )}
           </div>
+
+          {/* Traits (opciones que modifican precio) */}
+          {traits.length > 0 && (
+            <div className="mt-4 space-y-3">
+              {traits.map(trait => (
+                <div key={trait.id}>
+                  <div className="text-xs text-gray-600 mb-1">{trait.label}</div>
+                  <div className="flex flex-wrap gap-2">
+                    {(trait.options || []).map(opt => (
+                      <button
+                        key={String(opt.value)}
+                        type="button"
+                        onClick={() => setSelectedTraits(prev => ({ ...prev, [trait.id]: String(opt.value) }))}
+                        className={`h-8 px-3 rounded-full border text-xs bg-white text-gray-900 ${String(selectedTraits[trait.id]) === String(opt.value) ? 'ring-2 ring-gray-900 border-gray-900' : 'border-gray-300'}`}
+                        aria-label={opt.label}
+                        title={opt.label}
+                      >
+                        {opt.label}{typeof opt.price === 'number' ? (
+                          trait.mode === 'base'
+                            ? ` — ${formatPrice(opt.price, product.currency)}`
+                            : ` — +${formatPrice(opt.price, product.currency)}`
+                        ) : null}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* Picker global (productos simples) */}
           {parts.length === 0 && materials.length > 1 && (
@@ -266,15 +328,32 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
                   setErrorMsg('Selecciona un color para todas las partes antes de continuar.')
                   return
                 }
-                const selections = parts.map(p => {
+                const selectionsParts = parts.map(p => {
                   const s = selectedByPart[p.id] || { material: '', colorValue: '' }
                   const colorObj = COLORS.find(c => c.value === s.colorValue) || null
                   return { partId: p.id, partLabel: p.label, material: s.material || '', colorValue: s.colorValue || '', colorLabel: colorObj?.label || null }
                 })
-                onAdd(product, selections)
+                const traitSelections = traits.map(t => {
+                  const val = String(selectedTraits[t.id] || '')
+                  const opt = (t.options || []).find(o => String(o.value) === val) || null
+                  return { partId: `trait_${t.id}`, partLabel: t.label, material: '', colorValue: val, colorLabel: opt?.label || val }
+                })
+                const combined = [...selectionsParts, ...traitSelections]
+                const productForCart = { ...product, price: computedPrice }
+                onAdd(productForCart, combined)
               } else {
-                const colorArg = canPickColor ? currentColorObj : null
-                onAdd(product, colorArg, selectedMaterial)
+                const traitSelections = traits.map(t => {
+                  const val = String(selectedTraits[t.id] || '')
+                  const opt = (t.options || []).find(o => String(o.value) === val) || null
+                  return { partId: `trait_${t.id}`, partLabel: t.label, material: '', colorValue: val, colorLabel: opt?.label || val }
+                })
+                if (traits.length > 0) {
+                  const productForCart = { ...product, price: computedPrice }
+                  onAdd(productForCart, traitSelections)
+                } else {
+                  const colorArg = canPickColor ? currentColorObj : null
+                  onAdd(product, colorArg, selectedMaterial)
+                }
               }
             }}>Añadir al carrito</Button>
             {errorMsg && (

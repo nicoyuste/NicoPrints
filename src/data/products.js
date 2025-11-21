@@ -135,6 +135,27 @@ export const products = [
     name: 'Deck box MTG 60 cartas (bisagra)',
     price: 9.5,
     currency: 'EUR',
+    traits: [
+      {
+        id: 'num_cards',
+        label: 'Número de cartas',
+        mode: 'base',
+        options: [
+          { value: '60', label: '60', price: 5 },
+          { value: '100', label: '100', price: 7 },
+        ],
+      },
+      {
+        id: 'sleeve_mode',
+        label: 'Fundas',
+        mode: 'addon',
+        options: [
+          { value: 'none', label: 'Sin funda', price: 0 },
+          { value: 'single', label: 'Funda simple', price: 2 },
+          { value: 'double', label: 'Funda doble', price: 4 },
+        ],
+      },
+    ],
     images: [
       `${import.meta.env.BASE_URL}products/deck_box_latch_1_blueAndCyan_800x600.jpg`,
       `${import.meta.env.BASE_URL}products/deck_box_latch_2_blueAndYellow_800x600.jpg`,
