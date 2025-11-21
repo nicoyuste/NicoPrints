@@ -5,6 +5,34 @@ import ProductCard from '@/components/ProductCard'
 import { products as allProducts } from '@/data/products'
 
 export default function Magic({ onAdd }) {
+  const sections = [
+    {
+      id: 'deck-box-bisagra',
+      title: 'Deck box con bisagra',
+      description: 'Cierre de bisagra: bloquea la tapa de forma segura y evita aperturas accidentales. Ideal para transporte en mochila y uso diario; opciones de color y dibujos personalizables.',
+      filter: (p) => p.collectionId === 'magic' && p.collectionSection === 'deck-box-bisagra',
+    },
+    {
+      id: 'separadores',
+      title: 'Separadores',
+      description: 'Organiza tus cartas por tipo con pestaña alta e icono.',
+      filter: (p) => p.collectionId === 'magic' && p.collectionSection === 'separadores',
+    },
+    {
+      id: 'deck-box',
+      title: 'Deck box (imanes)',
+      description: 'Cierre imantado y ajuste preciso para 60 y 100 cartas.',
+      filter: (p) => p.collectionId === 'magic' && p.collectionSection === 'deck-box',
+    },
+  ]
+
+  function scrollToSection(id) {
+    const el = document.getElementById(`sec-${id}`)
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }
+
   return (
     <section className="max-w-6xl mx-auto px-4 py-10">
       <div className="relative rounded-3xl overflow-hidden">
@@ -34,10 +62,43 @@ export default function Magic({ onAdd }) {
         </div>
       </div>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
-        {allProducts.filter(p => p.collectionId === 'magic').map((p) => (
-          <ProductCard key={p.slug} product={p} onAdd={onAdd} contactEmail={CONTACT_EMAIL} />
+      {/* Section chips */}
+      <div className="mt-4 flex flex-wrap gap-2">
+        {sections.map(s => (
+          <button
+            key={s.id}
+            type="button"
+            onClick={() => scrollToSection(s.id)}
+            className="h-9 px-3 rounded-full border text-sm bg-white text-gray-900 border-gray-300 hover:bg-gray-50"
+          >
+            {s.title}
+          </button>
         ))}
+      </div>
+
+      {/* Sections */}
+      <div className="mt-6 space-y-10">
+        {sections.map((s) => {
+          const items = allProducts.filter(s.filter)
+          if (items.length === 0) return null
+          return (
+            <div key={s.id} id={`sec-${s.id}`} className="scroll-mt-24">
+              <div className="mb-3">
+                <h2 className="text-xl font-semibold">{s.title}</h2>
+                <p className="text-sm text-gray-600 mt-1">{s.description}</p>
+              </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {items.map((p) => (
+                  <ProductCard key={p.slug} product={p} onAdd={onAdd} contactEmail={CONTACT_EMAIL} />
+                ))}
+              </div>
+            </div>
+          )
+        })}
+      </div>
+
+      {/* CTA custom accessories */}
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
         <Card className="rounded-2xl overflow-hidden">
           <CardContent className="p-0 bg-primary h-full flex flex-col min-h-[24rem] sm:min-h-[26rem]">
             <div className="relative overflow-hidden bg-gray-100 flex-1 min-h-[10rem]">

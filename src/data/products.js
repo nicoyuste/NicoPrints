@@ -131,6 +131,7 @@ export const products = [
   {
     slug: 'mtg-deck-box-60-cartas-bisagra',
     collectionId: 'magic',
+    collectionSection: 'deck-box-bisagra',
     name: 'Deck box MTG 60 cartas (bisagra)',
     price: 9.5,
     currency: 'EUR',
@@ -158,6 +159,7 @@ export const products = [
   {
     slug: 'mtg-deck-box-60-cartas',
     collectionId: 'magic',
+    collectionSection: 'deck-box',
     name: 'Deck box MTG 60 cartas',
     price: 11.20,
     currency: 'EUR',
@@ -180,6 +182,7 @@ export const products = [
   {
     slug: 'mtg-deck-box-100-cartas',
     collectionId: 'magic',
+    collectionSection: 'deck-box',
     name: 'Deck box MTG 100 cartas',
     price: 12.20,
     currency: 'EUR',
@@ -210,6 +213,7 @@ export const products = [
   {
     slug: 'mtg-separadores-rojo',
     collectionId: 'magic',
+    collectionSection: 'separadores',
     name: 'Separadores MTG Rojo (lote 5)',
     price: 4,
     currency: 'EUR',
@@ -232,6 +236,7 @@ export const products = [
   {
     slug: 'mtg-separadores-azul',
     collectionId: 'magic',
+    collectionSection: 'separadores',
     name: 'Separadores MTG Azul (lote 5)',
     price: 4,
     currency: 'EUR',
@@ -254,6 +259,7 @@ export const products = [
   {
     slug: 'mtg-separadores-negro',
     collectionId: 'magic',
+    collectionSection: 'separadores',
     name: 'Separadores MTG Negro (lote 5)',
     price: 4,
     currency: 'EUR',
@@ -273,6 +279,7 @@ export const products = [
   {
     slug: 'mtg-separadores-blanco',
     collectionId: 'magic',
+    collectionSection: 'separadores',
     name: 'Separadores MTG Blanco (lote 5)',
     price: 4,
     currency: 'EUR',
@@ -292,6 +299,7 @@ export const products = [
   {
     slug: 'mtg-separadores-verde',
     collectionId: 'magic',
+    collectionSection: 'separadores',
     name: 'Separadores MTG Verde (lote 5)',
     price: 4,
     currency: 'EUR',
