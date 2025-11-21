@@ -182,13 +182,13 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
             <div className="mt-4 space-y-3">
               {traits.map(trait => (
                 <div key={trait.id}>
-                  <div className="text-xs text-gray-600">{trait.label}</div>
+                  <div className="text-xs text-gray-600 mb-1">{trait.label}</div>
                   {trait.description ? (
-                    <div className="text-[11px] text-gray-500 mb-1">{trait.description}</div>
+                    <div className="text-[11px] text-gray-500 mt-1 mb-2">{trait.description}</div>
                   ) : (
-                    <div className="mb-1"></div>
+                    <div className="mb-2"></div>
                   )}
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 mt-1.5">
                     {(trait.options || []).map(opt => (
                       <button
                         key={String(opt.value)}
@@ -198,11 +198,7 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
                         aria-label={opt.label}
                         title={opt.label}
                       >
-                        {opt.label}{typeof opt.price === 'number' ? (
-                          trait.mode === 'base'
-                            ? ` — ${formatPrice(opt.price, product.currency)}`
-                            : ` — +${formatPrice(opt.price, product.currency)}`
-                        ) : null}
+                        {opt.label}
                       </button>
                     ))}
                   </div>

@@ -139,7 +139,6 @@ export const products = [
         id: 'num_cards',
         label: 'Número de cartas',
         mode: 'base',
-        description: 'Define la capacidad del deck. Esta opción fija el precio base.',
         options: [
           { value: '60', label: '60', price: 5 },
           { value: '100', label: '100', price: 7 },
@@ -149,7 +148,7 @@ export const products = [
         id: 'sleeve_mode',
         label: 'Fundas',
         mode: 'addon',
-        description: 'Añade espacio interior para fundas. Incrementa el precio según el grosor.',
+        description: 'Selecciona si guardas tus cartas con funda, dobre funda o sin funda. Podemos ajustar el tamaño de tu Deck box para justo lo que necesitas.',
         options: [
           { value: 'none', label: 'Sin funda', price: 0 },
           { value: 'single', label: 'Funda simple', price: 2 },

@@ -16,6 +16,27 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
   const mainImage = imageObjs[Math.min(selectedIndex, imageObjs.length - 1)]?.src
   const availableColors = COLORS.filter(c => materials.includes(c.material))
   const canPickColor = product?.allowColorSelection !== false
+  const traits = Array.isArray(product?.traits) ? product.traits : []
+
+  // Compute starting price for products with traits ("Desde")
+  const hasTraits = traits.length > 0
+  let startingPrice = typeof product.price === 'number' ? product.price : 0
+  if (hasTraits) {
+    const baseTrait = traits.find(t => t.mode === 'base')
+    if (baseTrait && Array.isArray(baseTrait.options) && baseTrait.options.length > 0) {
+      const minBase = Math.min(...baseTrait.options.map(o => (typeof o.price === 'number' ? o.price : 0)))
+      startingPrice = isFinite(minBase) ? minBase : 0
+    }
+    const addonMinSum = traits
+      .filter(t => t.mode === 'addon')
+      .reduce((sum, t) => {
+        const opts = Array.isArray(t.options) ? t.options : []
+        if (opts.length === 0) return sum
+        const minAddon = Math.min(...opts.map(o => (typeof o.price === 'number' ? o.price : 0)))
+        return sum + (isFinite(minAddon) ? minAddon : 0)
+      }, 0)
+    startingPrice += addonMinSum
+  }
 
   return (
     <Card className="rounded-2xl overflow-hidden">
@@ -50,7 +71,11 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
               <h4 className="font-medium leading-tight">{product.name}</h4>
               <p className="text-sm text-muted-foreground">{materials.join('/')}</p>
             </div>
-            <Badge>{formatPrice(product.price, product.currency)}</Badge>
+            <Badge>
+              {hasTraits
+                ? `Desde: ${formatPrice(startingPrice, product.currency)}`
+                : formatPrice(product.price, product.currency)}
+            </Badge>
           </div>
           <p ref={descRef} className="text-sm text-muted-foreground mt-2 line-clamp-3">{product.description}</p>
           {canPickColor && availableColors.length > 0 && (
