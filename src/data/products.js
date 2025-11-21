@@ -129,17 +129,17 @@ export const products = [
   //
 
   {
-    slug: 'mtg-deck-box-60-cartas-bisagra',
+    slug: 'mtg-deck-box-bisagra-simple',
     collectionId: 'magic',
     collectionSection: 'deck-box-bisagra',
-    name: 'Deck box MTG 60 cartas (bisagra)',
-    price: 9.5,
+    name: 'Deck con bisagra simple',
     currency: 'EUR',
     traits: [
       {
         id: 'num_cards',
         label: 'Número de cartas',
         mode: 'base',
+        description: 'Define la capacidad del deck. Esta opción fija el precio base.',
         options: [
           { value: '60', label: '60', price: 5 },
           { value: '100', label: '100', price: 7 },
@@ -149,6 +149,7 @@ export const products = [
         id: 'sleeve_mode',
         label: 'Fundas',
         mode: 'addon',
+        description: 'Añade espacio interior para fundas. Incrementa el precio según el grosor.',
         options: [
           { value: 'none', label: 'Sin funda', price: 0 },
           { value: 'single', label: 'Funda simple', price: 2 },

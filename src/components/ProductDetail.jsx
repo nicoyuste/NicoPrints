@@ -182,7 +182,12 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
             <div className="mt-4 space-y-3">
               {traits.map(trait => (
                 <div key={trait.id}>
-                  <div className="text-xs text-gray-600 mb-1">{trait.label}</div>
+                  <div className="text-xs text-gray-600">{trait.label}</div>
+                  {trait.description ? (
+                    <div className="text-[11px] text-gray-500 mb-1">{trait.description}</div>
+                  ) : (
+                    <div className="mb-1"></div>
+                  )}
                   <div className="flex flex-wrap gap-2">
                     {(trait.options || []).map(opt => (
                       <button
