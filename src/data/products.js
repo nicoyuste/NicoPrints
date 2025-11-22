@@ -269,7 +269,7 @@ export const products = [
       { id: 'box', label: 'Caja', materials: ['PLA', 'PLA Mate'] },
     ],
     description: 'Deck box para 100 cartas (ideal Commander). Cierre con imanes para mayor seguridad. Protege las cartas con o sin funda gracias al ajuste preciso y al cuerpo rígido. Logo superior personalizable.',
-    longDescription: 'Caja para mazos de hasta 100 cartas, compatible con fundas estándar. El cierre imantado ayuda a que no se abra durante el transporte. El ajuste interior mantiene las cartas firmes sin holguras y la rigidez de la impresión ofrece protección fiable. El logotipo de la tapa puede personalizarse (texto o imagen); si quieres un diseño distinto al de las fotos, ponte en contacto. Impreso en PLA o PLA Mate con varias opciones de color.',
+    longDescription: 'Caja para mazos de hasta 100 cartas, compatible con fundas estándar. El cierre imantado ayuda a que no se abra durante el transporte. El ajuste interior mantiene las cartas firmes sin holguras y la rigidez de la impresión ofrece protección fiable. El logotipo de la tapa puede personalizarse (texto o imagen); si quieres un diseño distinto al de las fotos, ponte en contacto. Impreso en 3D con varias opciones de color.',
     crossReferences: ['mtg-deck-box-60-cartas'],
   },
   {
@@ -292,7 +292,7 @@ export const products = [
     category: 'Magic: The Gathering',
     material: ['PLA'],
     description: 'Lote de 5 separadores para cartas MTG en color rojo: Instantáneo, Conjuro, Encantamiento, Criatura y Tierras.',
-    longDescription: 'Organiza tu colección de Magic: The Gathering con este set de 5 separadores impresos en 3D. Cada separador incluye título grande y pictograma: Instantáneo, Conjuro, Encantamiento, Criatura y Tierras. El diseño de pestaña elevada facilita identificarlos de un vistazo dentro de cajas o binders, y los bordes están suavizados para no dañar fundas. Fabricados en PLA con buena rigidez para aguantar el uso diario.\n\nSi necesitas otros títulos (por ejemplo, Artefacto, Planeswalker, Sideboard, Tokens) o quieres iconos/dibujos diferentes, puedo diseñarlos e imprimirlos a medida. Visita la sección de encargos y cuéntame tu idea: <a href="encargos.html" target="_blank" rel="noreferrer noopener">encargos</a>.',
+    longDescription: 'Organiza tu colección de Magic: The Gathering con este set de 5 separadores impresos en 3D. Cada separador incluye título grande y pictograma: Instantáneo, Conjuro, Encantamiento, Criatura y Tierras. El diseño de pestaña elevada facilita identificarlos de un vistazo dentro de cajas o binders, y los bordes están suavizados para no dañar fundas. Fabricados en 3D con buena rigidez para aguantar el uso diario.\n\nSi necesitas otros títulos (por ejemplo, Artefacto, Planeswalker, Sideboard, Tokens) o quieres iconos/dibujos diferentes, puedo diseñarlos e imprimirlos a medida. Visita la sección de encargos y cuéntame tu idea: <a href="encargos.html" target="_blank" rel="noreferrer noopener">encargos</a>.',
     crossReferences: ['mtg-separadores-azul', 'mtg-separadores-negro', 'mtg-separadores-blanco', 'mtg-separadores-verde'],
   },
   {
@@ -315,7 +315,7 @@ export const products = [
     category: 'Magic: The Gathering',
     material: ['PLA'],
     description: 'Lote de 5 separadores para cartas MTG en color azul: Instantáneo, Conjuro, Encantamiento, Criatura y Tierras.',
-    longDescription: 'Set de cinco separadores para clasificar tus cartas de Magic: The Gathering. Impresos en PLA y con pestaña alta para localizar rápido cada sección. Incluye: Instantáneo, Conjuro, Encantamiento, Criatura y Tierras. Superficie y bordes pensados para convivir con fundas sin engancharse.\n\n¿Buscas otros nombres o iconos? Puedo personalizar texto, tipografía e ilustraciones y producirlos en PLA. Escríbeme desde la página de <a href="encargos.html" target="_blank" rel="noreferrer noopener">encargos</a>.',
+    longDescription: 'Set de cinco separadores para clasificar tus cartas de Magic: The Gathering. Impresos en 3D y con pestaña alta para localizar rápido cada sección. Incluye: Instantáneo, Conjuro, Encantamiento, Criatura y Tierras. Superficie y bordes pensados para convivir con fundas sin engancharse.\n\n¿Buscas otros nombres o iconos? Puedo personalizar texto, tipografía e ilustraciones. Escríbeme desde la página de <a href="encargos.html" target="_blank" rel="noreferrer noopener">encargos</a>.',
     crossReferences: ['mtg-separadores-rojo', 'mtg-separadores-negro', 'mtg-separadores-blanco', 'mtg-separadores-verde'],
   },
   {
@@ -355,7 +355,7 @@ export const products = [
     category: 'Magic: The Gathering',
     material: ['PLA'],
     description: 'Lote de 5 separadores para cartas MTG en color blanco: Instantáneo, Conjuro, Encantamiento, Criatura y Tierras.',
-    longDescription: 'Pack de 5 separadores para Magic: The Gathering. Cada pieza está rotulada y acompañada de un icono para reconocer más rápido cada categoría (Instantáneo, Conjuro, Encantamiento, Criatura, Tierras). Fabricados en PLA con buena rigidez y acabado pensado para uso con fundas.\n\n¿Quieres un diseño diferente (otros títulos, idiomas o dibujos)? Realizo diseños a medida e impresión bajo pedido. Más info en <a href="encargos.html" target="_blank" rel="noreferrer noopener">encargos</a>.',
+    longDescription: 'Pack de 5 separadores para Magic: The Gathering. Cada pieza está rotulada y acompañada de un icono para reconocer más rápido cada categoría (Instantáneo, Conjuro, Encantamiento, Criatura, Tierras). Fabricados con buena rigidez y acabado pensado para uso con fundas.\n\n¿Quieres un diseño diferente (otros títulos, idiomas o dibujos)? Realizo diseños a medida e impresión bajo pedido. Más info en <a href="encargos.html" target="_blank" rel="noreferrer noopener">encargos</a>.',
     crossReferences: ['mtg-separadores-rojo', 'mtg-separadores-azul', 'mtg-separadores-negro', 'mtg-separadores-verde'],
   },
   {
@@ -375,7 +375,7 @@ export const products = [
     category: 'Magic: The Gathering',
     material: ['PLA'],
     description: 'Lote de 5 separadores para cartas MTG en color verde: Instantáneo, Conjuro, Encantamiento, Criatura y Tierras.',
-    longDescription: 'Conjunto de 5 separadores pensados para clasificar tus cartas de MTG. Impresos en PLA, con pestañas altas y texto/icono grande para consulta rápida en cajas o archivadores. Incluye: Instantáneo, Conjuro, Encantamiento, Criatura y Tierras.\n\nPuedo fabricar separadores personalizados con los títulos y dibujos que necesites. Ponte en contacto a través de la sección de <a href="encargos.html" target="_blank" rel="noreferrer noopener">encargos</a> y lo preparo a medida.',
+    longDescription: 'Conjunto de 5 separadores pensados para clasificar tus cartas de MTG. Impresos en 3D, con pestañas altas y texto/icono grande para consulta rápida en cajas o archivadores. Incluye: Instantáneo, Conjuro, Encantamiento, Criatura y Tierras.\n\nPuedo fabricar separadores personalizados con los títulos y dibujos que necesites. Ponte en contacto a través de la sección de <a href="encargos.html" target="_blank" rel="noreferrer noopener">encargos</a> y lo preparo a medida.',
     crossReferences: ['mtg-separadores-rojo', 'mtg-separadores-azul', 'mtg-separadores-negro', 'mtg-separadores-blanco'],
   },
   {
