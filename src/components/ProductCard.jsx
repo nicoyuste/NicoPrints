@@ -10,10 +10,24 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
   const materials = Array.isArray(product.material) ? product.material : [product.material].filter(Boolean)
   const imageObjs = Array.isArray(product.images) ? product.images : []
 
-  const mainImage = imageObjs[Math.min(selectedIndex, imageObjs.length - 1)]?.src
+  // Filter images by default trait selections (if traits exist and images declare traits)
+  const traits = Array.isArray(product?.traits) ? product.traits : []
+  const defaultTraitValues = traits
+    .map(t => {
+      const opts = Array.isArray(t.options) ? t.options : []
+      const def = opts.find(o => o && o.default === true) || opts[0] || null
+      return def ? String(def.value) : null
+    })
+    .filter(Boolean)
+  const imagesMatchingDefaults = imageObjs.filter(img => {
+    const imgVals = Array.isArray(img?.traits) ? img.traits.map(v => String(v)) : []
+    return defaultTraitValues.every(v => imgVals.includes(v))
+  })
+  const shownImages = imagesMatchingDefaults.length > 0 ? imagesMatchingDefaults : imageObjs
+
+  const mainImage = shownImages[Math.min(selectedIndex, Math.max(0, shownImages.length - 1))]?.src
   const availableColors = COLORS.filter(c => materials.includes(c.material))
   const canPickColor = product?.allowColorSelection !== false
-  const traits = Array.isArray(product?.traits) ? product.traits : []
 
   // Compute starting price for products with traits ("Desde")
   const hasTraits = traits.length > 0
@@ -49,7 +63,7 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
         </div>
         {imageObjs.length > 1 && (
           <div className="px-4 pt-3 flex gap-2 overflow-x-auto no-scrollbar">
-            {imageObjs.map((img, idx) => (
+            {shownImages.map((img, idx) => (
               <button
                 key={img.src + idx}
                 type="button"

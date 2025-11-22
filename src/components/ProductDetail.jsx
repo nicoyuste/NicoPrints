@@ -33,13 +33,14 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
       .filter(p => p && p.slug !== product.slug)
   }, [product])
 
-  // Inicializar selección de traits cuando cambia el producto
+  // Inicializar selección de traits cuando cambia el producto (usar defaults si existen)
   useEffect(() => {
     if (!product || traits.length === 0) { setSelectedTraits({}); return }
     const init = {}
     for (const trait of traits) {
-      const first = Array.isArray(trait.options) && trait.options.length > 0 ? trait.options[0] : null
-      init[trait.id] = first ? String(first.value) : ''
+      const opts = Array.isArray(trait.options) ? trait.options : []
+      const def = opts.find(o => o && o.default === true) || opts[0] || null
+      init[trait.id] = def ? String(def.value) : ''
     }
     setSelectedTraits(init)
   }, [product])
@@ -127,20 +128,29 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
 
   const allPartsSelected = parts.length === 0 || parts.every(p => Boolean(selectedByPart[p.id]?.colorValue))
 
+  // Filtrar imágenes por traits seleccionados
+  const selectedTraitValues = traits.map(t => String(selectedTraits[t.id] || '')).filter(Boolean)
+  const imagesMatchingSelected = imageObjs.filter(img => {
+    const imgVals = Array.isArray(img?.traits) ? img.traits.map(v => String(v)) : []
+    return selectedTraitValues.every(v => imgVals.includes(v))
+  })
+  const shownImages = imagesMatchingSelected.length > 0 ? imagesMatchingSelected : imageObjs
+  const safeIndex = Math.min(selectedIndex, Math.max(0, shownImages.length - 1))
+
   return (
     <section className="max-w-6xl mx-auto px-4 py-10 overflow-x-hidden">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
         <div>
           <div className="aspect-video overflow-hidden bg-gray-100 rounded-2xl">
-            {mainImage ? (
-              <img src={mainImage} alt={product.name} className="w-full h-full object-cover" />
+            {shownImages[safeIndex]?.src ? (
+              <img src={shownImages[safeIndex].src} alt={product.name} className="w-full h-full object-cover" />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-gray-500 text-sm">Sin imagen</div>
             )}
           </div>
-          {imageObjs.length > 1 && (
+          {shownImages.length > 1 && (
             <div className="mt-3 flex gap-2 overflow-x-auto no-scrollbar">
-              {imageObjs.map((img, idx) => (
+              {shownImages.map((img, idx) => (
                 <button
                   key={img.src + idx}
                   type="button"
