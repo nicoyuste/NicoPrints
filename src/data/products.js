@@ -126,7 +126,8 @@ export const products = [
 
   //
   // Magic: The Gathering
-  //
+  
+  // Deck Boxes
   {
     slug: 'deck-box-v2-top-loader-trail-sideboard',
     collectionId: 'magic',
@@ -161,6 +162,10 @@ export const products = [
       { src: `${import.meta.env.BASE_URL}products/deck_box_top_loader_trail_sideboard/top_loader_sideboard_trail_6.png` },
       { src: `${import.meta.env.BASE_URL}products/deck_box_top_loader_trail_sideboard/top_loader_sideboard_trail_2.png` },
     ],
+    otherImages: [
+      { src: `${import.meta.env.BASE_URL}products/deck_box_top_loader_trail_sideboard/final_fantasy_top_loader_1.png`},
+      { src: `${import.meta.env.BASE_URL}products/deck_box_top_loader_trail_sideboard/final_fantasy_top_loader_2.png`},
+    ],
     category: 'Magic: The Gathering',
     material: ['PLA', 'PLA Mate'],
     parts: [
@@ -170,7 +175,7 @@ export const products = [
     ],
     description: 'Cierre por bisagra, top loader en un lateral, cajón y sideboard. De 60 o 100 cartas con funda simple o doble. En los colores que tu quieras.',
     longDescription: 'Este deck box incorpora un cierre de bisagra integrado que bloquea la tapa de forma mecánica: no necesita imanes y no se abre por golpes ni vibraciones. Incluye un top loader en el lateral para poder tener tu commander siempre visible o identificar el mazo con la carta que tu quieras. En el interior, hay un cajón para tus dados, contadores o lo que necesites y también hueco para tu sideboard. La geometría interior mantiene las cartas firmes (elige bien tu modelo), de modo que no se descolocan ni se salen.\n\nPuedes configurar los colores de las tres piezas —tapa, cierre y base— para combinarlo con tu mazo. Si quieres añadir un texto, logotipo o un relieve decorativo en la tapa, puedo diseñarlo e imprimirlo a medida. Escríbeme desde la página de <a href="encargos.html" target="_blank" rel="noreferrer noopener">encargos</a>.',
-    crossReferences: ['mtg-deck-box-60-cartas'],
+    crossReferences: ['deck-box-v2-simple'],
   },
   {
     slug: 'deck-box-v2-simple',
@@ -215,63 +220,10 @@ export const products = [
     ],
     description: 'Deck box con cierre por bisagra. De 60 o 100 cartas con funda simple o doble. En los colores que tu quieras.',
     longDescription: 'Este deck box incorpora un cierre de bisagra integrado que bloquea la tapa de forma mecánica: no necesita imanes y no se abre por golpes ni vibraciones. La geometría interior mantiene las cartas firmes con funda o sin ella (elige bien tu modelo), de modo que no se descolocan ni se salen en la mochila.\n\nPuedes configurar los colores de las tres piezas —tapa, cierre y base— para combinarlo con tu mazo. Si quieres añadir un texto, logotipo o un relieve decorativo en la tapa, puedo diseñarlo e imprimirlo a medida. Escríbeme desde la página de <a href="encargos.html" target="_blank" rel="noreferrer noopener">encargos</a>.',
-    crossReferences: ['mtg-deck-box-60-cartas'],
+    crossReferences: ['deck-box-v2-top-loader-trail-sideboard'],
   },
 
-  {
-    slug: 'mtg-deck-box-60-cartas',
-    collectionId: 'magic',
-    collectionSection: 'deck-box',
-    name: 'Deck box MTG 60 cartas',
-    price: 11.20,
-    currency: 'EUR',
-    images: [
-      { src: `${import.meta.env.BASE_URL}products/deck_box_60_black_blue_1.png` },
-      { src: `${import.meta.env.BASE_URL}products/deck_box_60_red_blue_1.jpg` },
-      { src: `${import.meta.env.BASE_URL}products/deck_box_60_white_yellow_1.png` },
-    ],
-    category: 'Magic: The Gathering',
-    material: ['PLA', 'PLA Mate'],
-    parts: [
-      { id: 'lid', label: 'Tapa', materials: ['PLA', 'PLA Mate'] },
-      { id: 'logo', label: 'Logo', materials: ['PLA', 'PLA Mate'] },
-      { id: 'box', label: 'Caja', materials: ['PLA', 'PLA Mate'] },
-    ],
-    description: 'Deck box para 60 cartas (formato Estándar). Cierre con imanes y ajuste preciso para proteger tus cartas con o sin funda. Logo superior personalizable.',
-    longDescription: 'Caja para mazos de hasta 60 cartas, compatible con fundas estándar. Incorpora cierre imantado para evitar aperturas accidentales durante el transporte. El interior ajustado reduce holguras y la rigidez del material protege las cartas. El logotipo de la tapa se puede personalizar (texto o imagen). Impreso en 3D con varias opciones de color.',
-    crossReferences: ['mtg-deck-box-100-cartas', 'mtg-deck-box-60-cartas-bisagra'],
-  },
-  {
-    slug: 'mtg-deck-box-100-cartas',
-    collectionId: 'magic',
-    collectionSection: 'deck-box',
-    name: 'Deck box MTG 100 cartas',
-    price: 12.20,
-    currency: 'EUR',
-    images: [
-      { src: `${import.meta.env.BASE_URL}products/deck_box_100_green_yellow.jpg` },
-      { src: `${import.meta.env.BASE_URL}products/deck_box_100_green_yellow_2.jpg` },
-      { src: `${import.meta.env.BASE_URL}products/deck_box_100_green_yellow_3.jpg` },
-      { src: `${import.meta.env.BASE_URL}products/deck_box_100_white_black.jpg` },
-      { src: `${import.meta.env.BASE_URL}products/deck_box_100_black_yellow.jpg` },
-      { src: `${import.meta.env.BASE_URL}products/deck_box_100_red_blue.jpg` },
-    ],
-    otherImages: [
-      { src: `${import.meta.env.BASE_URL}products/deck_box_100_other_blue_green.jpg`},
-      { src: `${import.meta.env.BASE_URL}products/deck_box_100_other_red_black.jpg`},
-      { src: `${import.meta.env.BASE_URL}products/deck_box_100_other_red_white.jpg`},
-    ],
-    category: 'Magic: The Gathering',
-    material: ['PLA', 'PLA Mate'],
-    parts: [
-      { id: 'lid', label: 'Tapa', materials: ['PLA', 'PLA Mate'] },
-      { id: 'logo', label: 'Logo', materials: ['PLA', 'PLA Mate'] },
-      { id: 'box', label: 'Caja', materials: ['PLA', 'PLA Mate'] },
-    ],
-    description: 'Deck box para 100 cartas (ideal Commander). Cierre con imanes para mayor seguridad. Protege las cartas con o sin funda gracias al ajuste preciso y al cuerpo rígido. Logo superior personalizable.',
-    longDescription: 'Caja para mazos de hasta 100 cartas, compatible con fundas estándar. El cierre imantado ayuda a que no se abra durante el transporte. El ajuste interior mantiene las cartas firmes sin holguras y la rigidez de la impresión ofrece protección fiable. El logotipo de la tapa puede personalizarse (texto o imagen); si quieres un diseño distinto al de las fotos, ponte en contacto. Impreso en 3D con varias opciones de color.',
-    crossReferences: ['mtg-deck-box-60-cartas'],
-  },
+  // Separadores
   {
     slug: 'mtg-separadores-rojo',
     collectionId: 'magic',
