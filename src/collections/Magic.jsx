@@ -18,12 +18,6 @@ export default function Magic({ onAdd }) {
       description: 'Organiza tus cartas por tipo con pestaña alta e icono.',
       filter: (p) => p.collectionId === 'magic' && p.collectionSection === 'separadores',
     },
-    {
-      id: 'deck-box',
-      title: 'Deck box (imanes)',
-      description: 'Cierre imantado y ajuste preciso para 60 y 100 cartas.',
-      filter: (p) => p.collectionId === 'magic' && p.collectionSection === 'deck-box',
-    },
   ]
 
   function scrollToSection(id) {
@@ -129,7 +123,6 @@ export default function Magic({ onAdd }) {
     </section>
   )
 }
-
 
 
 
