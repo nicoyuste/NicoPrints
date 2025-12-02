@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Redirigiendo…</title>
+    <script>
+      // Redirect any unknown path back to the SPA entry point, preserving the intended path
+      (function() {
+        var redirect = window.location.pathname + window.location.search + window.location.hash;
+        window.location.replace('/?redirect=' + encodeURIComponent(redirect));
+      })();
+    </script>
+  </head>
+  <body></body>
+</html>

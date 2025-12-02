@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from 'react'
+import { Link, Route, Routes, useLocation } from 'react-router-dom'
 import { ShoppingCart, Trash2, Package, Mail, Menu } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -11,14 +12,118 @@ import Taller from '@/collections/Taller'
 import Magic from '@/collections/Magic'
 import ProductDetail from '@/components/ProductDetail'
 import PayPalIcon from '@/components/icons/PayPalIcon'
-import CustomOrderForm from '@/components/CustomOrderForm'
 import { CONTACT_EMAIL, PAYPAL_BUSINESS_EMAIL, SHIPPING_FEE_EUR, WHATSAPP_PHONE, WHATSAPP_DEFAULT_MESSAGE } from '@/config'
 import { trackEventGA4 } from '@/lib/utils'
 import useLocalStorage from '@/lib/useLocalStorage'
 import { formatPrice } from '@/lib/format'
 import { Badge } from '@/components/ui/badge'
 import { COLORS } from '@/colors'
+import usePageView from '@/lib/usePageView'
 
+function Home() {
+  return (
+    <>
+      <section className="max-w-6xl mx-auto px-4 pt-8">
+        <div className="grid md:grid-cols-2 gap-6 items-center">
+          <div>
+            <h2 className="text-3xl md:text-4xl font-bold">Tus ideas, y más cosas, impresas en 3D</h2>
+            <p className="mt-3 text-gray-600 md:text-lg leading-relaxed">Aficionado a la impresión 3D. Aquí encontrarás piezas prácticas que nacen del día a día: organizadores, soportes y pequeños accesorios pensados para durar y mejorar tus espacios.</p>
+            <p className="mt-2 text-gray-600">Trabajo bajo pedido en PLA y PETG, con distintos colores y acabados. Si no ves lo que buscas, <a href={`${import.meta.env.BASE_URL}encargos.html`} className="underline">pide un encargo a medida</a> y lo diseñamos para que encaje justo donde lo necesitas.</p>
+            <ul className="mt-4 grid gap-2 text-sm text-gray-700 sm:grid-cols-2">
+              <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> PLA y PETG en varios colores</li>
+              <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> Tamaño máximo 18×18×18 cm</li>
+              <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> Encargos a medida: pide presupuesto</li>
+            </ul>
+            <div className="mt-5 flex gap-2">
+              <a href="#colecciones"><Button>Ver colecciones</Button></a>
+              <a href={`${import.meta.env.BASE_URL}encargos.html`}><Button variant="outline">Contacto</Button></a>
+            </div>
+          </div>
+          <div className="rounded-3xl overflow-hidden shadow bg-white">
+            <img src={`${import.meta.env.BASE_URL}hero-print.svg`} alt="Ilustración de impresión 3D" className="w-full h-full object-cover" />
+          </div>
+        </div>
+      </section>
+
+      <section id="colecciones" className="max-w-6xl mx-auto px-4 py-10">
+        <h3 className="text-2xl font-semibold mb-4">Colecciones</h3>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <Card className="rounded-2xl overflow-hidden bg-green-700">
+            <CardContent className="p-0">
+              <div className="aspect-video overflow-hidden">
+                <img src={`${import.meta.env.BASE_URL}taller_a_medida.jpg`} alt="Taller y organización" className="w-full h-full object-cover" />
+              </div>
+              <div className="p-4 bg-green-700 text-white">
+                <h4 className="font-medium leading-tight">Taller y organización</h4>
+                <p className="text-sm mt-1 line-clamp-3 text-white/90">Soportes para baterías y accesorios para ordenar tu taller.</p>
+                <div className="mt-3">
+                  <Link to="/taller">
+                    <Button className="bg-white text-gray-900 hover:bg-white/90">Ver colección</Button>
+                  </Link>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+          <Card className="rounded-2xl overflow-hidden bg-orange-600">
+            <CardContent className="p-0">
+              <div className="aspect-video overflow-hidden">
+                <img src={`${import.meta.env.BASE_URL}deck_examples.jpg`} alt="Magic: The Gathering" className="w-full h-full object-cover" />
+              </div>
+              <div className="p-4 bg-orange-600 text-white">
+                <h4 className="font-medium leading-tight">Magic: The Gathering</h4>
+                <p className="text-sm mt-1 line-clamp-3 text-white/90">Accesorios impresos en 3D para cartas y partidas.</p>
+                <div className="mt-3">
+                  <Link to="/magic">
+                    <Button className="bg-white text-gray-900 hover:bg-white/90">Ver colección</Button>
+                  </Link>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      <section className="max-w-6xl mx-auto px-4 pt-6 pb-10">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#4C4B4C] via-[#737A78] to-[#B0B5B3] text-white">
+          <div className="px-6 py-8 md:px-10 md:py-10 flex flex-col md:flex-row md:items-center gap-4">
+            <div className="flex-1">
+              <div className="flex items-center gap-2 text-sm text-gray-300">
+                <Package className="w-5 h-5" /> Encargos a medida
+              </div>
+              <h3 className="text-2xl md:text-3xl font-semibold mt-1">¿No encuentras lo que buscas?</h3>
+              <p className="mt-2 text-gray-300 md:text-base">Diseñamos una pieza a medida en PLA/PETG que encaje justo donde la necesitas.</p>
+              <div className="mt-4 flex flex-col gap-2">
+                <a href={`${import.meta.env.BASE_URL}encargos.html`} className="w-full">
+                  <Button className="w-full bg-white text-gray-900 hover:bg-gray-100">Solicitar presupuesto</Button>
+                </a>
+              </div>
+            </div>
+            <div className="hidden md:block">
+              <img src={`${import.meta.env.BASE_URL}hero-print.svg`} alt="Ilustración de impresión 3D" className="w-56 h-36 object-contain opacity-80 rounded-2xl" />
+            </div>
+          </div>
+          <div className="pointer-events-none absolute -bottom-20 -right-20 h-56 w-56 rounded-full bg-white/10 blur-2xl"></div>
+        </div>
+      </section>
+    </>
+  )
+}
+
+function NotFound() {
+  return (
+    <section className="max-w-6xl mx-auto px-4 py-14">
+      <div className="max-w-xl">
+        <h1 className="text-3xl font-bold mb-2">Página no encontrada</h1>
+        <p className="text-gray-600">No hemos podido encontrar la página que buscabas. Vuelve al inicio para seguir navegando.</p>
+        <div className="mt-4">
+          <Link to="/">
+            <Button>Ir al inicio</Button>
+          </Link>
+        </div>
+      </div>
+    </section>
+  )
+}
 
 export default function Shop3D() {
   const [cart, setCart] = useLocalStorage('cart3d', [])
@@ -26,11 +131,11 @@ export default function Shop3D() {
   const shipping = cart.length > 0 ? SHIPPING_FEE_EUR : 0
   const grandTotal = total + shipping
   const [checkoutStatus, setCheckoutStatus] = useState('none') // 'none' | 'success' | 'cancel'
-  const [currentCollectionId, setCurrentCollectionId] = useState(null)
-  const [currentProductSlug, setCurrentProductSlug] = useState(null)
   const [collectionsOpen, setCollectionsOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const collectionsMenuRef = useRef(null)
+  const location = useLocation()
+  usePageView()
 
   // Microtask scheduler to avoid blocking state updates
   const scheduleMicrotask = (cb) => {
@@ -105,7 +210,6 @@ export default function Shop3D() {
   function clearCart() { setCart([]) }
 
   function checkoutPayPal() {
-    const itemsCount = cart.reduce((a, b) => a + b.qty, 0)
     const lines = cart.map(i => {
       if (Array.isArray(i.selections) && i.selections.length > 0) {
         const parts = i.selections.map(p => `${p.partLabel || p.partId}: ${p.colorLabel || p.colorValue || '—'}${p.material ? ` [${p.material}]` : ''}`).join('; ')
@@ -117,16 +221,16 @@ export default function Shop3D() {
     const amount = (Math.round(grandTotal * 100) / 100).toFixed(2) // 2 decimales con punto
     const currency = 'EUR'
     const business = encodeURIComponent(PAYPAL_BUSINESS_EMAIL)
-    const baseUrl = window.location.origin + import.meta.env.BASE_URL
-    const returnUrl = encodeURIComponent(baseUrl + '#gracias')
-    const cancelUrl = encodeURIComponent(baseUrl + '#cancelado')
+    const baseUrlRaw = window.location.origin + import.meta.env.BASE_URL
+    const baseUrl = baseUrlRaw.endsWith('/') ? baseUrlRaw : `${baseUrlRaw}/`
+    const returnUrl = encodeURIComponent(baseUrl + 'gracias')
+    const cancelUrl = encodeURIComponent(baseUrl + 'cancelado')
 
     const url = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=${business}&item_name=${itemName}&amount=${amount}&currency_code=${currency}&no_note=1&no_shipping=0&return=${returnUrl}&cancel_return=${cancelUrl}`
     try { trackEventGA4('pay_with_paypal', { value: parseFloat(amount), currency, items: cart.map(i => ({ item_id: i.id, item_name: i.name, quantity: i.qty })) }) } catch (_) {}
     window.location.href = url
   }
 
-  
   function checkoutEmail() {
     const subject = encodeURIComponent('Pedido Tienda 3D')
     const lines = cart.map(i => {
@@ -143,48 +247,14 @@ export default function Shop3D() {
     window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`
   }
 
-  // Detectar retorno de PayPal por hash y mostrar aviso. Limpiar la URL después.
+  // Checkout banners based on path (/gracias or /cancelado)
   useEffect(() => {
-    const handleHash = () => {
-      // Normalize hash: ignore anything after '?' (UTM or other params)
-      const rawHash = (window.location.hash || '').toLowerCase()
-      const h = rawHash.split('?')[0]
-      if (h.startsWith('#gracias')) {
-        setCheckoutStatus('success')
-        history.replaceState(null, '', import.meta.env.BASE_URL)
-        return
-      }
-      if (h.startsWith('#cancelado')) {
-        setCheckoutStatus('cancel')
-        history.replaceState(null, '', import.meta.env.BASE_URL)
-        return
-      }
-      // Router simple: producto y colecciones
-      if (h.startsWith('#p/')) {
-        const slug = h.replace('#p/', '').trim()
-        setCurrentProductSlug(slug || null)
-        setCurrentCollectionId(null)
-        return
-      }
-      setCurrentProductSlug(null)
-      if (h === '#taller') { setCurrentCollectionId('taller'); return }
-      if (h === '#magic') { setCurrentCollectionId('magic'); return }
-      setCurrentCollectionId(null)
-      setCollectionsOpen(false)
-    }
-    handleHash()
-    window.addEventListener('hashchange', handleHash)
-    return () => window.removeEventListener('hashchange', handleHash)
-  }, [])
+    if (location.pathname === '/gracias') { setCheckoutStatus('success'); return }
+    if (location.pathname === '/cancelado') { setCheckoutStatus('cancel'); return }
+    setCheckoutStatus('none')
+  }, [location.pathname])
 
-  // Al entrar en una colección, forzar scroll al inicio
-  useEffect(() => {
-    if (currentCollectionId) {
-      window.scrollTo({ top: 0, behavior: 'auto' })
-    }
-  }, [currentCollectionId])
-
-  // Cerrar dropdown al clicar fuera
+  // Close dropdown when clicking outside
   useEffect(() => {
     function onDocMouseDown(e) {
       if (collectionsMenuRef.current && !collectionsMenuRef.current.contains(e.target)) {
@@ -195,15 +265,22 @@ export default function Shop3D() {
     return () => document.removeEventListener('mousedown', onDocMouseDown)
   }, [])
 
+  // Scroll to top on route change
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'auto' })
+    setCollectionsOpen(false)
+    setMobileMenuOpen(false)
+  }, [location.pathname])
+
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
       <header className="sticky top-0 z-30 bg-white/80 backdrop-blur border-b">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
-          <a href="#" aria-label="Inicio">
+          <Link to="/" aria-label="Inicio">
             <img src={`${import.meta.env.BASE_URL}NicoPrints.svg`} alt="NicoPrints" className="h-8 w-auto" />
-          </a>
+          </Link>
           <nav className="ml-4 hidden md:flex items-center gap-4">
-            <a href="#" className="text-sm text-gray-700 hover:text-gray-900">Inicio</a>
+            <Link to="/" className="text-sm text-gray-700 hover:text-gray-900">Inicio</Link>
             <div className="relative" ref={collectionsMenuRef}>
               <button
                 type="button"
@@ -217,8 +294,8 @@ export default function Shop3D() {
               {collectionsOpen && (
                 <div className="absolute left-0 top-full mt-1 z-40">
                   <div className="min-w-[160px] rounded-md border bg-white shadow-md py-1">
-                    <a href="#taller" onClick={() => setCollectionsOpen(false)} className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50">Taller y organización</a>
-                    <a href="#magic" onClick={() => setCollectionsOpen(false)} className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50">Magic: The Gathering</a>
+                    <Link to="/taller" onClick={() => setCollectionsOpen(false)} className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50">Taller y organización</Link>
+                    <Link to="/magic" onClick={() => setCollectionsOpen(false)} className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50">Magic: The Gathering</Link>
                   </div>
                 </div>
               )}
@@ -249,11 +326,11 @@ export default function Shop3D() {
                   <SheetTitle>Navegación</SheetTitle>
                 </SheetHeader>
                 <div className="mt-4 grid gap-2">
-                  <a href="#" className="block text-sm text-gray-700 hover:underline" onClick={() => setMobileMenuOpen(false)}>Inicio</a>
+                  <Link to="/" className="block text-sm text-gray-700 hover:underline" onClick={() => setMobileMenuOpen(false)}>Inicio</Link>
                   <div>
                     <div className="text-xs uppercase text-gray-500 mb-1">Colecciones</div>
-                    <a href="#taller" className="block text-sm text-gray-700 hover:underline" onClick={() => setMobileMenuOpen(false)}>Taller y organización</a>
-                    <a href="#magic" className="block text-sm text-gray-700 hover:underline" onClick={() => setMobileMenuOpen(false)}>Magic: The Gathering</a>
+                    <Link to="/taller" className="block text-sm text-gray-700 hover:underline" onClick={() => setMobileMenuOpen(false)}>Taller y organización</Link>
+                    <Link to="/magic" className="block text-sm text-gray-700 hover:underline" onClick={() => setMobileMenuOpen(false)}>Magic: The Gathering</Link>
                   </div>
                   <a
                     href={`https://wa.me/${encodeURIComponent((WHATSAPP_PHONE || '').replace(/[^+\d]/g, '').replace(/^\+/, ''))}?text=${encodeURIComponent(WHATSAPP_DEFAULT_MESSAGE || '')}`}
@@ -372,98 +449,15 @@ export default function Shop3D() {
         </div>
       )}
 
-      {currentCollectionId || currentProductSlug ? null : (
-        <section className="max-w-6xl mx-auto px-4 pt-8">
-          <div className="grid md:grid-cols-2 gap-6 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold">Tus ideas, y más cosas, impresas en 3D</h2>
-              <p className="mt-3 text-gray-600 md:text-lg leading-relaxed">Aficionado a la impresión 3D. Aquí encontrarás piezas prácticas que nacen del día a día: organizadores, soportes y pequeños accesorios pensados para durar y mejorar tus espacios.</p>
-              <p className="mt-2 text-gray-600">Trabajo bajo pedido en PLA y PETG, con distintos colores y acabados. Si no ves lo que buscas, <a href={`${import.meta.env.BASE_URL}encargos.html`} className="underline">pide un encargo a medida</a> y lo diseñamos para que encaje justo donde lo necesitas.</p>
-              <ul className="mt-4 grid gap-2 text-sm text-gray-700 sm:grid-cols-2">
-                <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> PLA y PETG en varios colores</li>
-                <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> Tamaño máximo 18×18×18 cm</li>
-                <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> Encargos a medida: pide presupuesto</li>
-              </ul>
-              <div className="mt-5 flex gap-2">
-                <a href="#colecciones"><Button>Ver colecciones</Button></a>
-                <a href={`${import.meta.env.BASE_URL}encargos.html`}><Button variant="outline">Contacto</Button></a>
-              </div>
-            </div>
-            <div className="rounded-3xl overflow-hidden shadow bg-white">
-              <img src={`${import.meta.env.BASE_URL}hero-print.svg`} alt="Ilustración de impresión 3D" className="w-full h-full object-cover" />
-            </div>
-          </div>
-        </section>
-      )}
-
-      {currentProductSlug ? (
-        <ProductDetail slug={currentProductSlug} onAdd={addToCart} onBack={() => history.back()} />
-      ) : currentCollectionId === 'taller' ? (
-        <Taller onAdd={addToCart} />
-      ) : currentCollectionId === 'magic' ? (
-        <Magic onAdd={addToCart} />
-      ) : (
-        <section id="colecciones" className="max-w-6xl mx-auto px-4 py-10">
-          <h3 className="text-2xl font-semibold mb-4">Colecciones</h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Card className="rounded-2xl overflow-hidden bg-green-700">
-              <CardContent className="p-0">
-                <div className="aspect-video overflow-hidden">
-                  <img src={`${import.meta.env.BASE_URL}taller_a_medida.jpg`} alt="Taller y organización" className="w-full h-full object-cover" />
-                </div>
-                <div className="p-4 bg-green-700 text-white">
-                  <h4 className="font-medium leading-tight">Taller y organización</h4>
-                  <p className="text-sm mt-1 line-clamp-3 text-white/90">Soportes para baterías y accesorios para ordenar tu taller.</p>
-                  <div className="mt-3">
-                    <a href="#taller">
-                      <Button className="bg-white text-gray-900 hover:bg-white/90">Ver colección</Button>
-                    </a>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            <Card className="rounded-2xl overflow-hidden bg-orange-600">
-              <CardContent className="p-0">
-                <div className="aspect-video overflow-hidden">
-                  <img src={`${import.meta.env.BASE_URL}deck_examples.jpg`} alt="Magic: The Gathering" className="w-full h-full object-cover" />
-                </div>
-                <div className="p-4 bg-orange-600 text-white">
-                  <h4 className="font-medium leading-tight">Magic: The Gathering</h4>
-                  <p className="text-sm mt-1 line-clamp-3 text-white/90">Accesorios impresos en 3D para cartas y partidas.</p>
-                  <div className="mt-3">
-                    <a href="#magic">
-                      <Button className="bg-white text-gray-900 hover:bg-white/90">Ver colección</Button>
-                    </a>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-      )}
-
-      <section className="max-w-6xl mx-auto px-4 pt-6 pb-10">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#4C4B4C] via-[#737A78] to-[#B0B5B3] text-white">
-          <div className="px-6 py-8 md:px-10 md:py-10 flex flex-col md:flex-row md:items-center gap-4">
-            <div className="flex-1">
-              <div className="flex items-center gap-2 text-sm text-gray-300">
-                <Package className="w-5 h-5" /> Encargos a medida
-              </div>
-              <h3 className="text-2xl md:text-3xl font-semibold mt-1">¿No encuentras lo que buscas?</h3>
-              <p className="mt-2 text-gray-300 md:text-base">Diseñamos una pieza a medida en PLA/PETG que encaje justo donde la necesitas.</p>
-              <div className="mt-4 flex flex-col gap-2">
-                <a href={`${import.meta.env.BASE_URL}encargos.html`} className="w-full">
-                  <Button className="w-full bg-white text-gray-900 hover:bg-gray-100">Solicitar presupuesto</Button>
-                </a>
-              </div>
-            </div>
-            <div className="hidden md:block">
-              <img src={`${import.meta.env.BASE_URL}hero-print.svg`} alt="Ilustración de impresión 3D" className="w-56 h-36 object-contain opacity-80 rounded-2xl" />
-            </div>
-          </div>
-          <div className="pointer-events-none absolute -bottom-20 -right-20 h-56 w-56 rounded-full bg-white/10 blur-2xl"></div>
-        </div>
-      </section>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/gracias" element={<Home />} />
+        <Route path="/cancelado" element={<Home />} />
+        <Route path="/taller" element={<Taller onAdd={addToCart} />} />
+        <Route path="/magic" element={<Magic onAdd={addToCart} />} />
+        <Route path="/:collectionId/:productSlug" element={<ProductDetail onAdd={addToCart} />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
 
       {/* Sección de formulario movida a página independiente: encargos.html */}
 

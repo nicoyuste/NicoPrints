@@ -34,16 +34,6 @@ export function trackPageViewGA4(urlPath) {
   });
 }
 
-export function initHashPageviewTracking() {
-  if (typeof window === 'undefined') return;
-  // Send initial pageview once gtag is ready
-  onGtagReady(() => trackPageViewGA4());
-  // Track subsequent hash changes
-  window.addEventListener('hashchange', () => {
-    trackPageViewGA4();
-  });
-}
-
 // --- Generic GA4 event helper ---
 export function trackEventGA4(eventName, params = {}) {
   if (typeof window === 'undefined' || typeof window.gtag !== 'function') return;

@@ -26,6 +26,20 @@
     <meta name="twitter:description" content="Impresión 3D en PLA y PETG. Piezas útiles para casa y escritorio. Encargos a medida y envíos gratuitos." />
     <meta name="twitter:image" content="/og-image.svg" />
 
+    <script>
+      // Handle SPA deep-links restored from 404.html redirect (?redirect=/path)
+      (function() {
+        const params = new URLSearchParams(window.location.search);
+        const redirect = params.get('redirect');
+        if (redirect) {
+          params.delete('redirect');
+          const restSearch = params.toString();
+          const newUrl = redirect + (restSearch ? `?${restSearch}` : '') + window.location.hash;
+          window.history.replaceState(null, '', newUrl);
+        }
+      })();
+    </script>
+
     <!-- Google tag (gtag.js) - GA4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-86JXT84TKQ"></script>
     <script>

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -28,6 +29,7 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
   const mainImage = shownImages[Math.min(selectedIndex, Math.max(0, shownImages.length - 1))]?.src
   const availableColors = COLORS.filter(c => materials.includes(c.material))
   const canPickColor = product?.allowColorSelection !== false
+  const detailPath = product?.slug ? `/${product.collectionId}/${product.slug}` : '/'
 
   // Compute starting price for products with traits ("Desde")
   const hasTraits = traits.length > 0
@@ -53,13 +55,13 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
     <Card className="rounded-2xl overflow-hidden">
       <CardContent className="p-0">
         <div className="aspect-video overflow-hidden bg-secondary">
-          <a href={`#p/${product.slug || product.id}`} className="block w-full h-full" aria-label="Ver detalles">
+          <Link to={detailPath} className="block w-full h-full" aria-label="Ver detalles">
             {mainImage ? (
               <img src={mainImage} alt={product.name} className="w-full h-full object-cover" />
             ) : (
               <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">Sin imagen</div>
             )}
-          </a>
+          </Link>
         </div>
         {imageObjs.length > 1 && (
           <div className="px-4 pt-3 flex gap-2 overflow-x-auto no-scrollbar">
@@ -100,14 +102,13 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
             </div>
           )}
           <div className="mt-4">
-            <a href={`#p/${product.slug || product.id}`}>
+            <Link to={detailPath}>
               <Button variant="outline" className="w-full">Ver detalles</Button>
-            </a>
+            </Link>
           </div>
         </div>
       </CardContent>
     </Card>
   )
 }
-
 

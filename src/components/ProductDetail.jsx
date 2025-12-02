@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { productBySlug } from '@/data/products'
@@ -6,8 +7,12 @@ import ProductCard from '@/components/ProductCard'
 import { formatPrice } from '@/lib/format'
 import { COLORS } from '@/colors'
 
-export default function ProductDetail({ slug, onAdd, onBack }) {
-  const product = productBySlug.get(slug)
+export default function ProductDetail({ slug: slugProp, onAdd, onBack }) {
+  const navigate = useNavigate()
+  const { productSlug, collectionId } = useParams()
+  const slug = slugProp || productSlug
+  const product = slug ? productBySlug.get(slug) : null
+  const belongsToCollection = !collectionId || (product && product.collectionId === collectionId)
   const canPickColor = product?.allowColorSelection !== false
   const [selectedIndex, setSelectedIndex] = useState(0)
   const materials = useMemo(() => (Array.isArray(product?.material) ? product.material : [product?.material].filter(Boolean)), [product])
@@ -32,6 +37,10 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
       .map(sl => productBySlug.get(sl))
       .filter(p => p && p.slug !== product.slug)
   }, [product])
+  const handleBack = () => {
+    if (onBack) { onBack(); return }
+    navigate(-1)
+  }
 
   // Inicializar selección de traits cuando cambia el producto (usar defaults si existen)
   useEffect(() => {
@@ -43,6 +52,11 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
       init[trait.id] = def ? String(def.value) : ''
     }
     setSelectedTraits(init)
+  }, [product])
+
+  useEffect(() => {
+    setSelectedMaterial(materials[0] || '')
+    setSelectedIndex(0)
   }, [product])
 
   const computedPrice = useMemo(() => {
@@ -74,7 +88,7 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
     if (!product) return
     const first = filteredColors[0]?.value || ''
     setSelectedColor(prev => (filteredColors.some(c => c.value === prev) ? prev : first))
-  }, [selectedMaterial])
+  }, [selectedMaterial, filteredColors, product])
 
   // Inicializar selección por partes cuando cambia el producto
   useEffect(() => {
@@ -115,12 +129,12 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
     return () => cancelAnimationFrame(id)
   }, [product?.description, isDescExpanded])
 
-  if (!product) {
+  if (!product || !belongsToCollection) {
     return (
       <section className="max-w-6xl mx-auto px-4 py-10">
         <p className="text-sm text-gray-600">Producto no encontrado.</p>
         <div className="mt-4">
-          <Button variant="outline" onClick={onBack}>Volver</Button>
+          <Button variant="outline" onClick={handleBack}>Volver</Button>
         </div>
       </section>
     )
@@ -415,5 +429,3 @@ export default function ProductDetail({ slug, onAdd, onBack }) {
     </section>
   )
 }
-
-
