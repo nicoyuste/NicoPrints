@@ -364,22 +364,6 @@ export const products = [
     longDescription: 'Tres separadores impresos en 3D para tus cartas de Artefacto de Magic: The Gathering. Pestaña alta y rotulación clara para identificación rápida en cajas o archivadores. Bordes y superficies diseñados para su uso con fundas.\n\nTambién realizo separadores personalizados con otros títulos (Planeswalker, Tokens, Sideboard, etc.) y gráficos a tu gusto. Solicítalo en <a href="encargos.html" target="_blank" rel="noreferrer noopener">encargos</a>.',
     crossReferences: ['mtg-separadores-rojo', 'mtg-separadores-azul', 'mtg-separadores-negro', 'mtg-separadores-blanco', 'mtg-separadores-verde', 'mtg-separadores-multicolor'],
   },
-  {
-    slug: 'taller-test-product',
-    collectionId: 'taller',
-    name: '[TEST] Producto de prueba',
-    price: 1,
-    currency: 'EUR',
-    images: [
-      { src: `${import.meta.env.BASE_URL}taller_a_medida.jpg` },
-    ],
-    category: 'Taller',
-    material: ['PETG'],
-    description: 'Entrada temporal para pruebas en producción. Precio simbólico de 1 € para validar flujo de compra.',
-    longDescription: 'Producto de prueba para validar despliegues y comportamientos en producción. No es un artículo real; no se procesará ningún envío.',
-    allowColorSelection: false,
-  },
 ]
 
 export const productBySlug = new Map(products.map(p => [p.slug, p]))
-
