@@ -1,5 +1,5 @@
 :root {
-  /* NicoPrints design tokens */
+  /* Capia 3D design tokens */
   --np-black: 0 0% 0%;
   --np-white: 0 0% 100%;
   --np-gray: 0 1% 30%; /* #4C4B4C approx. */
@@ -79,5 +79,4 @@
   --input: 0 0% 22%;
   --ring: var(--np-accent);
 }
-
 

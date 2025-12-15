@@ -217,7 +217,7 @@ export default function Shop3D() {
       }
       return `#${i.id}${i.material ? ` [${i.material}]` : ''}${i.colorLabel ? ` (${i.colorLabel})` : ''} x${i.qty}`
     }).join(' | ')
-    const itemName = encodeURIComponent(`Pedido NicoPrints: ${lines}`)
+    const itemName = encodeURIComponent(`Pedido Capia 3D: ${lines}`)
     const amount = (Math.round(grandTotal * 100) / 100).toFixed(2) // 2 decimales con punto
     const currency = 'EUR'
     const business = encodeURIComponent(PAYPAL_BUSINESS_EMAIL)
@@ -277,7 +277,7 @@ export default function Shop3D() {
       <header className="sticky top-0 z-30 bg-white/80 backdrop-blur border-b">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
           <Link to="/" aria-label="Inicio">
-            <img src={`${import.meta.env.BASE_URL}NicoPrints.svg`} alt="NicoPrints" className="h-8 w-auto" />
+            <img src={`${import.meta.env.BASE_URL}capia.svg`} alt="Capia 3D" className="h-8 w-auto" />
           </Link>
           <nav className="ml-4 hidden md:flex items-center gap-4">
             <Link to="/" className="text-sm text-gray-700 hover:text-gray-900">Inicio</Link>
@@ -467,7 +467,7 @@ export default function Shop3D() {
           <span className="mx-2">·</span>
           <a className="underline" href="aviso-legal.html">Aviso legal</a>
         </div>
-        <div className="text-center text-xs text-gray-500 pb-6">© {new Date().getFullYear()} NicoPrints – Hecho con React + GitHub Pages</div>
+        <div className="text-center text-xs text-gray-500 pb-6">© {new Date().getFullYear()} Capia 3D – Hecho con React + GitHub Pages</div>
       </footer>
     </div>
   )

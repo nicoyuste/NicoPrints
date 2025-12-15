@@ -13,7 +13,7 @@ export default function CustomOrderForm() {
       if (name.length < 2) { alert('Por favor, indica un nombre válido.'); return }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Introduce un email válido.'); return }
       if (details.length < 20) { alert('Cuéntame un poco más de detalles (mínimo 20 caracteres).'); return }
-      const subject = encodeURIComponent('Encargo a medida - NicoPrints');
+      const subject = encodeURIComponent('Encargo a medida - Capia 3D');
       const linkLine = link ? `\nEnlace de referencia: ${link}` : '';
       const body = encodeURIComponent(`Nombre: ${name}\nEmail: ${email}${linkLine}\n\nDetalles del encargo:\n${details}`);
       window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
@@ -31,5 +31,4 @@ export default function CustomOrderForm() {
     </form>
   )
 }
-
 

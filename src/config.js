@@ -1,5 +1,5 @@
-export const CONTACT_EMAIL = 'info@nicoprints.com'
-export const PAYPAL_BUSINESS_EMAIL = 'info@nicoprints.com'
+export const CONTACT_EMAIL = 'hola@capia3d.com'
+export const PAYPAL_BUSINESS_EMAIL = 'hola@capia3d.com'
 export const SHIPPING_FEE_EUR = 5
 
 // WhatsApp contact. Use full international format without '+' or with it; we'll sanitize when building URLs.

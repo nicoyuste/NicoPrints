@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://www.nicoprints.com/sitemap.xml
-
+Sitemap: https://www.capia3d.com/sitemap.xml

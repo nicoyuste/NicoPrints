@@ -13,7 +13,7 @@ If you are developing a production application, we recommend using TypeScript wi
 
 ### Campañas (UTM)
 - Usa parámetros UTM en los enlaces de campaña: `utm_source`, `utm_medium`, `utm_campaign` (opcional `utm_content`, `utm_term`).
-- Ejemplo: `https://www.nicoprints.com/#magic?utm_source=cardBinder&utm_medium=settings&utm_campaign=settings_button`.
+- Ejemplo: `https://www.capia3d.com/#magic?utm_source=cardBinder&utm_medium=settings&utm_campaign=settings_button`.
 
 ### Verificación
 - GA4 → Realtime: ver `page_view` y eventos anteriores.
