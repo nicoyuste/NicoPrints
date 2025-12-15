@@ -11,6 +11,27 @@ alwaysApply: true
 ## Technology
 - El sitio está publicado en GitHub Pages; con solo hacer push a la rama main se despliega automáticamente.
 
+## Identidad visual (Capia 3D)
+
+### Paleta de color
+- Azul principal (brand): `#1F6AE1`
+- Grafito (texto): `#1E1E1E`
+- Blanco cálido (fondo): `#F6F6F4`
+- Gris técnico (muted): `#8A8F98`
+- Azul suave (fondos/hover): `#A9C4F8`
+- Acento naranja (detalle): `#FF9F43`
+
+### Guía de uso (look & feel)
+- 70% fondo claro (`#F6F6F4` / blancos) para una estética limpia.
+- 20% grafito + grises (`#1E1E1E`, `#8A8F98`) para texto, bordes y jerarquía.
+- 10% azul Capia (`#1F6AE1`) como color principal (botones, links, highlights).
+- <5% naranja (`#FF9F43`) solo como acento puntual (badges, bordes, detalles).
+
+### Dónde se aplica en el código
+- Tokens CSS globales: `src/styles/tokens.css` (variables `--primary`, `--background`, `--foreground`, etc.).
+- Tailwind consume tokens: `tailwind.config.js` (colores `primary`, `background`, `muted`, `border`, etc.).
+- En componentes, preferir utilidades basadas en tokens (`bg-background`, `text-muted-foreground`, `border-border`, `bg-accent`) y evitar colores hardcodeados tipo `text-gray-600`, `bg-green-700`, etc.
+
 ## Colecciones
 - Enfoque: páginas dedicadas por colección (no genérico). Cada colección tiene su propio `.jsx` bajo `src/collections/` con contenido y maquetación a medida.
 - Routing: hash simple gestionado en `src/Shop3D.jsx`.

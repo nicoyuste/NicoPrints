@@ -15,7 +15,7 @@ export default function Taller({ onAdd }) {
           className="w-full h-56 sm:h-72 md:h-80 object-cover"
         />
         {/* Degradado neutro */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent to-green-700"></div>
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent to-[hsl(var(--primary)/0.35)]"></div>
         {/* Título superpuesto opcional en el lado izquierdo */}
         <div className="absolute inset-0 flex items-end">
           <div className="p-4 sm:p-6 md:p-8 max-w-xl">
@@ -31,7 +31,7 @@ export default function Taller({ onAdd }) {
         <Card className="rounded-2xl overflow-hidden">
           <CardContent className="p-0 bg-primary h-full flex flex-col min-h-[24rem] sm:min-h-[26rem]">
             {/* Foto superior (crece/encoge para ocupar el espacio disponible) */}
-            <div className="relative overflow-hidden bg-gray-100 flex-1 min-h-[10rem]">
+            <div className="relative overflow-hidden bg-muted flex-1 min-h-[10rem]">
               <img
                 src={`${import.meta.env.BASE_URL}taller_a_medida.jpg`}
                 alt="Soportes a medida"
@@ -46,10 +46,10 @@ export default function Taller({ onAdd }) {
               <p className="text-sm text-primary-foreground/90 mt-2">Diseño e imprimo bajo pedido soportes para baterías y herramientas de distintas marcas. Cuéntame tu idea y lo adapto a tu espacio.</p>
               <div className="mt-3 flex flex-col sm:flex-row gap-2 items-center justify-center">
                 <a href={`${import.meta.env.BASE_URL}encargos.html`}>
-                  <Button className="bg-white text-gray-900 hover:bg-white/90">Solicitar a medida</Button>
+                  <Button className="bg-card text-foreground hover:bg-card/90">Solicitar a medida</Button>
                 </a>
                 <a href={`mailto:${CONTACT_EMAIL}`}>
-                  <Button className="bg-white text-gray-900 hover:bg-white/90 w-full sm:w-auto">Escribir email</Button>
+                  <Button className="bg-card text-foreground hover:bg-card/90 w-full sm:w-auto">Escribir email</Button>
                 </a>
               </div>
             </div>
@@ -59,6 +59,5 @@ export default function Taller({ onAdd }) {
     </section>
   )
 }
-
 
 

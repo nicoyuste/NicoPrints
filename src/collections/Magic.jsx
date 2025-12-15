@@ -35,9 +35,9 @@ export default function Magic({ onAdd }) {
           alt="Magic: The Gathering"
           className="w-full h-56 sm:h-72 md:h-80 object-cover"
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent to-[#D6632C]"></div>
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent to-[hsl(var(--np-accent-orange)/0.35)]"></div>
         <div className="absolute inset-y-0 right-0 w-1/3 min-w-[220px] hidden sm:flex items-center justify-center">
-          <div className="w-full h-full bg-[#D6632C] flex items-center justify-center">
+          <div className="w-full h-full bg-[hsl(var(--np-accent-orange)/0.22)] backdrop-blur-sm flex items-center justify-center">
             <div className="p-4">
               <img
                 src={`${import.meta.env.BASE_URL}magic-logo.png`}
@@ -63,7 +63,7 @@ export default function Magic({ onAdd }) {
             key={s.id}
             type="button"
             onClick={() => scrollToSection(s.id)}
-            className="h-9 px-3 rounded-full border text-sm bg-white text-gray-900 border-gray-300 hover:bg-gray-50"
+            className="h-9 px-3 rounded-full border text-sm bg-card text-foreground border-border hover:bg-accent"
           >
             {s.title}
           </button>
@@ -79,7 +79,7 @@ export default function Magic({ onAdd }) {
             <div key={s.id} id={`sec-${s.id}`} className="scroll-mt-24">
               <div className="mb-3">
                 <h2 className="text-xl font-semibold">{s.title}</h2>
-                <p className="text-sm text-gray-600 mt-1">{s.description}</p>
+                <p className="text-sm text-muted-foreground mt-1">{s.description}</p>
               </div>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {items.map((p) => (
@@ -95,7 +95,7 @@ export default function Magic({ onAdd }) {
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
         <Card className="rounded-2xl overflow-hidden">
           <CardContent className="p-0 bg-primary h-full flex flex-col min-h-[24rem] sm:min-h-[26rem]">
-            <div className="relative overflow-hidden bg-gray-100 flex-1 min-h-[10rem]">
+            <div className="relative overflow-hidden bg-muted flex-1 min-h-[10rem]">
               <img
                 src={`${import.meta.env.BASE_URL}deck_examples.jpg`}
                 alt="Deck boxes a medida"
@@ -110,10 +110,10 @@ export default function Magic({ onAdd }) {
               <p className="text-sm text-primary-foreground/90 mt-2">Diseño e imprimo por encargo deck boxes con el logo y el texto que mas te guste.</p>
               <div className="mt-3 flex flex-col sm:flex-row gap-2 items-center justify-center">
                 <a href={`${import.meta.env.BASE_URL}encargos.html`}>
-                  <Button className="bg-white text-gray-900 hover:bg-white/90">Solicitar a medida</Button>
+                  <Button className="bg-card text-foreground hover:bg-card/90">Solicitar a medida</Button>
                 </a>
                 <a href={`mailto:${CONTACT_EMAIL}`}>
-                  <Button className="bg-white text-gray-900 hover:bg-white/90 w-full sm:w-auto">Escribir email</Button>
+                  <Button className="bg-card text-foreground hover:bg-card/90 w-full sm:w-auto">Escribir email</Button>
                 </a>
               </div>
             </div>
@@ -123,6 +123,5 @@ export default function Magic({ onAdd }) {
     </section>
   )
 }
-
 
 

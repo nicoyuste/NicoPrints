@@ -23,7 +23,7 @@ export default function CustomOrderForm() {
         <Input required type="email" name="email" placeholder="Tu email" />
       </div>
       <Input type="url" name="link" placeholder="Enlace de referencia (Printables, Thingiverse, etc.)" />
-      <textarea required name="details" rows="5" placeholder="Describe tu pieza: medidas, material (PLA/PETG), color, referencias..." className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-gray-900"></textarea>
+      <textarea required name="details" rows="5" placeholder="Describe tu pieza: medidas, material (PLA/PETG), color, referencias..." className="w-full rounded-md border border-border bg-card px-3 py-2 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-ring"></textarea>
       <div className="flex gap-2">
         <Button type="submit">Enviar solicitud</Button>
         <a href={`mailto:${CONTACT_EMAIL}`}><Button variant="outline">Escribir email</Button></a>
@@ -31,4 +31,3 @@ export default function CustomOrderForm() {
     </form>
   )
 }
-

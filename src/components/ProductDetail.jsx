@@ -37,6 +37,11 @@ export default function ProductDetail({ slug: slugProp, onAdd, onBack }) {
       .map(sl => productBySlug.get(sl))
       .filter(p => p && p.slug !== product.slug)
   }, [product])
+
+  const normalizeInternalHtmlLinks = (html) => {
+    const baseUrl = String(import.meta.env.BASE_URL || '/')
+    return String(html || '').replace(/href=(['"])(?:\.\/)?encargos\.html\1/g, (_m, q) => `href=${q}${baseUrl}encargos.html${q}`)
+  }
   const handleBack = () => {
     if (onBack) { onBack(); return }
     navigate(-1)
@@ -132,7 +137,7 @@ export default function ProductDetail({ slug: slugProp, onAdd, onBack }) {
   if (!product || !belongsToCollection) {
     return (
       <section className="max-w-6xl mx-auto px-4 py-10">
-        <p className="text-sm text-gray-600">Producto no encontrado.</p>
+        <p className="text-sm text-muted-foreground">Producto no encontrado.</p>
         <div className="mt-4">
           <Button variant="outline" onClick={handleBack}>Volver</Button>
         </div>
@@ -155,11 +160,11 @@ export default function ProductDetail({ slug: slugProp, onAdd, onBack }) {
     <section className="max-w-6xl mx-auto px-4 py-10 overflow-x-hidden">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
         <div>
-          <div className="aspect-video overflow-hidden bg-gray-100 rounded-2xl">
+          <div className="aspect-video overflow-hidden bg-muted rounded-2xl">
             {shownImages[safeIndex]?.src ? (
               <img src={shownImages[safeIndex].src} alt={product.name} className="w-full h-full object-cover" />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-gray-500 text-sm">Sin imagen</div>
+              <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">Sin imagen</div>
             )}
           </div>
           {shownImages.length > 1 && (
@@ -169,7 +174,7 @@ export default function ProductDetail({ slug: slugProp, onAdd, onBack }) {
                   key={img.src + idx}
                   type="button"
                   onClick={() => setSelectedIndex(idx)}
-                  className={`flex-none h-16 w-24 rounded-md overflow-hidden p-0 bg-gray-100 border ${idx === selectedIndex ? 'border-gray-900' : 'border-transparent'}`}
+                  className={`flex-none h-16 w-24 rounded-md overflow-hidden p-0 bg-muted border ${idx === selectedIndex ? 'border-border ring-2 ring-ring' : 'border-transparent'}`}
                   aria-label={`Vista ${idx + 1}`}
                 >
                   <img src={img.src} alt="" className="block h-full w-full object-cover" />
@@ -185,13 +190,13 @@ export default function ProductDetail({ slug: slugProp, onAdd, onBack }) {
           </div>
 
           <div className="mt-2">
-            <Badge className="bg-gray-900 text-white text-base px-3 py-1.5 rounded-md">{formatPrice(computedPrice, product.currency)}</Badge>
+            <Badge className="bg-primary text-primary-foreground text-base px-3 py-1.5 rounded-md">{formatPrice(computedPrice, product.currency)}</Badge>
           </div>
 
           <div className="mt-3">
-            <p ref={descRef} className={`text-sm text-gray-700 break-words${isDescExpanded ? '' : ' line-clamp-5'}`}>{product.description}</p>
+            <p ref={descRef} className={`text-sm text-foreground/80 break-words${isDescExpanded ? '' : ' line-clamp-5'}`}>{product.description}</p>
             {showDescToggle && (
-              <button type="button" className="text-xs underline text-gray-600 mt-1" onClick={() => setIsDescExpanded(v => !v)}>
+              <button type="button" className="text-xs underline text-muted-foreground mt-1" onClick={() => setIsDescExpanded(v => !v)}>
                 {isDescExpanded ? 'Ver menos' : 'Leer más'}
               </button>
             )}
@@ -202,9 +207,9 @@ export default function ProductDetail({ slug: slugProp, onAdd, onBack }) {
             <div className="mt-4 space-y-3">
               {traits.map(trait => (
                 <div key={trait.id}>
-                  <div className="text-xs text-gray-600 mb-1">{trait.label}</div>
+                  <div className="text-xs text-muted-foreground mb-1">{trait.label}</div>
                   {trait.description ? (
-                    <div className="text-[11px] text-gray-500 mt-1 mb-2">{trait.description}</div>
+                    <div className="text-[11px] text-muted-foreground mt-1 mb-2">{trait.description}</div>
                   ) : (
                     <div className="mb-2"></div>
                   )}
@@ -214,7 +219,7 @@ export default function ProductDetail({ slug: slugProp, onAdd, onBack }) {
                         key={String(opt.value)}
                         type="button"
                         onClick={() => setSelectedTraits(prev => ({ ...prev, [trait.id]: String(opt.value) }))}
-                        className={`h-8 px-3 rounded-full border text-xs bg-white text-gray-900 ${String(selectedTraits[trait.id]) === String(opt.value) ? 'ring-2 ring-gray-900 border-gray-900' : 'border-gray-300'}`}
+                        className={`h-8 px-3 rounded-full border text-xs bg-card text-foreground ${String(selectedTraits[trait.id]) === String(opt.value) ? 'ring-2 ring-ring border-border' : 'border-border'}`}
                         aria-label={opt.label}
                         title={opt.label}
                       >
@@ -230,19 +235,19 @@ export default function ProductDetail({ slug: slugProp, onAdd, onBack }) {
           {/* Picker global (productos simples) */}
           {parts.length === 0 && materials.length > 1 && (
             <div className="mt-4">
-              <div className="text-xs text-gray-600 mb-1">Material</div>
+              <div className="text-xs text-muted-foreground mb-1">Material</div>
               <div className="flex flex-wrap gap-2 items-center">
                 {materials.map((m) => (
                   <button
                     key={m}
                     type="button"
                     onClick={() => setSelectedMaterial(m)}
-                    className={`h-8 px-3 rounded-full border text-xs bg-white text-gray-900 ${selectedMaterial === m ? 'ring-2 ring-gray-900 border-gray-900' : 'border-gray-300'}`}
+                    className={`h-8 px-3 rounded-full border text-xs bg-card text-foreground ${selectedMaterial === m ? 'ring-2 ring-ring border-border' : 'border-border'}`}
                   >
                     {m}
                   </button>
                 ))}
-                <a href={`${import.meta.env.BASE_URL}materiales.html`} className="text-xs underline text-gray-600 ml-2" target="_blank" rel="noreferrer">¿Diferencias?</a>
+                <a href={`${import.meta.env.BASE_URL}materiales.html`} className="text-xs underline text-muted-foreground ml-2" target="_blank" rel="noreferrer">¿Diferencias?</a>
               </div>
             </div>
           )}
@@ -250,14 +255,14 @@ export default function ProductDetail({ slug: slugProp, onAdd, onBack }) {
           {parts.length === 0 ? (
             canPickColor ? (
               <div className="mt-4">
-                <div className="text-xs text-gray-600 mb-1">Color</div>
+                <div className="text-xs text-muted-foreground mb-1">Color</div>
                 <div className="flex flex-wrap gap-2">
                   {filteredColors.length > 0 ? filteredColors.map(c => (
                     <button
                       key={c.value}
                       type="button"
                       onClick={() => setSelectedColor(c.value)}
-                      className={`h-8 px-3 rounded-full border text-xs flex items-center gap-2 bg-white text-gray-900 ${selectedColor === c.value ? 'ring-2 ring-gray-900 border-gray-900' : 'border-gray-300'}`}
+                      className={`h-8 px-3 rounded-full border text-xs flex items-center gap-2 bg-card text-foreground ${selectedColor === c.value ? 'ring-2 ring-ring border-border' : 'border-border'}`}
                       aria-label={c.label}
                       title={c.label}
                     >
@@ -265,7 +270,7 @@ export default function ProductDetail({ slug: slugProp, onAdd, onBack }) {
                       {c.label}
                     </button>
                   )) : (
-                    <span className="text-xs text-gray-500">Sin colores disponibles para {selectedMaterial}</span>
+                    <span className="text-xs text-muted-foreground">Sin colores disponibles para {selectedMaterial}</span>
                   )}
                 </div>
               </div>
@@ -278,20 +283,20 @@ export default function ProductDetail({ slug: slugProp, onAdd, onBack }) {
                 const colorsForPart = COLORS.filter(c => c.material === sel.material)
                 const colorObj = COLORS.find(c => c.value === sel.colorValue) || null
                 return (
-                  <details key={part.id} className="border rounded-xl bg-white overflow-hidden">
+                  <details key={part.id} className="border border-border rounded-xl bg-card overflow-hidden">
                     <summary className="cursor-pointer select-none list-none flex items-center justify-between gap-3 px-3 py-2">
                       <span className="text-sm font-medium">{part.label}</span>
-                      <span className="flex items-center gap-2 text-xs text-gray-700">
+                      <span className="flex items-center gap-2 text-xs text-foreground/80">
                         {sel.material ? (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-gray-300 bg-white text-gray-900">{sel.material}</span>
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-border bg-background text-foreground">{sel.material}</span>
                         ) : null}
                         {colorObj ? (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-gray-300 bg-white text-gray-900">
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full border border-border bg-background text-foreground">
                             <span className="inline-block h-3.5 w-3.5 rounded-full border" style={{ backgroundColor: colorObj.hex }}></span>
                             {colorObj.label}
                           </span>
                         ) : (
-                          <span className="text-gray-500">Sin color</span>
+                          <span className="text-muted-foreground">Sin color</span>
                         )}
                         <span aria-hidden className="ml- text-lg md:text-xl leading-none">▾</span>
                       </span>
@@ -299,14 +304,14 @@ export default function ProductDetail({ slug: slugProp, onAdd, onBack }) {
                     <div className="px-3 pb-3">
                       {allowedMaterials.length > 1 && (
                         <div className="mb-2">
-                          <div className="text-xs text-gray-600 mb-1">Material</div>
+                          <div className="text-xs text-muted-foreground mb-1">Material</div>
                           <div className="flex flex-wrap gap-2 items-center">
                             {allowedMaterials.map(m => (
                               <button
                                 key={m}
                                 type="button"
                                 onClick={() => setPartMaterial(part.id, m)}
-                                className={`h-8 px-3 rounded-full border text-xs bg-white text-gray-900 ${sel.material === m ? 'ring-2 ring-gray-900 border-gray-900' : 'border-gray-300'}`}
+                                className={`h-8 px-3 rounded-full border text-xs bg-card text-foreground ${sel.material === m ? 'ring-2 ring-ring border-border' : 'border-border'}`}
                               >
                                 {m}
                               </button>
@@ -315,14 +320,14 @@ export default function ProductDetail({ slug: slugProp, onAdd, onBack }) {
                         </div>
                       )}
                       <div>
-                        <div className="text-xs text-gray-600 mb-1">Color</div>
+                        <div className="text-xs text-muted-foreground mb-1">Color</div>
                         <div className="flex flex-wrap gap-2">
                           {colorsForPart.length > 0 ? colorsForPart.map(c => (
                             <button
                               key={c.value}
                               type="button"
                               onClick={() => setPartColor(part.id, c.value)}
-                              className={`h-8 px-3 rounded-full border text-xs flex items-center gap-2 bg-white text-gray-900 ${sel.colorValue === c.value ? 'ring-2 ring-gray-900 border-gray-900' : 'border-gray-300'}`}
+                              className={`h-8 px-3 rounded-full border text-xs flex items-center gap-2 bg-card text-foreground ${sel.colorValue === c.value ? 'ring-2 ring-ring border-border' : 'border-border'}`}
                               aria-label={c.label}
                               title={c.label}
                             >
@@ -330,7 +335,7 @@ export default function ProductDetail({ slug: slugProp, onAdd, onBack }) {
                               {c.label}
                             </button>
                           )) : (
-                            <span className="text-xs text-gray-500">Sin colores disponibles para {sel.material}</span>
+                            <span className="text-xs text-muted-foreground">Sin colores disponibles para {sel.material}</span>
                           )}
                         </div>
                       </div>
@@ -390,8 +395,8 @@ export default function ProductDetail({ slug: slugProp, onAdd, onBack }) {
         <div className="mt-10">
           <h3 className="font-semibold">Descripción</h3>
           <div
-            className="text-sm text-gray-700 mt-2 break-words"
-            dangerouslySetInnerHTML={{ __html: (product.longDescription || product.longDescripcion || '').replace(/\n/g, '<br/>') }}
+            className="text-sm text-foreground/80 mt-2 break-words"
+            dangerouslySetInnerHTML={{ __html: normalizeInternalHtmlLinks(product.longDescription || product.longDescripcion || '').replace(/\n/g, '<br/>') }}
           />
         </div>
       )}
@@ -417,7 +422,7 @@ export default function ProductDetail({ slug: slugProp, onAdd, onBack }) {
           <h3 className="font-semibold">Personalizaciones para clientes</h3>
           <div className="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
             {otherImageObjs.map((img, idx) => (
-              <div key={(img.src || 'other') + idx} className="aspect-square bg-gray-100 rounded-lg overflow-hidden">
+              <div key={(img.src || 'other') + idx} className="aspect-square bg-muted rounded-lg overflow-hidden">
                 <img src={img.src} alt="Personalización de cliente" className="w-full h-full object-cover" />
               </div>
             ))}

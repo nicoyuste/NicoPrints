@@ -25,21 +25,21 @@ function Home() {
     <>
       <section className="max-w-6xl mx-auto px-4 pt-8">
         <div className="grid md:grid-cols-2 gap-6 items-center">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold">Tus ideas, y más cosas, impresas en 3D</h2>
-            <p className="mt-3 text-gray-600 md:text-lg leading-relaxed">Aficionado a la impresión 3D. Aquí encontrarás piezas prácticas que nacen del día a día: organizadores, soportes y pequeños accesorios pensados para durar y mejorar tus espacios.</p>
-            <p className="mt-2 text-gray-600">Trabajo bajo pedido en PLA y PETG, con distintos colores y acabados. Si no ves lo que buscas, <a href={`${import.meta.env.BASE_URL}encargos.html`} className="underline">pide un encargo a medida</a> y lo diseñamos para que encaje justo donde lo necesitas.</p>
-            <ul className="mt-4 grid gap-2 text-sm text-gray-700 sm:grid-cols-2">
-              <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> PLA y PETG en varios colores</li>
-              <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> Tamaño máximo 18×18×18 cm</li>
-              <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-gray-900"></span> Encargos a medida: pide presupuesto</li>
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold">Tus ideas, y más cosas, impresas en 3D</h2>
+            <p className="mt-3 text-muted-foreground md:text-lg leading-relaxed">Aficionado a la impresión 3D. Aquí encontrarás piezas prácticas que nacen del día a día: organizadores, soportes y pequeños accesorios pensados para durar y mejorar tus espacios.</p>
+            <p className="mt-2 text-muted-foreground">Trabajo bajo pedido en PLA y PETG, con distintos colores y acabados. Si no ves lo que buscas, <a href={`${import.meta.env.BASE_URL}encargos.html`} className="underline">pide un encargo a medida</a> y lo diseñamos para que encaje justo donde lo necesitas.</p>
+            <ul className="mt-4 grid gap-2 text-sm text-foreground/80 sm:grid-cols-2">
+              <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-foreground"></span> PLA y PETG en varios colores</li>
+              <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-foreground"></span> Tamaño máximo 18×18×18 cm</li>
+              <li className="flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-foreground"></span> Encargos a medida: pide presupuesto</li>
             </ul>
             <div className="mt-5 flex gap-2">
               <a href="#colecciones"><Button>Ver colecciones</Button></a>
               <a href={`${import.meta.env.BASE_URL}encargos.html`}><Button variant="outline">Contacto</Button></a>
             </div>
           </div>
-          <div className="rounded-3xl overflow-hidden shadow bg-white">
+          <div className="rounded-3xl overflow-hidden shadow bg-card">
             <img src={`${import.meta.env.BASE_URL}hero-print.svg`} alt="Ilustración de impresión 3D" className="w-full h-full object-cover" />
           </div>
         </div>
@@ -48,33 +48,33 @@ function Home() {
       <section id="colecciones" className="max-w-6xl mx-auto px-4 py-10">
         <h3 className="text-2xl font-semibold mb-4">Colecciones</h3>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card className="rounded-2xl overflow-hidden bg-green-700">
+          <Card className="rounded-2xl overflow-hidden border-t-4 border-t-[hsl(var(--primary))]">
             <CardContent className="p-0">
               <div className="aspect-video overflow-hidden">
                 <img src={`${import.meta.env.BASE_URL}taller_a_medida.jpg`} alt="Taller y organización" className="w-full h-full object-cover" />
               </div>
-              <div className="p-4 bg-green-700 text-white">
+              <div className="p-4">
                 <h4 className="font-medium leading-tight">Taller y organización</h4>
-                <p className="text-sm mt-1 line-clamp-3 text-white/90">Soportes para baterías y accesorios para ordenar tu taller.</p>
+                <p className="text-sm mt-1 line-clamp-3 text-muted-foreground">Soportes para baterías y accesorios para ordenar tu taller.</p>
                 <div className="mt-3">
                   <Link to="/taller">
-                    <Button className="bg-white text-gray-900 hover:bg-white/90">Ver colección</Button>
+                    <Button>Ver colección</Button>
                   </Link>
                 </div>
               </div>
             </CardContent>
           </Card>
-          <Card className="rounded-2xl overflow-hidden bg-orange-600">
+          <Card className="rounded-2xl overflow-hidden border-t-4 border-t-[hsl(var(--np-accent-orange))]">
             <CardContent className="p-0">
               <div className="aspect-video overflow-hidden">
                 <img src={`${import.meta.env.BASE_URL}deck_examples.jpg`} alt="Magic: The Gathering" className="w-full h-full object-cover" />
               </div>
-              <div className="p-4 bg-orange-600 text-white">
+              <div className="p-4">
                 <h4 className="font-medium leading-tight">Magic: The Gathering</h4>
-                <p className="text-sm mt-1 line-clamp-3 text-white/90">Accesorios impresos en 3D para cartas y partidas.</p>
+                <p className="text-sm mt-1 line-clamp-3 text-muted-foreground">Accesorios impresos en 3D para cartas y partidas.</p>
                 <div className="mt-3">
                   <Link to="/magic">
-                    <Button className="bg-white text-gray-900 hover:bg-white/90">Ver colección</Button>
+                    <Button>Ver colección</Button>
                   </Link>
                 </div>
               </div>
@@ -84,17 +84,17 @@ function Home() {
       </section>
 
       <section className="max-w-6xl mx-auto px-4 pt-6 pb-10">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#4C4B4C] via-[#737A78] to-[#B0B5B3] text-white">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#1E1E1E] to-[#1F2A44] text-white">
           <div className="px-6 py-8 md:px-10 md:py-10 flex flex-col md:flex-row md:items-center gap-4">
             <div className="flex-1">
-              <div className="flex items-center gap-2 text-sm text-gray-300">
+              <div className="flex items-center gap-2 text-sm text-white/75">
                 <Package className="w-5 h-5" /> Encargos a medida
               </div>
               <h3 className="text-2xl md:text-3xl font-semibold mt-1">¿No encuentras lo que buscas?</h3>
-              <p className="mt-2 text-gray-300 md:text-base">Diseñamos una pieza a medida en PLA/PETG que encaje justo donde la necesitas.</p>
+              <p className="mt-2 text-white/75 md:text-base">Diseñamos una pieza a medida en PLA/PETG que encaje justo donde la necesitas.</p>
               <div className="mt-4 flex flex-col gap-2">
                 <a href={`${import.meta.env.BASE_URL}encargos.html`} className="w-full">
-                  <Button className="w-full bg-white text-gray-900 hover:bg-gray-100">Solicitar presupuesto</Button>
+                  <Button className="w-full">Solicitar presupuesto</Button>
                 </a>
               </div>
             </div>
@@ -102,7 +102,7 @@ function Home() {
               <img src={`${import.meta.env.BASE_URL}hero-print.svg`} alt="Ilustración de impresión 3D" className="w-56 h-36 object-contain opacity-80 rounded-2xl" />
             </div>
           </div>
-          <div className="pointer-events-none absolute -bottom-20 -right-20 h-56 w-56 rounded-full bg-white/10 blur-2xl"></div>
+          <div className="pointer-events-none absolute -bottom-20 -right-20 h-56 w-56 rounded-full bg-[hsl(var(--primary)/0.22)] blur-2xl"></div>
         </div>
       </section>
     </>
@@ -114,7 +114,7 @@ function NotFound() {
     <section className="max-w-6xl mx-auto px-4 py-14">
       <div className="max-w-xl">
         <h1 className="text-3xl font-bold mb-2">Página no encontrada</h1>
-        <p className="text-gray-600">No hemos podido encontrar la página que buscabas. Vuelve al inicio para seguir navegando.</p>
+        <p className="text-muted-foreground">No hemos podido encontrar la página que buscabas. Vuelve al inicio para seguir navegando.</p>
         <div className="mt-4">
           <Link to="/">
             <Button>Ir al inicio</Button>
@@ -273,29 +273,29 @@ export default function Shop3D() {
   }, [location.pathname])
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900">
-      <header className="sticky top-0 z-30 bg-white/80 backdrop-blur border-b">
+    <div className="min-h-screen bg-background text-foreground">
+      <header className="sticky top-0 z-30 bg-background/80 backdrop-blur border-b border-border">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-3">
           <Link to="/" aria-label="Inicio">
             <img src={`${import.meta.env.BASE_URL}capia.svg`} alt="Capia 3D" className="h-8 w-auto" />
           </Link>
           <nav className="ml-4 hidden md:flex items-center gap-4">
-            <Link to="/" className="text-sm text-gray-700 hover:text-gray-900">Inicio</Link>
+            <Link to="/" className="text-sm text-foreground/80 hover:text-foreground">Inicio</Link>
             <div className="relative" ref={collectionsMenuRef}>
               <button
                 type="button"
                 onClick={() => setCollectionsOpen(v => !v)}
                 aria-haspopup="menu"
                 aria-expanded={collectionsOpen}
-                className="text-sm text-gray-700 hover:text-gray-900 inline-flex items-center gap-1"
+                className="text-sm text-foreground/80 hover:text-foreground inline-flex items-center gap-1"
               >
                 Colecciones <span aria-hidden>▾</span>
               </button>
               {collectionsOpen && (
                 <div className="absolute left-0 top-full mt-1 z-40">
-                  <div className="min-w-[160px] rounded-md border bg-white shadow-md py-1">
-                    <Link to="/taller" onClick={() => setCollectionsOpen(false)} className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50">Taller y organización</Link>
-                    <Link to="/magic" onClick={() => setCollectionsOpen(false)} className="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50">Magic: The Gathering</Link>
+                  <div className="min-w-[160px] rounded-md border bg-popover shadow-md py-1">
+                    <Link to="/taller" onClick={() => setCollectionsOpen(false)} className="block px-3 py-1.5 text-sm text-foreground/80 hover:bg-accent">Taller y organización</Link>
+                    <Link to="/magic" onClick={() => setCollectionsOpen(false)} className="block px-3 py-1.5 text-sm text-foreground/80 hover:bg-accent">Magic: The Gathering</Link>
                   </div>
                 </div>
               )}
@@ -326,11 +326,11 @@ export default function Shop3D() {
                   <SheetTitle>Navegación</SheetTitle>
                 </SheetHeader>
                 <div className="mt-4 grid gap-2">
-                  <Link to="/" className="block text-sm text-gray-700 hover:underline" onClick={() => setMobileMenuOpen(false)}>Inicio</Link>
+                  <Link to="/" className="block text-sm text-foreground/80 hover:underline" onClick={() => setMobileMenuOpen(false)}>Inicio</Link>
                   <div>
-                    <div className="text-xs uppercase text-gray-500 mb-1">Colecciones</div>
-                    <Link to="/taller" className="block text-sm text-gray-700 hover:underline" onClick={() => setMobileMenuOpen(false)}>Taller y organización</Link>
-                    <Link to="/magic" className="block text-sm text-gray-700 hover:underline" onClick={() => setMobileMenuOpen(false)}>Magic: The Gathering</Link>
+                    <div className="text-xs uppercase text-muted-foreground mb-1">Colecciones</div>
+                    <Link to="/taller" className="block text-sm text-foreground/80 hover:underline" onClick={() => setMobileMenuOpen(false)}>Taller y organización</Link>
+                    <Link to="/magic" className="block text-sm text-foreground/80 hover:underline" onClick={() => setMobileMenuOpen(false)}>Magic: The Gathering</Link>
                   </div>
                   <a
                     href={`https://wa.me/${encodeURIComponent((WHATSAPP_PHONE || '').replace(/[^+\d]/g, '').replace(/^\+/, ''))}?text=${encodeURIComponent(WHATSAPP_DEFAULT_MESSAGE || '')}`}
@@ -362,38 +362,38 @@ export default function Shop3D() {
                 <div className="mt-4 space-y-4">
                   <AnimatePresence>
                     {cart.length === 0 ? (
-                      <p className="text-sm text-gray-500">Aún no hay productos.</p>
+                      <p className="text-sm text-muted-foreground">Aún no hay productos.</p>
                     ) : (
                       cart.map(item => (
                         <motion.div key={item.lineKey} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}>
-                          <div className="flex items-center gap-3 border rounded-2xl p-3 bg-white shadow-sm">
+                          <div className="flex items-center gap-3 border border-border rounded-2xl p-3 bg-card shadow-sm">
                             <img src={item.img} alt="" className="w-16 h-16 object-cover rounded-xl" />
                             <div className="flex-1">
                               <div className="font-medium">{item.name}</div>
                               {item.colorLabel && (
-                                <div className="text-xs text-gray-500">Color: {item.colorLabel}</div>
+                                <div className="text-xs text-muted-foreground">Color: {item.colorLabel}</div>
                               )}
                               {Array.isArray(item.selections) && item.selections.length > 0 && (
                                 <div className="mt-1 space-y-0.5">
                                   {item.selections.map(sel => {
                                     const colorObj = COLORS.find(c => c.value === sel.colorValue)
                                     return (
-                                      <div key={sel.partId} className="text-xs text-gray-500 flex items-center gap-1.5">
-                                        <span className="text-gray-600">{sel.partLabel}:</span>
+                                      <div key={sel.partId} className="text-xs text-muted-foreground flex items-center gap-1.5">
+                                        <span className="text-foreground/80">{sel.partLabel}:</span>
                                         {colorObj ? (
-                                          <span className="inline-block h-3 w-3 rounded-full border border-gray-300" style={{ backgroundColor: colorObj.hex }}></span>
+                                          <span className="inline-block h-3 w-3 rounded-full border border-border" style={{ backgroundColor: colorObj.hex }}></span>
                                         ) : null}
                                         <span>{sel.colorLabel || sel.colorValue || '—'}</span>
-                                        {sel.material ? <span className="text-gray-400">[{sel.material}]</span> : null}
+                                        {sel.material ? <span className="text-muted-foreground/80">[{sel.material}]</span> : null}
                                       </div>
                                     )
                                   })}
                                 </div>
                               )}
-                              <div className="text-sm text-gray-500">{formatPrice(item.price)} / ud</div>
+                              <div className="text-sm text-muted-foreground">{formatPrice(item.price)} / ud</div>
                               <div className="flex items-center gap-2 mt-1">
                                 <Input type="number" min={1} value={item.qty} onChange={(e) => updateQty(item.lineKey, parseInt(e.target.value || "1"))} className="w-20" />
-                                <Button size="icon" className="bg-white text-gray-900 hover:bg-gray-100" onClick={() => removeFromCart(item.lineKey)}>
+                                <Button size="icon" variant="outline" onClick={() => removeFromCart(item.lineKey)}>
                                   <Trash2 className="w-4 h-4" />
                                 </Button>
                               </div>
@@ -417,15 +417,15 @@ export default function Shop3D() {
                       <span className="font-medium">Total</span>
                       <span className="font-semibold">{formatPrice(grandTotal)}</span>
                     </div>
-                    <p className="text-xs text-gray-500 mt-2">* Envío fijo de {formatPrice(SHIPPING_FEE_EUR)} en España peninsular. <i>Envios solo dentro de España.</i></p>
+                    <p className="text-xs text-muted-foreground mt-2">* Envío fijo de {formatPrice(SHIPPING_FEE_EUR)} en España peninsular. <i>Envios solo dentro de España.</i></p>
                     <div className="grid grid-cols-1 gap-2 mt-4">
                       <Button className="gap-2" onClick={checkoutPayPal}>
                         <PayPalIcon className="w-4 h-4" /> Pagar con PayPal
                       </Button>
-                      <Button className="gap-2 bg-white text-gray-900 hover:bg-gray-100" onClick={checkoutEmail}>
+                      <Button className="gap-2" onClick={checkoutEmail}>
                         <Mail className="w-4 h-4" /> Reservar por email
                       </Button>
-                      <Button className="bg-white text-gray-900 hover:bg-gray-100" onClick={clearCart}>Vaciar carrito</Button>
+                      <Button variant="outline" onClick={clearCart}>Vaciar carrito</Button>
                     </div>
                   </div>
                 </div>
@@ -461,13 +461,13 @@ export default function Shop3D() {
 
       {/* Sección de formulario movida a página independiente: encargos.html */}
 
-      <footer className="border-t bg-white/60">
-        <div className="text-center text-xs text-gray-600 pb-2 mt-4">
+      <footer className="border-t bg-background/60">
+        <div className="text-center text-xs text-muted-foreground pb-2 mt-4">
           <a className="underline" href="privacidad.html">Política de privacidad</a>
           <span className="mx-2">·</span>
           <a className="underline" href="aviso-legal.html">Aviso legal</a>
         </div>
-        <div className="text-center text-xs text-gray-500 pb-6">© {new Date().getFullYear()} Capia 3D – Hecho con React + GitHub Pages</div>
+        <div className="text-center text-xs text-muted-foreground pb-6">© {new Date().getFullYear()} Capia 3D – Hecho con React + GitHub Pages</div>
       </footer>
     </div>
   )
