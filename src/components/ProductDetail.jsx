@@ -401,6 +401,19 @@ export default function ProductDetail({ slug: slugProp, onAdd, onBack }) {
         </div>
       )}
 
+      {otherImageObjs.length > 0 && (
+        <div className="mt-10">
+          <h3 className="font-semibold">Personalizaciones para clientes</h3>
+          <div className="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+            {otherImageObjs.map((img, idx) => (
+              <div key={(img.src || 'other') + idx} className="aspect-square bg-muted rounded-lg overflow-hidden">
+                <img src={img.src} alt="Personalización de cliente" className="w-full h-full object-cover" />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {referencedProducts.length > 0 && (
         <div className="mt-10">
           <h3 className="font-semibold">También te puede interesar</h3>
@@ -413,19 +426,6 @@ export default function ProductDetail({ slug: slugProp, onAdd, onBack }) {
               ))}
               <div className="w-2 flex-shrink-0"></div>
             </div>
-          </div>
-        </div>
-      )}
-
-      {otherImageObjs.length > 0 && (
-        <div className="mt-10">
-          <h3 className="font-semibold">Personalizaciones para clientes</h3>
-          <div className="mt-3 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-            {otherImageObjs.map((img, idx) => (
-              <div key={(img.src || 'other') + idx} className="aspect-square bg-muted rounded-lg overflow-hidden">
-                <img src={img.src} alt="Personalización de cliente" className="w-full h-full object-cover" />
-              </div>
-            ))}
           </div>
         </div>
       )}
