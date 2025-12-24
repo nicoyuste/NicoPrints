@@ -181,8 +181,8 @@ export const products = [
         mode: 'base',
         description: 'Selecciona si guardas tus cartas con funda o doble funda. Podemos ajustar el tamaño de tu Deck box para justo lo que necesitas.',
         options: [
-          { value: 'single', label: 'Funda simple', price: 18.00, default: true },
-          { value: 'double', label: 'Funda doble', price: 19.00, default: false },
+          { value: 'single', label: 'Funda simple', price: 16.00, default: true },
+          { value: 'double', label: 'Funda doble', price: 17.00, default: false },
         ],
       },
     ],
@@ -216,8 +216,8 @@ export const products = [
         label: 'Número de cartas',
         mode: 'base',
         options: [
-          { value: '60', label: '60', price: 11.00, default: false },
-          { value: '100', label: '100', price: 12.20, default: true },
+          { value: '60', label: '60', price: 9.50, default: true },
+          { value: '100', label: '100', price: 10.50, default: false },
         ],
       },
       {
@@ -227,7 +227,7 @@ export const products = [
         description: 'Selecciona si guardas tus cartas con funda o doble funda. Podemos ajustar el tamaño de tu Deck box para justo lo que necesitas.',
         options: [
           { value: 'single', label: 'Funda simple', price: 0, default: true },
-          { value: 'double', label: 'Funda doble', price: 1, default: false },
+          { value: 'double', label: 'Funda doble', price: { '60': 0.5, '100': 1.0 }, default: false },
         ],
       },
     ],
@@ -270,8 +270,8 @@ export const products = [
         label: 'Número de cartas',
         mode: 'base',
         options: [
-          { value: '60', label: '60', price: 12.00, default: false },
-          { value: '100', label: '100', price: 13.20, default: true },
+          { value: '60', label: '60', price: 9.70, default: true },
+          { value: '100', label: '100', price: 10.70, default: false },
         ],
       },
       {
@@ -281,7 +281,7 @@ export const products = [
         description: 'Selecciona si guardas tus cartas con funda o doble funda. Podemos ajustar el tamaño de tu Deck box para justo lo que necesitas.',
         options: [
           { value: 'single', label: 'Funda simple', price: 0, default: true },
-          { value: 'double', label: 'Funda doble', price: 1, default: false },
+          { value: 'double', label: 'Funda doble', price: { '60': 0.5, '100': 1.0 }, default: false },
         ],
       },
     ],
@@ -322,8 +322,8 @@ export const products = [
         mode: 'base',
         description: 'Selecciona si guardas tus cartas con funda simple o doble funda.',
         options: [
-          { value: 'single', label: 'Funda simple', price: 10.50, default: true },
-          { value: 'double', label: 'Funda doble', price: 11.50, default: false },
+          { value: 'single', label: 'Funda simple', price: 11.60, default: true },
+          { value: 'double', label: 'Funda doble', price: 12.60, default: false },
         ],
       },
     ],
@@ -348,7 +348,7 @@ export const products = [
       { id: 'box', label: 'Base', materials: ['PLA', 'PLA Mate'] },
     ],
     description: 'Deck box sencilla y compacta con cierre por imanes. Diseñada para mazos de 60 cartas con funda simple o doble funda, personalizable en colores.',
-    longDescription: 'Este deck box está pensado para quien busca una caja pequeña, práctica y económica: cierre magnético para abrir y cerrar rápido, sin bisagras ni piezas extra. El interior está ajustado a mazos de 60 cartas y puedes elegir si las llevas con funda simple o doble funda.\n\nPuedes personalizar los colores de la tapa y la base para que combine con tu mazo. Si quieres añadir un texto, logotipo o un relieve decorativo, puedo diseñarlo e imprimirlo a medida. Escríbeme desde la página de <a href="encargos.html" target="_blank" rel="noreferrer noopener">encargos</a>.',
+    longDescription: 'Este deck box está pensado para quien busca una caja pequeña y práctica: cierre magnético para abrir y cerrar rápido, sin bisagras ni piezas extra. El interior está ajustado a mazos de 60 cartas y puedes elegir si las llevas con funda simple o doble funda.\n\nPuedes personalizar los colores de la tapa y la base para que combine con tu mazo. Si quieres añadir un texto, logotipo o un relieve decorativo, puedo diseñarlo e imprimirlo a medida. Escríbeme desde la página de <a href="encargos.html" target="_blank" rel="noreferrer noopener">encargos</a>.',
     crossReferences: ['deck-box-v2-simple', 'deck-box-v2-simple-sideboard', 'deck-box-v2-top-loader-trail-sideboard'],
   },
 

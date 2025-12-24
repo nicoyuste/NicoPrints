@@ -78,7 +78,14 @@ export default function ProductDetail({ slug: slugProp, onAdd, onBack }) {
         if (t.mode !== 'addon') continue
         const val = selectedTraits[t.id]
         const opt = (t.options || []).find(o => String(o.value) === String(val))
-        if (opt && typeof opt.price === 'number') base += opt.price
+        if (!opt) continue
+        if (typeof opt.price === 'number') { base += opt.price; continue }
+        if (opt.price && typeof opt.price === 'object') {
+          const baseTrait = traits.find(tr => tr.mode === 'base')
+          const baseVal = baseTrait ? String(selectedTraits[baseTrait.id] || '') : ''
+          const delta = opt.price[baseVal]
+          if (typeof delta === 'number') base += delta
+        }
       }
     }
     return base

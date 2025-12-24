@@ -45,7 +45,14 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
       .reduce((sum, t) => {
         const opts = Array.isArray(t.options) ? t.options : []
         if (opts.length === 0) return sum
-        const minAddon = Math.min(...opts.map(o => (typeof o.price === 'number' ? o.price : 0)))
+        const minAddon = Math.min(...opts.map(o => {
+          if (typeof o.price === 'number') return o.price
+          if (o.price && typeof o.price === 'object') {
+            const vals = Object.values(o.price).filter(v => typeof v === 'number')
+            return vals.length > 0 ? Math.min(...vals) : 0
+          }
+          return 0
+        }))
         return sum + (isFinite(minAddon) ? minAddon : 0)
       }, 0)
     startingPrice += addonMinSum
@@ -111,4 +118,3 @@ export default function ProductCard({ product, onAdd, contactEmail }) {
     </Card>
   )
 }
-
