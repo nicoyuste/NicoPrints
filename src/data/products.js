@@ -256,7 +256,7 @@ export const products = [
     ],
     description: 'Deck box con cierre por bisagra. De 60 o 100 cartas con funda simple o doble. En los colores que tu quieras.',
     longDescription: 'Este deck box incorpora un cierre de bisagra integrado que bloquea la tapa de forma mecánica y hace que no se abra por golpes ni vibraciones. La geometría interior mantiene las cartas firmes con cualquier tipo de funda (elige bien tu modelo).\n\nPuedes configurar los colores de las tres piezas —tapa, cierre y base— para combinarlo con tu mazo. Si quieres añadir un texto, logotipo o un relieve decorativo en la tapa, puedo diseñarlo e imprimirlo a medida. Escríbeme desde la página de <a href="encargos.html" target="_blank" rel="noreferrer noopener">encargos</a>.',
-    crossReferences: ['deck-box-v2-top-loader-trail-sideboard', 'deck-box-v2-top-loader-sideboard', 'deck-box-v2-simple-sideboard'],
+    crossReferences: ['deck-box-magnetic-60','deck-box-v2-top-loader-trail-sideboard', 'deck-box-v2-top-loader-sideboard', 'deck-box-v2-simple-sideboard'],
   },
   {
     slug: 'deck-box-v2-simple-sideboard',
@@ -305,7 +305,51 @@ export const products = [
     ],
     description: 'Deck box con cierre por bisagra, compacto y cómodo, con un hueco extra para guardar tu sideboard. De 60 o 100 cartas con funda simple o doble, personalizable en colores.',
     longDescription: 'Este deck box mantiene el cierre de bisagra integrado que bloquea la tapa de forma mecánica y hace que no se abra por golpes ni vibraciones. Es una versión “simple” y manejable, pero con un espacio adicional para llevar tu sideboard siempre junto al mazo. La geometría interior mantiene las cartas firmes  (elige bien tu modelo).\n\nPuedes configurar los colores de las tres piezas —tapa, cierre y base— para combinarlo con tu mazo. Si quieres añadir un texto, logotipo o un relieve decorativo en la tapa, puedo diseñarlo e imprimirlo a medida. Escríbeme desde la página de <a href="encargos.html" target="_blank" rel="noreferrer noopener">encargos</a>.',
-    crossReferences: ['deck-box-v2-simple', 'deck-box-v2-top-loader-trail-sideboard', 'deck-box-v2-top-loader-sideboard'],
+    crossReferences: ['deck-box-v2-simple','deck-box-magnetic-60', 'deck-box-v2-top-loader-trail-sideboard', 'deck-box-v2-top-loader-sideboard'],
+  },
+
+  // Deck boxes con cierre por imanes (60 cartas)
+  {
+    slug: 'deck-box-magnetic-60',
+    collectionId: 'magic',
+    collectionSection: 'deck-box-imanes',
+    name: 'Deck box compacta con cierre magnético (60 cartas).',
+    currency: 'EUR',
+    traits: [
+      {
+        id: 'sleeve_mode',
+        label: 'Fundas',
+        mode: 'base',
+        description: 'Selecciona si guardas tus cartas con funda simple o doble funda.',
+        options: [
+          { value: 'single', label: 'Funda simple', price: 10.50, default: true },
+          { value: 'double', label: 'Funda doble', price: 11.50, default: false },
+        ],
+      },
+    ],
+    images: [
+      { src: `${import.meta.env.BASE_URL}products/deck-box-magnetic-60/deck-box-magnetic-60_1.png` },
+      { src: `${import.meta.env.BASE_URL}products/deck-box-magnetic-60/deck-box-magnetic-60_7.png` },
+      { src: `${import.meta.env.BASE_URL}products/deck-box-magnetic-60/deck-box-magnetic-60_3.png` },
+      { src: `${import.meta.env.BASE_URL}products/deck-box-magnetic-60/deck-box-magnetic-60_5.png` },
+      { src: `${import.meta.env.BASE_URL}products/deck-box-magnetic-60/deck-box-magnetic-60_8.png` },
+    ],
+    otherImages: [
+      { src: `${import.meta.env.BASE_URL}products/deck-box-magnetic-60/deck-box-magnetic-60-other_1.png` },
+      { src: `${import.meta.env.BASE_URL}products/deck-box-magnetic-60/deck-box-magnetic-60-other_2.png` },
+      { src: `${import.meta.env.BASE_URL}products/deck-box-magnetic-60/deck-box-magnetic-60-other_3.png` },
+      { src: `${import.meta.env.BASE_URL}products/deck-box-magnetic-60/deck-box-magnetic-60-other_4.png` },
+    ],
+    category: 'Magic: The Gathering',
+    material: ['PLA', 'PLA Mate'],
+    parts: [
+      { id: 'lid', label: 'Tapa', materials: ['PLA', 'PLA Mate'] },
+      { id: 'logo', label: 'Logo', materials: ['PLA', 'PLA Mate'] },
+      { id: 'box', label: 'Base', materials: ['PLA', 'PLA Mate'] },
+    ],
+    description: 'Deck box sencilla y compacta con cierre por imanes. Diseñada para mazos de 60 cartas con funda simple o doble funda, personalizable en colores.',
+    longDescription: 'Este deck box está pensado para quien busca una caja pequeña, práctica y económica: cierre magnético para abrir y cerrar rápido, sin bisagras ni piezas extra. El interior está ajustado a mazos de 60 cartas y puedes elegir si las llevas con funda simple o doble funda.\n\nPuedes personalizar los colores de la tapa y la base para que combine con tu mazo. Si quieres añadir un texto, logotipo o un relieve decorativo, puedo diseñarlo e imprimirlo a medida. Escríbeme desde la página de <a href="encargos.html" target="_blank" rel="noreferrer noopener">encargos</a>.',
+    crossReferences: ['deck-box-v2-simple', 'deck-box-v2-simple-sideboard', 'deck-box-v2-top-loader-trail-sideboard'],
   },
 
   // Separadores

@@ -13,6 +13,12 @@ export default function Magic({ onAdd }) {
       filter: (p) => p.collectionId === 'magic' && p.collectionSection === 'deck-box-bisagra',
     },
     {
+      id: 'deck-box-imanes',
+      title: 'Deck box con cierre por imanes',
+      description: 'Deck boxes compactas y sencillas con cierre magnético. Para mazos de 60 cartas con funda simple o doble.',
+      filter: (p) => p.collectionId === 'magic' && p.collectionSection === 'deck-box-imanes',
+    },
+    {
       id: 'separadores',
       title: 'Separadores',
       description: 'Organiza tus cartas por tipo con pestaña alta e icono.',
@@ -123,5 +129,4 @@ export default function Magic({ onAdd }) {
     </section>
   )
 }
-
 
