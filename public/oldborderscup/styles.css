@@ -8,9 +8,6 @@
   --ring: rgba(214, 180, 106, 0.28);
   --max: 1120px;
   --topbar-h: 64px;
-  /* Match current hero image ratio: 1536×803 */
-  --hero-w: 1536;
-  --hero-h: 803;
 }
 
 * {
@@ -107,9 +104,14 @@ a {
   padding: 76px 0;
 }
 
-.band--hero {
+.band.band--hero {
   padding: 0;
   background: #05060a;
+}
+
+.band.band--hero-actions {
+  padding: 10px 0 30px;
+  background: #000000;
 }
 
 .band--a {
@@ -169,8 +171,6 @@ a {
 .hero-bleed {
   position: relative;
   width: 100%;
-  aspect-ratio: var(--hero-w) / var(--hero-h);
-  height: min(calc(100vw * var(--hero-h) / var(--hero-w)), calc(100vh - var(--topbar-h)));
   overflow: hidden;
 }
 
@@ -202,36 +202,27 @@ a {
   display: grid;
   justify-items: center;
   width: 100%;
-  height: 100%;
 }
 
 .hero__logo {
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
+  height: auto;
   display: block;
-  filter: none;
 }
 
-.hero__overlay {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 22px 24px 26px;
+.hero-actions {
+  padding: 0 24px;
   display: flex;
   justify-content: center;
   gap: 12px;
   flex-wrap: wrap;
-  background: linear-gradient(180deg, transparent 0%, rgba(5, 6, 10, 0.72) 55%, rgba(5, 6, 10, 0.92) 100%);
 }
 
-.hero__overlay .btn {
+.hero-actions .btn {
   backdrop-filter: blur(10px);
 }
 
-.hero__overlay .btn--ghost {
+.hero-actions .btn--ghost {
   background: rgba(255, 255, 255, 0.08);
 }
 
@@ -278,7 +269,7 @@ a {
 
 .btn--disabled {
   pointer-events: none;
-  opacity: 0.6;
+  opacity: 1;
 }
 
 .fine {
@@ -398,6 +389,15 @@ h3 {
 .facts--basic .fact2 {
   width: 100%;
   max-width: 420px;
+}
+
+.fact2__icon {
+  height: 26px;
+  width: auto;
+  display: block;
+  margin: 0 auto 10px;
+  opacity: 0.95;
+  filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.45));
 }
 
 .facts--basic .fact2__extra {
@@ -533,6 +533,10 @@ h3 {
     grid-template-columns: 1fr;
   }
 
+  .facts--basic {
+    gap: 38px;
+  }
+
   .prize {
     grid-template-columns: 1fr;
   }
@@ -551,8 +555,12 @@ h3 {
     padding: 64px 0;
   }
 
-  .band--hero {
+  .band.band--hero {
     padding: 0;
+  }
+
+  .band.band--hero-actions {
+    padding: 10px 0 20px;
   }
 }
 
