@@ -1,75 +1,45 @@
 # Capia 3D
 
-Source code for [www.capia3d.com](https://www.capia3d.com), a Spanish-language storefront for 3D-printed products and custom design and printing work.
+Source code for [www.capia3d.com](https://www.capia3d.com), a bilingual portfolio and marketing website for personalized 3D-printed objects.
 
-The site includes product collections, configurable product variants, a browser-persisted cart, and checkout through PayPal or email. It is a static application with no backend or database.
+The site presents Capia 3D's work, explains the custom design process, and directs visitors to Wallapop or WhatsApp. It does not process sales, payments, inventory, or customer accounts.
 
 ## Technology
 
 - React 19 and Vite 7
 - React Router
-- Tailwind CSS
-- Radix UI and shadcn-style components
 - Framer Motion and Lucide icons
 - GitHub Pages
 
-The application uses JavaScript and JSX rather than TypeScript.
-
 ## Local development
 
-Use Node.js 20, matching the version used by the deployment workflow.
+Use Node.js 20, matching the deployment workflow.
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Vite prints the local development URL when the server starts.
-
-## Available commands
+## Commands
 
 ```sh
-npm run dev      # Start the Vite development server
-npm run lint     # Run ESLint
-npm run build    # Create a production build in dist/
-npm run preview  # Preview the production build locally
-```
-
-Before submitting a change, run:
-
-```sh
+npm run dev
 npm run lint
 npm run build
+npm run preview
 ```
 
-There is currently no automated test suite.
+## Content model
 
-## Application structure
-
-- `src/Shop3D.jsx` contains the site shell, routes, navigation, cart, and checkout flows.
-- `src/data/products.js` is the canonical product catalog.
-- `src/collections/` contains the bespoke collection pages.
-- `src/components/` contains product views and shared UI components.
-- `src/styles/tokens.css` defines the Capia 3D visual-design tokens.
-- `public/products/` contains storefront product media.
-- `public/` also contains standalone legal, materials, and custom-order pages.
-- `public/oldborderscup/` is an independent static microsite.
-
-The main storefront routes are:
-
-- `/`
-- `/taller`
-- `/magic`
-- `/:collectionId/:productSlug`
-- `/gracias`
-- `/cancelado`
+- Spanish is served at `/`; English is served at `/en`.
+- `src/content.js` contains localized site copy, external destinations, and portfolio-product stories.
+- Spanish product pages use `/productos/:slug`.
+- English product pages use `/en/products/:slug`.
+- A product page explains the object, its uses, examples already created, personalization, and related work. It is not a purchasable SKU.
+- `public/data/instagram.json` is the safe, public cache consumed by the Instagram section. Until automatic synchronization is configured, the site uses curated portfolio images as a fallback.
 
 ## Deployment
 
-Pushes to `main` trigger `.github/workflows/deploy.yml`, which installs dependencies, builds the application, and deploys `dist/` to GitHub Pages.
+Pushes to `main` run `.github/workflows/deploy.yml` and publish `dist/` to GitHub Pages. The custom domain is configured through `public/CNAME`. SPA deep links rely on the redirect handshake between `public/404.html` and `index.html`.
 
-The custom domain is configured through `public/CNAME`. SPA deep links are supported by the redirect handshake between `public/404.html` and `index.html`; keep both files aligned when changing routing.
-
-## Project guidance
-
-Detailed architecture, catalog conventions, checkout constraints, analytics behavior, and instructions for coding agents are documented in [AGENTS.md](./AGENTS.md).
+See [AGENTS.md](./AGENTS.md) for detailed project conventions.
