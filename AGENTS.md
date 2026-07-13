@@ -27,7 +27,7 @@ Run lint and build before finishing code changes. There is no automated test sui
 - `src/App.jsx`: layout, bilingual routes, homepage, generic product-story page, Instagram gallery, and Comprar sheet.
 - `src/content.js`: localized copy, external links, and portfolio-product data.
 - `src/index.css`: complete visual system and responsive layout.
-- `public/products/`: real examples of completed work.
+- `public/v2/`: real examples of completed work, grouped by product or homepage section.
 - `public/data/instagram.json`: public Instagram feed cache consumed by the homepage.
 - `public/404.html` and `index.html`: GitHub Pages SPA deep-link restoration.
 
