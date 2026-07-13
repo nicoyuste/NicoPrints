@@ -5,6 +5,11 @@ import { AnimatePresence, motion as Motion } from 'framer-motion'
 import { content, products, productBySlug, siteLinks } from './content'
 
 const asset = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`
+const heroImages = [
+  'v2/hero/hero.jpeg',
+  'v2/hero/hero2.jpeg',
+  'v2/hero/hero3.jpeg',
+]
 
 function localizedPath(lang, path = '') {
   const normalized = path.replace(/^\//, '')
@@ -35,6 +40,29 @@ function HashLink({ to, onClick, children, ...props }) {
   }
 
   return <Link to={to} onClick={handleClick} {...props}>{children}</Link>
+}
+
+function HeroGallery({ imageAlts }) {
+  const [activeImage, setActiveImage] = useState(0)
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (reducedMotion.matches) return undefined
+    const interval = window.setInterval(() => {
+      setActiveImage((current) => (current + 1) % heroImages.length)
+    }, 5000)
+    return () => window.clearInterval(interval)
+  }, [])
+
+  return heroImages.map((image, index) => (
+    <img
+      key={image}
+      src={asset(image)}
+      alt={index === activeImage ? imageAlts[index] : ''}
+      aria-hidden={index !== activeImage}
+      className={index === activeImage ? 'is-active' : ''}
+    />
+  ))
 }
 
 function BuySheet({ open, onClose, lang }) {
@@ -231,15 +259,12 @@ function HomePage({ lang }) {
           <div className="hero-actions"><button className="button button-primary" onClick={openBuy}>{copy.nav.buy}<ArrowRight size={18} /></button><a className="button button-secondary" href={siteLinks.instagram} target="_blank" rel="noreferrer"><Instagram size={18} /> Instagram</a></div>
         </Motion.div>
         <Motion.div className="hero-visual" initial={{ opacity: 0, scale: .97 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: .1 }}>
-          <img src={asset('products/deck-box-v2-simple/deck-box-v2-simple_other_4.png')} alt={copy.hero.imageAlt} />
+          <HeroGallery imageAlts={copy.hero.imageAlts} />
           <div className="hero-note"><span>{copy.hero.noteLabel}</span><strong>{copy.hero.note}</strong></div>
         </Motion.div>
       </section>
 
-      <section id="work" className="section work-section">
-        <div className="section-heading"><p className="eyebrow">{copy.work.eyebrow}</p><h2>{copy.work.title}</h2><p>{copy.work.intro}</p></div>
-        <div className="work-grid">{products.map((product) => <ProductCard key={product.slug} product={product} lang={lang} />)}</div>
-      </section>
+      <InstagramFeed lang={lang} />
 
       <section className="custom-banner section-narrow">
         <p className="eyebrow">{copy.custom.eyebrow}</p><h2>{copy.custom.title}</h2><p>{copy.custom.body}</p><button className="text-link light" onClick={openBuy}>{copy.custom.link}<ArrowRight /></button>
@@ -250,7 +275,10 @@ function HomePage({ lang }) {
         <div className="steps">{[MessageCircle, PenTool, Printer, PackageCheck].map((Icon, index) => <div className="step" key={copy.process.steps[index].title}><span><Icon /></span><small>0{index + 1}</small><h3>{copy.process.steps[index].title}</h3><p>{copy.process.steps[index].body}</p></div>)}</div>
       </section>
 
-      <InstagramFeed lang={lang} />
+      <section id="work" className="section work-section">
+        <div className="section-heading"><p className="eyebrow">{copy.work.eyebrow}</p><h2>{copy.work.title}</h2><p>{copy.work.intro}</p></div>
+        <div className="work-grid">{products.map((product) => <ProductCard key={product.slug} product={product} lang={lang} />)}</div>
+      </section>
 
       <section id="about" className="section about-section">
         <div className="about-image"><img src={asset('capia_logo.jpg')} alt="Capia 3D" /></div>
