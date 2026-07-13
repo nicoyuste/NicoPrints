@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, Navigate, Route, Routes, useLocation, useParams } from 'react-router-dom'
-import { ArrowRight, Check, ExternalLink, Instagram, Languages, Menu, MessageCircle, PackageCheck, PenTool, Printer, ShoppingBag, Sparkles, X } from 'lucide-react'
+import { ArrowRight, Check, ExternalLink, Instagram, Languages, Mail, Menu, MessageCircle, PackageCheck, PenTool, Printer, ShoppingBag, Sparkles, X } from 'lucide-react'
 import { AnimatePresence, motion as Motion } from 'framer-motion'
 import { content, products, productBySlug, siteLinks } from './content'
 
@@ -42,19 +42,19 @@ function HashLink({ to, onClick, children, ...props }) {
   return <Link to={to} onClick={handleClick} {...props}>{children}</Link>
 }
 
-function HeroGallery({ imageAlts }) {
+function LoopingGallery({ images, imageAlts }) {
   const [activeImage, setActiveImage] = useState(0)
 
   useEffect(() => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
-    if (reducedMotion.matches) return undefined
+    if (reducedMotion.matches || images.length < 2) return undefined
     const interval = window.setInterval(() => {
-      setActiveImage((current) => (current + 1) % heroImages.length)
+      setActiveImage((current) => (current + 1) % images.length)
     }, 5000)
     return () => window.clearInterval(interval)
-  }, [])
+  }, [images])
 
-  return heroImages.map((image, index) => (
+  return images.map((image, index) => (
     <img
       key={image}
       src={asset(image)}
@@ -70,6 +70,7 @@ function BuySheet({ open, onClose, lang }) {
   const copy = content[lang].buySheet
   const whatsappMessage = content[lang].whatsappMessage
   const whatsappUrl = `https://wa.me/${siteLinks.whatsapp}?text=${encodeURIComponent(whatsappMessage)}`
+  const emailUrl = `mailto:${siteLinks.email}?subject=${encodeURIComponent(copy.emailSubject)}&body=${encodeURIComponent(whatsappMessage)}`
 
   useEffect(() => {
     if (!open) return undefined
@@ -122,6 +123,11 @@ function BuySheet({ open, onClose, lang }) {
               <a href={whatsappUrl} target="_blank" rel="noreferrer" className="buy-option">
                 <span className="option-icon whatsapp-icon"><MessageCircle /></span>
                 <span><strong>WhatsApp</strong><small>{copy.whatsapp}</small></span>
+                <ExternalLink size={18} />
+              </a>
+              <a href={emailUrl} className="buy-option">
+                <span className="option-icon email-icon"><Mail /></span>
+                <span><strong>Email</strong><small>{copy.email}</small></span>
                 <ExternalLink size={18} />
               </a>
             </div>
@@ -189,13 +195,12 @@ function Layout({ lang, children }) {
       <Header lang={lang} onBuy={() => setBuyOpen(true)} />
       <main>{typeof children === 'function' ? children(() => setBuyOpen(true)) : children}</main>
       <footer className="site-footer">
-        <div><img src={asset('capia.svg')} alt="Capia 3D" /><p>{footer.tagline}</p></div>
         <div className="footer-links">
           <a href={siteLinks.instagram} target="_blank" rel="noreferrer">Instagram</a>
           <a href={siteLinks.wallapop} target="_blank" rel="noreferrer">Wallapop</a>
           <a href={`mailto:${siteLinks.email}`}>{footer.contact}</a>
         </div>
-        <p className="copyright">© {new Date().getFullYear()} Capia 3D</p>
+        <p className="copyright">© 2026 Capia 3D</p>
       </footer>
       <BuySheet open={buyOpen} onClose={() => setBuyOpen(false)} lang={lang} />
     </div>
@@ -235,10 +240,11 @@ function InstagramFeed({ lang }) {
 
   return (
     <section className="section instagram-section">
-      <div className="section-heading split-heading"><div><p className="eyebrow">Instagram</p><h2>{copy.title}</h2></div><a className="text-link" href={siteLinks.instagram} target="_blank" rel="noreferrer">{copy.link}<ArrowRight /></a></div>
+      <div className="section-heading"><p className="eyebrow">Instagram</p><h2>{copy.title}</h2></div>
       <div className="instagram-grid">
         {items.map((post) => <a key={post.id} href={post.permalink || siteLinks.instagram} target="_blank" rel="noreferrer"><img src={post.image || post.media_url} alt={post.caption || copy.alt} loading="lazy" /><span><Instagram size={18} /></span></a>)}
       </div>
+      <div className="instagram-follow"><a className="text-link" href={siteLinks.instagram} target="_blank" rel="noreferrer">{copy.link}<ArrowRight /></a></div>
     </section>
   )
 }
@@ -259,7 +265,7 @@ function HomePage({ lang }) {
           <div className="hero-actions"><button className="button button-primary" onClick={openBuy}>{copy.nav.buy}<ArrowRight size={18} /></button><a className="button button-secondary" href={siteLinks.instagram} target="_blank" rel="noreferrer"><Instagram size={18} /> Instagram</a></div>
         </Motion.div>
         <Motion.div className="hero-visual" initial={{ opacity: 0, scale: .97 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: .1 }}>
-          <HeroGallery imageAlts={copy.hero.imageAlts} />
+          <LoopingGallery images={heroImages} imageAlts={copy.hero.imageAlts} />
           <div className="hero-note"><span>{copy.hero.noteLabel}</span><strong>{copy.hero.note}</strong></div>
         </Motion.div>
       </section>
@@ -296,6 +302,7 @@ function ProductPage({ lang }) {
   const copy = content[lang]
   const item = product?.[lang]
   const related = useMemo(() => product ? product.related.map((relatedSlug) => productBySlug.get(relatedSlug)).filter(Boolean) : [], [product])
+  const coverImages = product?.coverGallery || (product ? [product.cover] : [])
 
   useEffect(() => {
     window.scrollTo({ top: 0 })
@@ -308,13 +315,13 @@ function ProductPage({ lang }) {
     <article className="product-page">
       <section className="product-hero section">
         <div className="product-title"><HashLink className="back-link" to={`${localizedPath(lang)}#work`}>← {copy.product.back}</HashLink><p className="eyebrow">{item.kicker}</p><h1>{item.title}</h1><p>{item.intro}</p><button className="button button-primary" onClick={openBuy}>{copy.nav.buy}<ArrowRight /></button></div>
-        <div className="product-cover"><img src={asset(product.cover)} alt={item.title} /></div>
+        <div className="product-cover"><LoopingGallery key={product.slug} images={coverImages} imageAlts={coverImages.map((_, index) => `${item.title} — ${copy.product.example} ${index + 1}`)} /></div>
       </section>
       <section className="product-story section">
         <div><p className="eyebrow">{copy.product.what}</p><h2>{item.whatTitle}</h2></div><div className="rich-copy">{item.what.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}</div>
       </section>
       <section className="use-section section"><div className="section-heading"><p className="eyebrow">{copy.product.uses}</p><h2>{item.usesTitle}</h2></div><div className="use-grid">{item.uses.map((use) => <div key={use.title}><span><Check /></span><h3>{use.title}</h3><p>{use.body}</p></div>)}</div></section>
-      <section className="examples-section section"><div className="section-heading"><p className="eyebrow">{copy.product.examples}</p><h2>{item.examplesTitle}</h2><p>{item.examplesIntro}</p></div><div className="example-grid">{product.gallery.map((image, index) => <img key={image} src={asset(image)} alt={`${item.title} — ${copy.product.example} ${index + 1}`} loading="lazy" />)}</div></section>
+      <section className="examples-section section"><div className="section-heading"><p className="eyebrow">{copy.product.examples}</p><h2>{item.examplesTitle}</h2><p>{item.examplesIntro}</p></div><div className="example-grid">{product.gallery.map((image, index) => <img key={image} src={asset(image)} alt={`${item.title} — ${copy.product.example} ${index + 1}`} loading="lazy" />)}</div><div className="examples-more"><a className="button button-secondary" href={siteLinks.instagram} target="_blank" rel="noreferrer"><Instagram size={18} />{copy.product.moreInstagram}</a></div></section>
       <section className="personalization section-narrow"><p className="eyebrow">{copy.product.personalized}</p><h2>{item.personalizationTitle}</h2><p>{item.personalization}</p><button className="button button-light" onClick={openBuy}>{copy.nav.buy}<ArrowRight /></button></section>
       <section className="related-section section"><div className="section-heading split-heading"><div><p className="eyebrow">{copy.product.related}</p><h2>{copy.product.relatedTitle}</h2></div></div><div className="work-grid related-grid">{related.map((relatedProduct) => <ProductCard key={relatedProduct.slug} product={relatedProduct} lang={lang} />)}</div></section>
     </article>

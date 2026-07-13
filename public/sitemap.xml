@@ -21,12 +21,22 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.capia3d.com/productos/glasses-cases</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.capia3d.com/en/products/deck-boxes</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.capia3d.com/en/products/card-dividers</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.capia3d.com/en/products/glasses-cases</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
