@@ -11,6 +11,32 @@ function localizedPath(lang, path = '') {
   return lang === 'en' ? `/en${normalized ? `/${normalized}` : ''}` : `/${normalized}`
 }
 
+function ScrollToHash() {
+  const { hash, pathname } = useLocation()
+
+  useEffect(() => {
+    if (!hash) return
+    const sectionId = decodeURIComponent(hash.slice(1))
+    requestAnimationFrame(() => {
+      document.getElementById(sectionId)?.scrollIntoView()
+    })
+  }, [hash, pathname])
+
+  return null
+}
+
+function HashLink({ to, onClick, children, ...props }) {
+  const sectionId = to.split('#')[1]
+  const handleClick = (event) => {
+    onClick?.(event)
+    requestAnimationFrame(() => {
+      document.getElementById(sectionId)?.scrollIntoView()
+    })
+  }
+
+  return <Link to={to} onClick={handleClick} {...props}>{children}</Link>
+}
+
 function BuySheet({ open, onClose, lang }) {
   const sheetRef = useRef(null)
   const copy = content[lang].buySheet
@@ -100,9 +126,9 @@ function Header({ lang, onBuy }) {
       <div className="header-inner">
         <Link to={home} className="brand" aria-label="Capia 3D"><img src={asset('capia.svg')} alt="Capia 3D" /></Link>
         <nav className="desktop-nav" aria-label="Main navigation">
-          <Link to={`${home}#work`}>{nav.work}</Link>
-          <Link to={`${home}#process`}>{nav.process}</Link>
-          <Link to={`${home}#about`}>{nav.about}</Link>
+          <HashLink to={`${home}#work`}>{nav.work}</HashLink>
+          <HashLink to={`${home}#process`}>{nav.process}</HashLink>
+          <HashLink to={`${home}#about`}>{nav.about}</HashLink>
           <a href={siteLinks.instagram} target="_blank" rel="noreferrer">Instagram</a>
         </nav>
         <div className="header-actions">
@@ -115,9 +141,9 @@ function Header({ lang, onBuy }) {
         {menuOpen && (
           <Motion.div className="mobile-menu" initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }}>
             <button className="icon-button mobile-close" onClick={() => setMenuOpen(false)} aria-label={nav.close}><X /></button>
-            <Link to={`${home}#work`} onClick={() => setMenuOpen(false)}>{nav.work}</Link>
-            <Link to={`${home}#process`} onClick={() => setMenuOpen(false)}>{nav.process}</Link>
-            <Link to={`${home}#about`} onClick={() => setMenuOpen(false)}>{nav.about}</Link>
+            <HashLink to={`${home}#work`} onClick={() => setMenuOpen(false)}>{nav.work}</HashLink>
+            <HashLink to={`${home}#process`} onClick={() => setMenuOpen(false)}>{nav.process}</HashLink>
+            <HashLink to={`${home}#about`} onClick={() => setMenuOpen(false)}>{nav.about}</HashLink>
             <a href={siteLinks.instagram} target="_blank" rel="noreferrer">Instagram</a>
             <button className="button button-primary" onClick={() => { setMenuOpen(false); onBuy() }}>{nav.buy}</button>
           </Motion.div>
@@ -203,7 +229,6 @@ function HomePage({ lang }) {
           <h1>{copy.hero.title}</h1>
           <p className="hero-intro">{copy.hero.intro}</p>
           <div className="hero-actions"><button className="button button-primary" onClick={openBuy}>{copy.nav.buy}<ArrowRight size={18} /></button><a className="button button-secondary" href={siteLinks.instagram} target="_blank" rel="noreferrer"><Instagram size={18} /> Instagram</a></div>
-          <p className="trust-line"><Check size={16} />{copy.hero.trust}</p>
         </Motion.div>
         <Motion.div className="hero-visual" initial={{ opacity: 0, scale: .97 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: .1 }}>
           <img src={asset('products/deck-box-v2-simple/deck-box-v2-simple_other_4.png')} alt={copy.hero.imageAlt} />
@@ -254,7 +279,7 @@ function ProductPage({ lang }) {
   return <Layout lang={lang}>{(openBuy) => <>
     <article className="product-page">
       <section className="product-hero section">
-        <div className="product-title"><Link className="back-link" to={`${localizedPath(lang)}#work`}>← {copy.product.back}</Link><p className="eyebrow">{item.kicker}</p><h1>{item.title}</h1><p>{item.intro}</p><button className="button button-primary" onClick={openBuy}>{copy.nav.buy}<ArrowRight /></button></div>
+        <div className="product-title"><HashLink className="back-link" to={`${localizedPath(lang)}#work`}>← {copy.product.back}</HashLink><p className="eyebrow">{item.kicker}</p><h1>{item.title}</h1><p>{item.intro}</p><button className="button button-primary" onClick={openBuy}>{copy.nav.buy}<ArrowRight /></button></div>
         <div className="product-cover"><img src={asset(product.cover)} alt={item.title} /></div>
       </section>
       <section className="product-story section">
@@ -269,11 +294,14 @@ function ProductPage({ lang }) {
 }
 
 export default function App() {
-  return <Routes>
-    <Route path="/" element={<HomePage lang="es" />} />
-    <Route path="/en" element={<HomePage lang="en" />} />
-    <Route path="/productos/:slug" element={<ProductPage lang="es" />} />
-    <Route path="/en/products/:slug" element={<ProductPage lang="en" />} />
-    <Route path="*" element={<Navigate to="/" replace />} />
-  </Routes>
+  return <>
+    <ScrollToHash />
+    <Routes>
+      <Route path="/" element={<HomePage lang="es" />} />
+      <Route path="/en" element={<HomePage lang="en" />} />
+      <Route path="/productos/:slug" element={<ProductPage lang="es" />} />
+      <Route path="/en/products/:slug" element={<ProductPage lang="en" />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  </>
 }
