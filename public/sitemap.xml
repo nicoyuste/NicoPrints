@@ -11,6 +11,16 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.capia3d.com/links</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.capia3d.com/en/links</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://www.capia3d.com/productos/deck-boxes</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

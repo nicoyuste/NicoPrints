@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, Navigate, Route, Routes, useLocation, useParams } from 'react-router-dom'
-import { ArrowRight, Check, ExternalLink, Instagram, Languages, Mail, Menu, MessageCircle, PackageCheck, PenTool, Printer, ShoppingBag, Sparkles, X } from 'lucide-react'
+import { ArrowRight, Check, ExternalLink, Globe2, Instagram, Languages, Mail, Menu, MessageCircle, PackageCheck, PenTool, Printer, ShoppingBag, Sparkles, X } from 'lucide-react'
 import { AnimatePresence, motion as Motion } from 'framer-motion'
 import { content, products, productBySlug, siteLinks } from './content'
 
@@ -328,6 +328,52 @@ function ProductPage({ lang }) {
   </>}</Layout>
 }
 
+function LinksPage({ lang }) {
+  const copy = content[lang]
+  const pageCopy = copy.linksPage
+  const home = localizedPath(lang)
+  const languagePath = lang === 'es' ? '/en/links' : '/links'
+  const emailUrl = `mailto:${siteLinks.email}?subject=${encodeURIComponent(copy.buySheet.emailSubject)}&body=${encodeURIComponent(copy.whatsappMessage)}`
+  const links = [
+    { key: 'website', href: home, Icon: Globe2, internal: true },
+    { key: 'wallapop', href: siteLinks.wallapop, Icon: ShoppingBag },
+    { key: 'whatsappCatalog', href: siteLinks.whatsappCatalog, Icon: ShoppingBag },
+    { key: 'email', href: emailUrl, Icon: Mail, email: true },
+  ]
+
+  useEffect(() => {
+    window.scrollTo({ top: 0 })
+    document.documentElement.lang = lang
+    document.title = lang === 'es' ? 'Enlaces — Capia 3D' : 'Links — Capia 3D'
+  }, [lang])
+
+  return (
+    <div className="links-page">
+      <div className="links-backdrop" aria-hidden="true"><span /><span /><span /></div>
+      <Motion.main className="links-card" initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}>
+        <Link to={home} className="links-logo" aria-label="Capia 3D">
+          <img src={asset('capia.svg')} alt="Capia 3D" />
+        </Link>
+        <h1>{pageCopy.title}</h1>
+        <p className="links-intro">{pageCopy.intro}</p>
+
+        <nav className="profile-links" aria-label={pageCopy.title}>
+          {links.map((profileLink) => {
+            const LinkIcon = profileLink.Icon
+            const linkContent = <><span className={`profile-link-icon ${profileLink.key}`}><LinkIcon /></span><span><strong>{pageCopy[profileLink.key].label}</strong><small>{pageCopy[profileLink.key].description}</small></span>{!profileLink.internal && <ExternalLink size={18} aria-label={pageCopy.external} />}</>
+            return profileLink.internal
+              ? <Link key={profileLink.key} className="profile-link" to={profileLink.href}>{linkContent}</Link>
+              : <a key={profileLink.key} className="profile-link" href={profileLink.href} target={profileLink.email ? undefined : '_blank'} rel={profileLink.email ? undefined : 'noreferrer'}>{linkContent}</a>
+          })}
+        </nav>
+
+        <Link className="links-language" to={languagePath}><Languages size={16} />{pageCopy.language}</Link>
+        <p className="links-signoff">© 2026 Capia 3D</p>
+      </Motion.main>
+    </div>
+  )
+}
+
 export default function App() {
   return <>
     <ScrollToHash />
@@ -336,6 +382,8 @@ export default function App() {
       <Route path="/en" element={<HomePage lang="en" />} />
       <Route path="/productos/:slug" element={<ProductPage lang="es" />} />
       <Route path="/en/products/:slug" element={<ProductPage lang="en" />} />
+      <Route path="/links" element={<LinksPage lang="es" />} />
+      <Route path="/en/links" element={<LinksPage lang="en" />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   </>
