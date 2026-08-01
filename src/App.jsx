@@ -3,6 +3,7 @@ import { Link, Navigate, Route, Routes, useLocation, useParams } from 'react-rou
 import { ArrowRight, Check, ExternalLink, Globe2, Instagram, Languages, Mail, Menu, MessageCircle, PackageCheck, PenTool, Printer, ShoppingBag, Sparkles, X } from 'lucide-react'
 import { AnimatePresence, motion as Motion } from 'framer-motion'
 import { content, products, productBySlug, siteLinks } from './content'
+import MaverickPage from './MaverickPage'
 
 const asset = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`
 const heroImages = [
@@ -384,6 +385,7 @@ export default function App() {
       <Route path="/en/products/:slug" element={<ProductPage lang="en" />} />
       <Route path="/links" element={<LinksPage lang="es" />} />
       <Route path="/en/links" element={<LinksPage lang="en" />} />
+      <Route path="/maverick" element={<MaverickPage />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   </>
