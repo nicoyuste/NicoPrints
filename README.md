@@ -46,6 +46,10 @@ The synchronization stores only the public fields needed by the gallery. If Meta
 
 Long-lived Instagram tokens still expire. Replace the `INSTAGRAM_ACCESS_TOKEN` repository secret before its expiry date, then manually run the **Sync Instagram feed** workflow to verify the replacement.
 
+If **Fetch Instagram posts** fails with HTTP 401 or Meta code 190, Meta has rejected the saved token (for example, because it expired or was revoked). Generate a new long-lived token for the `capia3d` Business account in the Meta app configured for Instagram API with Instagram Login. In [repository Actions secrets](https://github.com/nicoyuste/NicoPrints/settings/secrets/actions), update `INSTAGRAM_ACCESS_TOKEN`, then open [Sync Instagram feed](https://github.com/nicoyuste/NicoPrints/actions/workflows/sync-instagram.yml) and choose **Run workflow** on `main`. Enter the token only in the secret field, never in an issue, chat, or source file. GitHub does not allow reading back an existing secret.
+
+Fetching posts does not renew the token. Until token renewal is automated, track the expiry date and replace the secret before it expires. The script reports only HTTP status and numeric Meta error codes, never the raw API error body. Node.js action-runtime deprecation warnings and Ubuntu image migration notices are separate from Meta authentication failures.
+
 ## Deployment
 
 Pushes to `main` run `.github/workflows/deploy.yml` and publish `dist/` to GitHub Pages. The custom domain is configured through `public/CNAME`. SPA deep links rely on the redirect handshake between `public/404.html` and `index.html`.

@@ -73,7 +73,24 @@ async function syncInstagram() {
   }
 
   if (!response.ok) {
-    throw new Error(`Instagram returned HTTP ${response.status}; the existing cache was preserved.`)
+    // Only log numeric diagnostics; Meta's raw response can contain sensitive data.
+    const payload = await response.json().catch(() => null)
+    const code = payload?.error?.code
+    const subcode = payload?.error?.error_subcode
+    const diagnostics = [
+      Number.isInteger(code) ? `Meta code ${code}` : null,
+      Number.isInteger(subcode) ? `subcode ${subcode}` : null,
+    ].filter(Boolean)
+    const detail = diagnostics.length ? ` (${diagnostics.join(', ')})` : ''
+    const guidance = response.status === 401 || code === 190
+      ? ' The access token was rejected. Generate a new token for capia3d in Meta, replace the INSTAGRAM_ACCESS_TOKEN GitHub Actions repository secret, and manually run Sync Instagram feed.'
+      : response.status === 403 || code === 10 || code === 200
+        ? ' Check the Meta app permissions and the capia3d account authorization.'
+        : response.status === 429 || response.status >= 500
+          ? ' Meta may be temporarily unavailable or rate limiting requests; retry later.'
+          : ''
+
+    throw new Error(`Instagram returned HTTP ${response.status}${detail}; the existing cache was preserved.${guidance}`)
   }
 
   const payload = await response.json()
