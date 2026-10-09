@@ -218,13 +218,32 @@ function ProductCard({ product, lang }) {
   )
 }
 
+function InstagramPhoto({ post, fallback, copy }) {
+  const [failed, setFailed] = useState(false)
+  const source = post.image || post.media_url
+  const image = source?.startsWith('https://') ? source : asset(source || fallback.image)
+  const displayed = failed ? fallback : post
+
+  return (
+    <a href={displayed.permalink || siteLinks.instagram} target="_blank" rel="noreferrer">
+      <img
+        src={failed ? asset(fallback.image) : image}
+        alt={failed ? fallback.alt : post.alt || copy.alt}
+        loading="lazy"
+        onError={() => setFailed(true)}
+      />
+      <span><Instagram size={18} /></span>
+    </a>
+  )
+}
+
 function InstagramFeed({ lang }) {
   const [posts, setPosts] = useState([])
   const copy = content[lang].instagram
 
   useEffect(() => {
     let active = true
-    fetch(asset('data/instagram.json'))
+    fetch(asset('data/instagram.json'), { cache: 'no-cache' })
       .then((response) => response.ok ? response.json() : [])
       .then((data) => active && setPosts(Array.isArray(data) ? data.slice(0, 6) : []))
       .catch(() => {})
@@ -233,9 +252,9 @@ function InstagramFeed({ lang }) {
 
   const fallback = products.flatMap((product) => product.gallery.slice(0, 3).map((image, index) => ({
     id: `${product.slug}-${index}`,
-    image: asset(image),
+    image,
     permalink: siteLinks.instagram,
-    caption: product[lang].title,
+    alt: product[lang].title,
   }))).slice(0, 6)
   const items = posts.length ? posts : fallback
 
@@ -243,7 +262,7 @@ function InstagramFeed({ lang }) {
     <section className="section instagram-section">
       <div className="section-heading"><p className="eyebrow">Instagram</p><h2>{copy.title}</h2></div>
       <div className="instagram-grid">
-        {items.map((post) => <a key={post.id} href={post.permalink || siteLinks.instagram} target="_blank" rel="noreferrer"><img src={post.image || post.media_url} alt={post.caption || copy.alt} loading="lazy" /><span><Instagram size={18} /></span></a>)}
+        {items.map((post, index) => <InstagramPhoto key={`${post.id}-${post.image}`} post={post} fallback={fallback[index]} copy={copy} />)}
       </div>
       <div className="instagram-follow"><a className="text-link" href={siteLinks.instagram} target="_blank" rel="noreferrer">{copy.link}<ArrowRight /></a></div>
     </section>

@@ -1,8 +1,10 @@
-import { mkdir, writeFile } from 'node:fs/promises'
+import { createHash } from 'node:crypto'
+import { mkdir, readFile, readdir, rename, rm, writeFile } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
 
 const accessToken = process.env.INSTAGRAM_ACCESS_TOKEN
 const outputPath = resolve('public/data/instagram.json')
+const imageDirectory = resolve('public/data/instagram')
 const apiUrl = new URL('https://graph.instagram.com/v23.0/me/media')
 
 apiUrl.searchParams.set('fields', [
@@ -36,8 +38,8 @@ function imageFor(post) {
   const directImage = post.media_type === 'VIDEO' ? post.thumbnail_url : post.media_url
   if (isHttpsUrl(directImage)) return directImage
 
-  const firstChild = post.children?.data?.find((child) => (
-    isHttpsUrl(child.media_url) || isHttpsUrl(child.thumbnail_url)
+  const firstChild = post.children?.data?.find((child) => isHttpsUrl(
+    child.media_type === 'VIDEO' ? child.thumbnail_url : child.media_url,
   ))
 
   if (!firstChild) return null
@@ -103,8 +105,56 @@ async function syncInstagram() {
     throw new Error('Instagram returned no usable images; the existing cache was preserved.')
   }
 
+  // Download everything before touching the public cache. Visitors should not
+  // depend on expiring CDN URLs or browser access to Instagram's servers.
+  const images = []
+  for (const post of posts) {
+    try {
+      const imageResponse = await fetch(post.image, { signal: AbortSignal.timeout(20_000) })
+      if (!imageResponse.ok) throw new Error('Image download failed')
+      const bytes = Buffer.from(await imageResponse.arrayBuffer())
+      const type = imageResponse.headers.get('content-type')?.split(';')[0].trim()
+      const extensions = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' }
+      const extension = extensions[type]
+      if (!extension || !bytes.length || bytes.length > 10 * 1024 * 1024) {
+        throw new Error('Invalid image')
+      }
+      const hash = createHash('sha256').update(bytes).digest('hex')
+      const filename = `${hash}.${extension}`
+      images.push({ filename, bytes })
+      post.image = `data/instagram/${filename}`
+    } catch {
+      throw new Error('An Instagram photo could not be downloaded; the existing cache and photos were preserved.')
+    }
+  }
+
+  const previousPosts = await readFile(outputPath, 'utf8')
+    .then(JSON.parse).catch(() => [])
+  const retained = new Set([
+    ...posts,
+    ...(Array.isArray(previousPosts) ? previousPosts : []),
+  ].map((post) => post.image).filter((path) => path?.startsWith('data/instagram/')))
+
   await mkdir(dirname(outputPath), { recursive: true })
-  await writeFile(outputPath, `${JSON.stringify(posts, null, 2)}\n`, 'utf8')
+  await mkdir(imageDirectory, { recursive: true })
+  for (const { filename, bytes } of images) {
+    await writeFile(resolve(imageDirectory, filename), bytes)
+  }
+  const temporaryPath = `${outputPath}.tmp`
+  try {
+    await writeFile(temporaryPath, `${JSON.stringify(posts, null, 2)}\n`, 'utf8')
+    await rename(temporaryPath, outputPath)
+  } finally {
+    await rm(temporaryPath, { force: true })
+  }
+
+  // Keep the previous feed's photos too, for browsers with a cached feed JSON.
+  // Cleanup is best effort and only happens after publishing a successful cache.
+  for (const filename of await readdir(imageDirectory).catch(() => [])) {
+    if (/^[a-f0-9]{64}\.(jpg|png|webp)$/.test(filename) && !retained.has(`data/instagram/${filename}`)) {
+      await rm(resolve(imageDirectory, filename), { force: true }).catch(() => {})
+    }
+  }
   console.log(`Instagram cache updated with ${posts.length} posts.`)
 }
 

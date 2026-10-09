@@ -36,7 +36,7 @@ jobs:
       - name: Check for changes
         id: cache
         run: |
-          if git diff --quiet -- public/data/instagram.json; then
+          if [ -z "$(git status --porcelain -- public/data/instagram.json public/data/instagram/)" ]; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
@@ -47,7 +47,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/data/instagram.json
+          git add public/data/instagram.json public/data/instagram/
           git commit -m "chore: update Instagram feed"
           git pull --rebase origin main
           git push origin HEAD:main

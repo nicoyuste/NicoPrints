@@ -42,7 +42,9 @@ npm run preview
 
 `.github/workflows/sync-instagram.yml` refreshes the public Instagram cache every six hours and can also be run manually. It reads the Meta access token from the `INSTAGRAM_ACCESS_TOKEN` GitHub Actions repository secret; the token must never be added to source files, public JSON, logs, or commit history.
 
-The synchronization stores only the public fields needed by the gallery. If Meta is unavailable or returns an invalid response, the last successful cache is left untouched. A changed cache is committed by GitHub Actions and triggers the existing Pages deployment workflow.
+The synchronization stores only the public fields needed by the gallery and downloads the photos into `public/data/instagram/`. Photos are served by Capia 3D rather than Instagram's CDN, avoiding expired media links and browser restrictions on third-party images. Content hashes keep filenames stable when a photo is unchanged. If Meta is unavailable, returns an invalid response, or any photo download fails, the last successful cache and photos are left untouched. The previous feed's photos are retained for browsers with a cached feed; older unused photos are removed after a successful sync. A changed cache or photo set is committed by GitHub Actions and triggers the existing Pages deployment workflow.
+
+If a gallery photo cannot load, the website displays a curated local portfolio photo linking to the Instagram profile. Alt text uses short, localized descriptions rather than full Instagram captions.
 
 Long-lived Instagram tokens still expire. Replace the `INSTAGRAM_ACCESS_TOKEN` repository secret before its expiry date, then manually run the **Sync Instagram feed** workflow to verify the replacement.
 

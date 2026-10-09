@@ -75,7 +75,7 @@ p { line-height:1.7; color:rgba(24,24,24,.72); }
 .step p { margin-bottom:0; }
 .instagram-grid { columns:3; column-gap:12px; }
 .instagram-grid a { position:relative; display:block; break-inside:avoid; overflow:hidden; margin-bottom:12px; border-radius:18px; background:#e7e5df; }
-.instagram-grid img { width:100%; height:auto; transition:transform .5s ease; }
+.instagram-grid img { display:block; width:100%; height:auto; transition:transform .5s ease; }
 .instagram-grid a:hover img { transform:scale(1.04); }
 .instagram-grid span { position:absolute; top:14px; right:14px; width:36px; height:36px; display:grid; place-items:center; color:#fff; background:rgba(0,0,0,.38); border-radius:50%; backdrop-filter:blur(8px); }
 .instagram-follow { display:flex; justify-content:center; margin-top:32px; }
